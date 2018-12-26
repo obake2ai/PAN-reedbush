@@ -34,6 +34,7 @@ class NoiseLayer(nn.Module):
 
 RAND_MAX = 0xffffffff #2^32
 M = 65539 #http://www.geocities.jp/m_hiroi/light/index.html#cite
+import random
 
 class Random:
     def __init__(self, seed):
@@ -42,21 +43,38 @@ class Random:
 
     def irand(self):
         self.seed = (M * self.seed + 1) & RAND_MAX
-        return self.seed
+        return self.seed / (RAND_MAX / 10) / 10
 
 class PoolRandom:
-    def __init__(self, gen, seed, pool_size = 255):
+    def __init__(self, gen, seed, dim, pool_size = 255):
         assert seed != None, 'set seed'
         self.gen = gen(seed)
         self.pool_size = pool_size
         self.pool = [self.gen.irand() for _ in range(self.pool_size)]
         self.next = self.pool_size - 1
+        self.dim = dim
+        random.shuffle(self.pool)
 
     def irand(self):
-        self.next = self.pool[self.next] % self.pool_size
-        x = self.pool[self.next]
-        self.pool[self.next] = self.gen.irand()
+        self.next = int(self.pool[self.next] % self.pool_size)
+        x = self.pool[self.next : self.next+self.dim]
+        #self.pool[self.next] = self.gen.irand()
         return x
+
+class FitRandom:
+    def __init__(self, gen, seed, dim):
+        assert seed != None, 'set seed'
+        self.gen = gen(seed)
+        self.pool_size = dim
+        self.pool = [self.gen.irand() for _ in range(self.pool_size)]
+        random.shuffle(self.pool)
+
+    def irand(self):
+        return self.pool
+
+    def shuffle(self):
+        random.shuffle(self.pool)
+        return self.pool
 
 class AlgorithmicNoiseLayer(nn.Module):
     def __init__(self, in_planes, out_planes, level, noise_seed, normalize = True):
@@ -78,11 +96,10 @@ class AlgorithmicNoiseLayer(nn.Module):
         )
 
     def forward(self, x):
-        self.noiseAdder = PoolRandom(Random, self.seed, x.size()[1])
-        for i in range(x.size()[1]):
-            x[:, i] += self.noiseAdder.irand() * self.level
+        self.noiseAdder = FitRandom(Random, self.seed, x.size()[1])
+        x1 = torch.add(x, self.noiseAdder.irand() * self.level)
 
-        resized_x = x.view(x.size()[0], x.size()[1], 1)
+        resized_x1 = x1.view(x.size()[0], x1.size()[1], 1)
         x2 = self.pre_layers(resized_x)
 
         z = self.post_layers(x2)
