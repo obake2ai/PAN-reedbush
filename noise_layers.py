@@ -80,8 +80,8 @@ class AlgorithmicNoiseLayer(nn.Module):
     def forward(self, x):
         self.noiseAdder = PoolRandom(Random, self.seed, x.size()[1])
         for i in range(x.size()[1]):
-            x[:, i] += self.noiseAdder.irand()
-            
+            x[:, i] += self.noiseAdder.irand() * self.level
+
         resized_x1 = x1.view(x1.size()[0], x1.size()[1], 1)
         x2 = self.pre_layers(resized_x1)
 

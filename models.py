@@ -89,10 +89,10 @@ class ArgNoiseGeneratorSimple(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            *block(opt.latent_dim, 128, 0.1, normalize=False),
-            *block(128, 256, 0.1),
-            *block(256, 512, 0.1),
-            *block(512, 1024, 0.1),
+            AlgorithmicNoiseLayer(opt.latent_dim, 128, 0.1, normalize=False, noise_seed=0),
+            AlgorithmicNoiseLayer(128, 256, 0.1, noise_seed=1, noise_seed=1),
+            AlgorithmicNoiseLayer(256, 512, 0.1, noise_seed=1, noise_seed=2),
+            AlgorithmicNoiseLayer(512, 1024, 0.1, noise_seed=1, noise_seed=3),
             nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
