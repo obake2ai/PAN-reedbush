@@ -49,10 +49,6 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
 def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
     dName = discriminator.__class__.__name__
-    logger.info(gName)
-    logger.info(generator)
-    logger.info(dName)
-    logger.info(discriminator)
     cuda = True if torch.cuda.is_available() else False
     if cuda:
         generator.cuda()
@@ -71,9 +67,14 @@ def train(generator, discriminator, dataloader, opt):
 
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
     handler2.setLevel(logging.INFO)
-    handler2.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
+    handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
     logger.addHandler(handler2)
-    logger.info('saving imgs and parameters to', saveDir)
+
+    logger.info(opt)
+    logger.info(gName)
+    logger.info(generator)
+    logger.info(dName)
+    logger.info(discriminator)
 
     # Optimizers
     optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
@@ -141,7 +142,7 @@ def train(generator, discriminator, dataloader, opt):
                 if batches_done % opt.log_interval == 0:
                     elapsed_time = time.time() - start
                     logger.info(
-                        "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [Elapsed Time: %s]"
+                        "[Epoch: %d/%d] [Batch: %d/%d] [D loss: %f] [G loss: %f] [ElapsedTime: %s]"
                         % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0:.2f}".format(elapsed_time) + " [sec]")
                     )
 
