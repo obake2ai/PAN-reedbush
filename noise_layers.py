@@ -96,8 +96,8 @@ class AlgorithmicNoiseLayer(nn.Module):
         )
 
     def forward(self, x):
-        self.noiseAdder = FitRandom(Random, self.seed, x.size()[1])
-        x1 = torch.add(x, self.noiseAdder.irand() * self.level)
+        noiseAdder = FitRandom(Random, self.seed, x.size()[1])
+        x1 = torch.add(x, torch.Tensor(noiseAdder.irand()) * self.level)
 
         resized_x1 = x1.view(x.size()[0], x1.size()[1], 1)
         x2 = self.pre_layers(resized_x)
