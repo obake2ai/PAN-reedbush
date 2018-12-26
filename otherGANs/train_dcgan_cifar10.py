@@ -27,7 +27,7 @@ opt = easydict.EasyDict({
 dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = past_models.DCGANGenerator(opt)
-discriminator = past_models.DCGANDiscriminator(opt)
+generator = past_models.DCGANGenerator32(opt)
+discriminator = past_models.DCGANDiscriminator32(opt)
 
 train(generator, discriminator, dataloader, opt)

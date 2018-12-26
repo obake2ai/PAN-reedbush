@@ -91,7 +91,7 @@ def train(generator, discriminator, dataloader, opt):
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
 
             # Generate a batch of images
-            fake_imgs = generator(z)
+            fake_imgs = generator(z.view(*z.size(), 1, 1))
 
             label = torch.full((opt.batch_size,), real_label).cuda()
 
@@ -117,7 +117,7 @@ def train(generator, discriminator, dataloader, opt):
                 # -----------------
 
                 # Generate a batch of images
-                fake_imgs = generator(z)
+                fake_imgs = generator(z.view(*z.size(), 1, 1))
                 # Loss measures generator's ability to fool the discriminator
                 # Train on fake images
                 label.fill_(fake_label)
