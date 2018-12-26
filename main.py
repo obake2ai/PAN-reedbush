@@ -141,7 +141,7 @@ def train(generator, discriminator, dataloader, opt):
                     elapsed_time = time.time() - start
                     logger.info(
                         "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [Elapsed Time: %s]"
-                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0}".format(elapsed_time) + "[sec]")
+                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0:.2f}".format(elapsed_time) + "[sec]")
                     )
 
                 if batches_done % opt.sample_interval == 0:
