@@ -83,7 +83,7 @@ https://github.com/pytorch/examples/tree/master/dcgan
 '''
 class DCGANGenerator32(nn.Module):
     def __init__(self, opt):
-        super(DCGANGenerator, self).__init__()
+        super(DCGANGenerator32, self).__init__()
         nz = opt.latent_dim
         ngf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
@@ -117,7 +117,7 @@ class DCGANGenerator32(nn.Module):
 
 class DCGANGenerator64(nn.Module):
     def __init__(self, opt):
-        super(DCGANGenerator, self).__init__()
+        super(DCGANGenerator64, self).__init__()
         nz = opt.latent_dim
         ngf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
@@ -151,7 +151,7 @@ class DCGANGenerator64(nn.Module):
 
 class DCGANDiscriminator32(nn.Module):
     def __init__(self, opt):
-        super(DCGANDiscriminator, self).__init__()
+        super(DCGANDiscriminator32, self).__init__()
         ndf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
         else: nc = 3
@@ -182,7 +182,7 @@ class DCGANDiscriminator32(nn.Module):
 
     class DCGANDiscriminator64(nn.Module):
         def __init__(self, opt):
-            super(DCGANDiscriminator, self).__init__()
+            super(DCGANDiscriminator64, self).__init__()
             ndf = opt.num_filters
             if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
             else: nc = 3
