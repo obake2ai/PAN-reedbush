@@ -1,5 +1,5 @@
 import past_models
-from .. import dataset
+import dataset
 from main_dcgan import train
 
 import easydict
