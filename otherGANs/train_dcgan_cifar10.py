@@ -1,4 +1,4 @@
-import past_models
+import past_models as models
 import dataset
 from main_dcgan import train
 
