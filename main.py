@@ -39,7 +39,7 @@ def compute_gradient_penalty(D, real_samples, fake_samples):
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
 
-def train(generator, discriminator, opt):
+def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
     dName = discriminator.__class__.__name__
 

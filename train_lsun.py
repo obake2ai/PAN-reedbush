@@ -29,4 +29,4 @@ dataloader = dataset.makeDataloader(opt)
 generator = models.NoiseGeneratorSimple(opt)
 discriminator = models.DiscriminatorConv(opt)
 
-train(generator, discriminator, opt)
+train(generator, discriminator, dataloader, opt)
