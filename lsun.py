@@ -518,6 +518,8 @@ lambda_gp = 10
 
 generator = NoiseGeneratorSimple()
 discriminator = DiscriminatorConv()
+gName = generator.__class__.__name__
+dName = discriminator.__class__.__name__
 
 if cuda:
     generator.cuda()
@@ -535,8 +537,6 @@ if opt.resume != None:
 
 # In[85]:
 
-gName = generator.__class__.__name__
-dName = discriminator.__class__.__name__
 datasetName = opt.dataset
 saveDir = gName + '_' + dName + '_' + datasetName
 os.makedirs(saveDir, exist_ok = True)
