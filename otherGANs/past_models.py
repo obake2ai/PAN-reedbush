@@ -28,7 +28,7 @@ def weights_init(m):
 
 class MLPGenerator(nn.Module):
     def __init__(self, opt):
-        super(Generator, self).__init__()
+        super(MLPGenerator, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
@@ -58,7 +58,7 @@ class MLPGenerator(nn.Module):
 
 class MLPDiscriminator(nn.Module):
     def __init__(self, opt):
-        super(Discriminator, self).__init__()
+        super(MLPDiscriminator, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
@@ -83,7 +83,7 @@ https://github.com/pytorch/examples/tree/master/dcgan
 '''
 class DCGANGenerator(nn.Module):
     def __init__(self, opt):
-        super(Generator, self).__init__()
+        super(DCGANGenerator, self).__init__()
         nz = opt.latent_dim
         ngf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
@@ -120,7 +120,7 @@ class DCGANGenerator(nn.Module):
 
 class DCGANDiscriminator(nn.Module):
     def __init__(self, opt):
-        super(Discriminator, self).__init__()
+        super(DCGANDiscriminator, self).__init__()
         ndf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
         else: nc = 3
