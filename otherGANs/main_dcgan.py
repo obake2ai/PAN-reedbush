@@ -75,6 +75,8 @@ def train(generator, discriminator, dataloader, opt):
     real_label = 1
     fake_label = 0
 
+    criterion = nn.BCELoss()
+
     for epoch in range(opt.n_epochs):
         for i, (imgs, _) in enumerate(dataloader):
 
@@ -100,7 +102,7 @@ def train(generator, discriminator, dataloader, opt):
 
 
             # Adversarial loss
-            d_loss = nn.BCELoss(real_output, label)
+            d_loss = criterion(real_output, label)
             d_loss.backward()
             optimizer_D.step()
 
@@ -123,7 +125,7 @@ def train(generator, discriminator, dataloader, opt):
                 label.fill_(fake_label)
 
                 fake_output = discriminator(fake_imgs)
-                g_loss = BCELoss(output, label)
+                g_loss = criterion(output, label)
 
                 g_loss.backward()
                 optimizer_G.step()
