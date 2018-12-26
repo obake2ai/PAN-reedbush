@@ -27,7 +27,7 @@ opt = easydict.EasyDict({
 dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.ArgNoiseGeneratorSimple(opt)
+generator = models.NoiseGeneratorDeeper(opt)
 discriminator = models.DiscriminatorConv(opt)
 
 train(generator, discriminator, dataloader, opt)
