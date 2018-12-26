@@ -22,7 +22,7 @@ class Dataset(nn.Module):
     def __init__(self, opt):
         os.makedirs(os.path.join("data", opt.dataset), exist_ok=True)
 
-    def mnist():
+    def mnist(self):
         dataloader = torch.utils.data.DataLoader(
             datasets.MNIST(
                 "./data/mnist",
@@ -35,7 +35,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def cifar10():
+    def cifar10(self):
         dataloader = torch.utils.data.DataLoader(
             datasets.CIFAR10(
                 "./data/cifar10",
@@ -48,7 +48,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def fashion():
+    def fashion(self):
         dataloader = torch.utils.data.DataLoader(
             datasets.FashionMNIST(
                 "./data/FashionMNIST",
@@ -61,7 +61,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def lsun():
+    def lsun(self):
         dataset = datasets.LSUN(root="./data/lsun", classes=['bedroom_train'],
                             transform=transforms.Compose([
                                 transforms.Resize(opt.img_size),
