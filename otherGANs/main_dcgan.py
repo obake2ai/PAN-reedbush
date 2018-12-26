@@ -125,7 +125,7 @@ def train(generator, discriminator, dataloader, opt):
                 label.fill_(fake_label)
 
                 fake_output = discriminator(fake_imgs)
-                g_loss = criterion(output, label)
+                g_loss = criterion(fake_output, label)
 
                 g_loss.backward()
                 optimizer_G.step()
