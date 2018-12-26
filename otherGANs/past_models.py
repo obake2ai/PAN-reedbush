@@ -112,10 +112,7 @@ class DCGANGenerator(nn.Module):
         )
 
     def forward(self, input):
-        if input.is_cuda:
-            output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
-        else:
-            output = self.main(input)
+        output = self.main(input)
         return output
 
 class DCGANDiscriminator(nn.Module):
@@ -146,9 +143,5 @@ class DCGANDiscriminator(nn.Module):
         )
 
     def forward(self, input):
-        if input.is_cuda:
-            output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
-        else:
-            output = self.main(input)
-
+        output = self.main(input)
         return output.view(-1, 1).squeeze(1)
