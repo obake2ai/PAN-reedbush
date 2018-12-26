@@ -522,6 +522,9 @@ discriminator = DiscriminatorConv()
 if cuda:
     generator.cuda()
     discriminator.cuda()
+    generator = torch.nn.DataParallel(generator) # make parallel
+    discriminator = torch.nn.DataParallel(discriminator) # make parallel
+    cudnn.benchmark = True
 
 
 # In[84]:
@@ -555,8 +558,6 @@ Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 # ----------
 # deepPG vs simpleCD Training
 # ----------
-
-opt.sample_interval = 100
 
 batches_done = 0
 start = time.time()
@@ -625,4 +626,3 @@ for epoch in range(opt.n_epochs):
                     torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
 
             batches_done += opt.n_critic
-

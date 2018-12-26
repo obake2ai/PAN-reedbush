@@ -58,7 +58,7 @@ import torch
 
 import easydict
 opt = easydict.EasyDict({
-    'n_epochs': 1000,
+    'n_epochs': 5000,
     'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
@@ -522,7 +522,9 @@ discriminator = DiscriminatorConv()
 if cuda:
     generator.cuda()
     discriminator.cuda()
-
+    generator = torch.nn.DataParallel(generator) # make parallel
+    discriminator = torch.nn.DataParallel(discriminator) # make parallel
+    cudnn.benchmark = True
 
 # In[84]:
 
@@ -625,4 +627,3 @@ for epoch in range(opt.n_epochs):
                     torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
 
             batches_done += opt.n_critic
-
