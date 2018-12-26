@@ -18,8 +18,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
 
-from noise_layers import *
-
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find('Conv') != -1:
