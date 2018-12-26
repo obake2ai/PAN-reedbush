@@ -3,7 +3,7 @@ import torch.nn as nn
 
 #Simple Noise Layer from PNN
 class NoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, normalize):
+    def __init__(self, in_planes, out_planes, level, normalize = True):
         super(NoiseLayer, self).__init__()
         self.noise = nn.Parameter(torch.Tensor(0), requires_grad=False).cuda()
         self.level = level
@@ -59,7 +59,7 @@ class PoolRandom:
         return x
 
 class AlgorithmicNoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, normalize, noise_seed):
+    def __init__(self, in_planes, out_planes, level, normalize = True, noise_seed):
         super(AlgorithmicNoiseLayer, self).__init__()
         self.seed = noise_seed
         self.out_planes = out_planes
