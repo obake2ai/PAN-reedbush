@@ -18,7 +18,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
 
-def compute_gradient_penalty(D, real_samples, fake_samples):
+def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     """Calculates the gradient penalty loss for WGAN GP"""
     # Random weight term for interpolation between real and fake samples
     alpha = Tensor(np.random.random((real_samples.size(0), 1, 1, 1)))
@@ -97,7 +97,7 @@ def train(generator, discriminator, dataloader, opt):
             # Fake images
             fake_validity = discriminator(fake_imgs)
             # Gradient penalty
-            gradient_penalty = compute_gradient_penalty(discriminator, real_imgs.data, fake_imgs.data)
+            gradient_penalty = compute_gradient_penalty(discriminator, real_imgs.data, fake_imgs.data, Tensor)
             # Adversarial loss
             d_loss = -torch.mean(real_validity) + torch.mean(fake_validity) + lambda_gp * gradient_penalty
 
