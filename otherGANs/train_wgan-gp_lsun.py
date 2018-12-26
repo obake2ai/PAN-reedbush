@@ -1,4 +1,4 @@
-import past_models as models
+import past_models
 import dataset
 from main_wgan_gp import train
 
@@ -27,7 +27,7 @@ opt = easydict.EasyDict({
 dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.DCGANGenerator(opt)
-discriminator = models.DCGANDiscriminator(opt)
+generator = past_models.DCGANGenerator(opt)
+discriminator = past_models.DCGANDiscriminator(opt)
 
 train(generator, discriminator, dataloader, opt)
