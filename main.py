@@ -6,6 +6,13 @@ import math
 import sys
 import time
 
+import logging
+logger = logging.getLogger("logger")
+logger.setLevel(logging.DEBUG)
+handler1 = logging.StreamHandler()
+handler1.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
+logger.addHandler(handler1)
+
 import torchvision.transforms as transforms
 from torchvision.utils import save_image
 
@@ -42,7 +49,10 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
 def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
     dName = discriminator.__class__.__name__
-
+    logger.info(gName)
+    logger.info(generator)
+    logger.info(dName)
+    logger.info(discriminator)
     cuda = True if torch.cuda.is_available() else False
     if cuda:
         generator.cuda()
@@ -58,7 +68,10 @@ def train(generator, discriminator, dataloader, opt):
     datasetName = opt.dataset
     saveDir = gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
-    print ('saving imgs and parameters to', saveDir)
+
+    handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
+    handler2.setLevel(logging.DEBUG)
+    logger.info('saving imgs and parameters to', saveDir)
 
     # Optimizers
     optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
@@ -124,12 +137,11 @@ def train(generator, discriminator, dataloader, opt):
                 optimizer_G.step()
 
                 if batches_done % opt.sample_interval == 0:
-                    print(
-                        "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]"
-                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item())
-                    )
                     elapsed_time = time.time() - start
-                    print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
+                    logger.info(
+                        "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [Elapsed Time: %s]"
+                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0}".format(elapsed_time) + "[sec]")
+                    )
                     if batches_done == 0:
                         vutils.save_image(real_imgs.data[:49], (os.path.join(saveDir, "pwgan_real.png")), nrow=7, normalize=True)
                         vutils.save_image(fake_imgs.data[:49], (os.path.join(saveDir, "pwgan_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
