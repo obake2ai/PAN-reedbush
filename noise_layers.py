@@ -82,7 +82,7 @@ class AlgorithmicNoiseLayer(nn.Module):
         for i in range(x.size()[1]):
             x[:, i] += self.noiseAdder.irand() * self.level
 
-        resized_x = x.view(x1.size()[0], x.size()[1], 1)
+        resized_x = x.view(x.size()[0], x.size()[1], 1)
         x2 = self.pre_layers(resized_x)
 
         z = self.post_layers(x2)

@@ -64,7 +64,7 @@ def train(generator, discriminator, dataloader, opt):
 
     datasetName = opt.dataset
     date = datetime.datetime.now()
-    dateInfo = str(date.year).replace('20','') + str(date.month).zfill(2) + str(date.day).zfill(2) + ':' + str(date.hour).zfill(2) + str(date.minute).zfill(2)
+    dateInfo =  str(date.hour).zfill(2) + str(date.minute).zfill(2) + ':' + str(date.year).replace('20','') + str(date.month).zfill(2) + str(date.day).zfill(2)
     saveDir = dateInfo + '_' + gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
 
