@@ -22,7 +22,7 @@ class Dataset(nn.Module):
     def __init__(self, opt):
         os.makedirs(os.path.join("data", opt.dataset), exist_ok=True)
 
-    def mnist(self):
+    def mnist(self, opt):
         dataloader = torch.utils.data.DataLoader(
             datasets.MNIST(
                 "./data/mnist",
@@ -35,7 +35,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def cifar10(self):
+    def cifar10(self, opt):
         dataloader = torch.utils.data.DataLoader(
             datasets.CIFAR10(
                 "./data/cifar10",
@@ -48,7 +48,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def fashion(self):
+    def fashion(self, opt):
         dataloader = torch.utils.data.DataLoader(
             datasets.FashionMNIST(
                 "./data/FashionMNIST",
@@ -74,7 +74,7 @@ class Dataset(nn.Module):
 
 def makeDataloader(opt):
     dataset = Dataset(opt)
-    if opt.dataset == 'mnist': return dataset.mnist()
-    if opt.dataset == 'cifar10': return dataset.cifar10()
-    if opt.dataset == 'fashion': return dataset.fashion()
-    if opt.dataset == 'lsun': return dataset.lsun()
+    if opt.dataset == 'mnist': return dataset.mnist(opt)
+    if opt.dataset == 'cifar10': return dataset.cifar10(opt)
+    if opt.dataset == 'fashion': return dataset.fashion(opt)
+    if opt.dataset == 'lsun': return dataset.lsun(opt)
