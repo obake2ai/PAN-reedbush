@@ -19,8 +19,13 @@ import torch.nn.functional as F
 import torch.autograd as autograd
 
 class Generator(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(Generator, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
 
         def block(in_feat, out_feat, normalize=True):
             layers = [nn.Linear(in_feat, out_feat)]
@@ -44,9 +49,14 @@ class Generator(nn.Module):
         return img
 
 class NoiseGeneratorSimple(nn.Module):
-    def __init__(self, img_shape):
+    def __init__(self, opt):
         super(NoiseGeneratorSimple, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -66,9 +76,14 @@ class NoiseGeneratorSimple(nn.Module):
         return img
 
 class NoiseGeneratorComplex(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseGeneratorComplex, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -118,9 +133,14 @@ class NoiseLayer(nn.Module):
         return z.view(z.size()[0], z.size()[1])
 
 class NoiseDiscriminator(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseDiscriminator, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -137,9 +157,14 @@ class NoiseDiscriminator(nn.Module):
         return validity
 
 class Discriminator(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(Discriminator, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         self.model = nn.Sequential(
             nn.Linear(int(np.prod(img_shape)), 512),
             nn.LeakyReLU(0.2, inplace=True),
@@ -154,9 +179,14 @@ class Discriminator(nn.Module):
         return validity
 
 class NoiseGeneratorDeeper(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseGeneratorDeeper, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -181,9 +211,14 @@ class NoiseGeneratorDeeper(nn.Module):
         return img
 
 class DiscriminatorConv(nn.Module):
-    def __init__(self, channels, ndf):
+    def __init__(self, opt):
         super(DiscriminatorConv, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         self.model = nn.Sequential(
             # input is (nc) x 64 x 64
             nn.Conv2d(channels, ndf, 4, 2, 1, bias=False),
@@ -213,9 +248,14 @@ class DiscriminatorConv(nn.Module):
         return validity.view(-1, 1).squeeze(1)
 
 class NoiseGeneratorCompDeeper(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseGeneratorCompDeeper, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -240,9 +280,14 @@ class NoiseGeneratorCompDeeper(nn.Module):
         return img
 
 class NoiseGeneratorDeeperV2(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseGeneratorDeeperV2, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -267,9 +312,14 @@ class NoiseGeneratorDeeperV2(nn.Module):
         return img
 
 class NoiseGeneratorDeeperSlim(nn.Module):
-    def __init__(self):
+    def __init__(self, opt):
         super(NoiseGeneratorDeeperSlim, self).__init__()
-
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        img_shape = (channels, opt.img_size, opt.img_size)
+        ndf = opt.num_filters
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers

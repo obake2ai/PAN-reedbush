@@ -23,18 +23,10 @@ opt = easydict.EasyDict({
     'loadDir' : None
 })
 
-if opt.dataset == 'mnist' or opt.dataset == 'fashion':
-  channels = 1
-else:
-  channels = 3
-
-img_shape = (channels, opt.img_size, opt.img_size)
-ndf = opt.num_filters
-
 dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorSimple(img_shape)
-discriminator = models.DiscriminatorConv(channels, ndf)
+generator = models.NoiseGeneratorSimple(opt)
+discriminator = models.DiscriminatorConv(opt)
 
 train(generator, discriminator, opt)
