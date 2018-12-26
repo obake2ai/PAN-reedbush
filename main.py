@@ -70,7 +70,7 @@ def train(generator, discriminator, dataloader, opt):
     os.makedirs(saveDir, exist_ok = True)
 
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
-    handler2.setLevel(logging.DEBUG)
+    handler2.setLevel(logging.INFO)
     logger.info('saving imgs and parameters to', saveDir)
 
     # Optimizers
@@ -135,7 +135,7 @@ def train(generator, discriminator, dataloader, opt):
 
                 g_loss.backward()
                 optimizer_G.step()
-                
+
                 if batches_done % opt.log_interval == 0:
                     elapsed_time = time.time() - start
                     logger.info(
