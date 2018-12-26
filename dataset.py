@@ -61,7 +61,7 @@ class Dataset(nn.Module):
         )
         return dataloader
 
-    def lsun(self):
+    def lsun(self, opt):
         dataset = datasets.LSUN(root="./data/lsun", classes=['bedroom_train'],
                             transform=transforms.Compose([
                                 transforms.Resize(opt.img_size),
