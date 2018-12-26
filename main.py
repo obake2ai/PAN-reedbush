@@ -72,6 +72,7 @@ def train(generator, discriminator, dataloader, opt):
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
     handler2.setLevel(logging.INFO)
     handler2.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
+    logger.addHandler(handler2)
     logger.info('saving imgs and parameters to', saveDir)
 
     # Optimizers
@@ -141,7 +142,7 @@ def train(generator, discriminator, dataloader, opt):
                     elapsed_time = time.time() - start
                     logger.info(
                         "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [Elapsed Time: %s]"
-                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0:.2f}".format(elapsed_time) + "[sec]")
+                        % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0:.2f}".format(elapsed_time) + " [sec]")
                     )
 
                 if batches_done % opt.sample_interval == 0:
