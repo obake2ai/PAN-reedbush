@@ -1,6 +1,6 @@
 import past_models
 from .. import dataset
-from main_wgan-gp import train
+from main_wgan_gp import train
 
 import easydict
 
