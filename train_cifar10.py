@@ -16,6 +16,7 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
+    'log_interval': 10,
     'dataset': 'cifar10',
     'num_filters': 128,
     'saveDir' : None,
