@@ -78,7 +78,7 @@ class NoiseGeneratorSimple(nn.Module):
 
 class ArgNoiseGeneratorSimple(nn.Module):
     def __init__(self, opt):
-        super(NoiseGeneratorSimple, self).__init__()
+        super(ArgNoiseGeneratorSimple, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
