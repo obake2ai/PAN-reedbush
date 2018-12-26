@@ -71,6 +71,7 @@ def train(generator, discriminator, dataloader, opt):
 
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
     handler2.setLevel(logging.INFO)
+    handler2.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
     logger.info('saving imgs and parameters to', saveDir)
 
     # Optimizers
