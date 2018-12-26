@@ -74,11 +74,7 @@ class Dataset(nn.Module):
 
 def makeDataloader(opt):
     dataset = Dataset(opt)
-    if opt.dataset == 'mnist'
-        return dataset.mnist()
-    if opt.dataset == 'cifar10'
-        return dataset.cifar10()
-    if opt.dataset == 'fashion'
-        return dataset.fashion()
-    if opt.dataset == 'lsun'
-        return dataset.lsun()
+    if opt.dataset == 'mnist': return dataset.mnist()
+    if opt.dataset == 'cifar10': return dataset.cifar10()
+    if opt.dataset == 'fashion': return dataset.fashion()
+    if opt.dataset == 'lsun': return dataset.lsun()
