@@ -18,6 +18,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
 
+from noise_layers import *
+
 class Generator(nn.Module):
     def __init__(self, opt):
         super(Generator, self).__init__()
@@ -99,36 +101,6 @@ class NoiseGeneratorComplex(nn.Module):
         img = self.model(z)
         img = img.view(img.shape[0], *self.img_shape)
         return img
-
-class NoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, normalize):
-        super(NoiseLayer, self).__init__()
-        self.noise = nn.Parameter(torch.Tensor(0), requires_grad=False).cuda()
-        self.level = level
-        if normalize:
-          self.pre_layers = nn.Sequential(
-              nn.ReLU(True),
-              nn.BatchNorm1d(in_planes, 0.8),
-          )
-        else:
-          self.pre_layers = nn.Sequential(
-              nn.ReLU(True),
-          )
-        self.post_layers = nn.Sequential(
-            nn.Conv1d(in_planes, out_planes, kernel_size=1, stride=1),
-        )
-
-    def forward(self, x):
-        if self.noise.numel() == 0:
-            self.noise.resize_(x.data[0].shape).uniform_()
-            self.noise = (2 * self.noise - 1) * self.level
-
-        x1 = torch.add(x, self.noise)
-        resized_x1 = x1.view(x1.size()[0], x1.size()[1], 1)
-        x2 = self.pre_layers(resized_x1)
-
-        z = self.post_layers(x2)
-        return z.view(z.size()[0], z.size()[1])
 
 class NoiseDiscriminator(nn.Module):
     def __init__(self, opt):
