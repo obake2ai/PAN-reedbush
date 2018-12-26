@@ -76,7 +76,7 @@ class NoiseGeneratorSimple(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
-class NoiseGeneratorSimple(nn.Module):
+class ArgNoiseGeneratorSimple(nn.Module):
     def __init__(self, opt):
         super(NoiseGeneratorSimple, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':

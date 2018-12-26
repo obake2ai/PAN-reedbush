@@ -5,6 +5,7 @@ import numpy as np
 import math
 import sys
 import time
+import datetime
 
 import logging
 logger = logging.getLogger("logger")
@@ -62,7 +63,9 @@ def train(generator, discriminator, dataloader, opt):
         discriminator.load_state_dict(torch.load(os.path.join(loadDir, "discriminator_model__%s") % str(batches_done).zfill(8)))
 
     datasetName = opt.dataset
-    saveDir = gName + '_' + dName + '_' + datasetName
+    date = datetime.datetime.now()
+    dateInfo = str(date.year).replace('20','') + str(date.month).zfill(2) + str(date.day).zfill(2) + '_' + str(date.hour).zfill(2) + str(date.minute).zfill(2)
+    saveDir = dateInfo + '_' + gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
 
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
