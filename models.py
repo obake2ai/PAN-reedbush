@@ -25,7 +25,7 @@ class Generator(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
+        self.img_shape = (channels, opt.img_size, opt.img_size)
 
         def block(in_feat, out_feat, normalize=True):
             layers = [nn.Linear(in_feat, out_feat)]
@@ -39,13 +39,13 @@ class Generator(nn.Module):
             *block(128, 256),
             *block(256, 512),
             *block(512, 1024),
-            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class NoiseGeneratorSimple(nn.Module):
@@ -55,8 +55,7 @@ class NoiseGeneratorSimple(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -66,13 +65,13 @@ class NoiseGeneratorSimple(nn.Module):
             *block(128, 256, 0.1),
             *block(256, 512, 0.1),
             *block(512, 1024, 0.1),
-            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class NoiseGeneratorComplex(nn.Module):
@@ -82,8 +81,7 @@ class NoiseGeneratorComplex(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -93,13 +91,13 @@ class NoiseGeneratorComplex(nn.Module):
             *block(128, 1024, 0.1),
             *block(1024, 10240, 0.1),
             *block(10240, 10240, 0.1),
-            nn.Linear(10240, int(np.prod(img_shape))),
+            nn.Linear(10240, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class NoiseLayer(nn.Module):
@@ -139,14 +137,13 @@ class NoiseDiscriminator(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
 
         self.model = nn.Sequential(
-            *block(int(np.prod(img_shape)), 512, 0.1),
+            *block(int(np.prod(self.img_shape)), 512, 0.1),
             *block(512, 256, 0.1),
             *block(256, 1, 0.1),
         )
@@ -163,10 +160,9 @@ class Discriminator(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         self.model = nn.Sequential(
-            nn.Linear(int(np.prod(img_shape)), 512),
+            nn.Linear(int(np.prod(self.img_shape)), 512),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(512, 256),
             nn.LeakyReLU(0.2, inplace=True),
@@ -185,8 +181,7 @@ class NoiseGeneratorDeeper(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -201,13 +196,13 @@ class NoiseGeneratorDeeper(nn.Module):
             *block(1024, 1024, 0.1),
             *block(1024, 1024, 0.1),
             *block(1024, 1024, 0.1),
-            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class DiscriminatorConv(nn.Module):
@@ -217,26 +212,26 @@ class DiscriminatorConv(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        self.ndf = opt.num_filters
         self.model = nn.Sequential(
             # input is (nc) x 64 x 64
-            nn.Conv2d(channels, ndf, 4, 2, 1, bias=False),
+            nn.Conv2d(channels, self.ndf, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
             #nn.Dropout(self.vDO),
-            # state size. (ndf) x 32 x 32
-            nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
+            # state size. (self.ndf) x 32 x 32
+            nn.Conv2d(self.ndf, self.ndf * 2, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
             #nn.Dropout(self.vDO),
-            # state size. (ndf*2) x 16 x 16
-            nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
+            # state size. (self.ndf*2) x 16 x 16
+            nn.Conv2d(self.ndf * 2, self.ndf * 4, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
             #nn.Dropout(self.vDO),
-            nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
+            nn.Conv2d(self.ndf * 4, self.ndf * 8, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
             #nn.Dropout(self.vDO),
-            # state size. (ndf*8) x 4 x 4
-            nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False),
+            # state size. (self.ndf*8) x 4 x 4
+            nn.Conv2d(self.ndf * 8, 1, 4, 1, 0, bias=False),
             # nn.LeakyReLU(0.2, inplace=True),
             # nn.Dropout(self.vDO),
             #nn.AvgPool2d(kernel_size=4)
@@ -254,8 +249,7 @@ class NoiseGeneratorCompDeeper(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -270,13 +264,13 @@ class NoiseGeneratorCompDeeper(nn.Module):
              *block(4096, 4096, 0.1),
              *block(4096, 4096, 0.1),
             *block(4096, 1024, 0.1),
-            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class NoiseGeneratorDeeperV2(nn.Module):
@@ -286,8 +280,7 @@ class NoiseGeneratorDeeperV2(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -302,13 +295,13 @@ class NoiseGeneratorDeeperV2(nn.Module):
             *block(4096, 4096, 0.1),
             *block(4096, 4096, 0.1),
             *block(4096, 4096, 0.1),
-            nn.Linear(4096, int(np.prod(img_shape))),
+            nn.Linear(4096, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
 
 class NoiseGeneratorDeeperSlim(nn.Module):
@@ -318,8 +311,7 @@ class NoiseGeneratorDeeperSlim(nn.Module):
           channels = 1
         else:
           channels = 3
-        img_shape = (channels, opt.img_size, opt.img_size)
-        ndf = opt.num_filters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
             layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
@@ -329,11 +321,11 @@ class NoiseGeneratorDeeperSlim(nn.Module):
             *block(128, 512, 0.1),
             *block(512, 1024, 0.1),
             *block(1024, 1024, 0.1),
-            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.model(z)
-        img = img.view(img.shape[0], *img_shape)
+        img = img.view(img.shape[0], *self.img_shape)
         return img
