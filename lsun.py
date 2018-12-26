@@ -524,7 +524,7 @@ if cuda:
     discriminator.cuda()
     generator = torch.nn.DataParallel(generator) # make parallel
     discriminator = torch.nn.DataParallel(discriminator) # make parallel
-    cudnn.benchmark = True
+    torch.backends.cudnn.benchmark = True
 
 # In[84]:
 
