@@ -59,7 +59,7 @@ class PoolRandom:
         return x
 
 class AlgorithmicNoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, normalize = True, noise_seed):
+    def __init__(self, in_planes, out_planes, level, noise_seed, normalize = True):
         super(AlgorithmicNoiseLayer, self).__init__()
         self.seed = noise_seed
         self.out_planes = out_planes

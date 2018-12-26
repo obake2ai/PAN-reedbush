@@ -89,7 +89,7 @@ class ArgNoiseGeneratorSimple(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            AlgorithmicNoiseLayer(opt.latent_dim, 128, 0.1, normalize=False, noise_seed=0),
+            AlgorithmicNoiseLayer(opt.latent_dim, 128, 0.1, noise_seed=0, normalize=False),
             AlgorithmicNoiseLayer(128, 256, 0.1, noise_seed=1),
             AlgorithmicNoiseLayer(256, 512, 0.1, noise_seed=2),
             AlgorithmicNoiseLayer(512, 1024, 0.1, noise_seed=3),
