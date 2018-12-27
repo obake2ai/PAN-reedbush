@@ -110,8 +110,6 @@ def train(generator, discriminator, dataloader, opt):
 
             # Generate a batch of images
             fake_imgs = generator(z.view(*z.size(), 1, 1))
-            logger.debug(fake_imgs.size())
-            logger.debug(real_imgs.size())
 
             # Real images
             real_validity = discriminator(real_imgs)
