@@ -76,18 +76,15 @@ def train(generator, discriminator, dataloader, opt):
     criterion = nn.BCELoss()
 
     for epoch in range(opt.n_epochs):
-        for i, data in enumerate(dataloader):
-        #for i, (imgs, _) in enumerate(dataloader):
+        for i, (imgs, _) in enumerate(dataloader):
             # ---------------------
             #  Train Discriminator
             # ---------------------
-
+            print (imgs.size())
             # train with real
-            #real_imgs = Variable(imgs.type(Tensor))
-            real_imgs = data[0].cuda()
+            real_imgs = Variable(imgs.type(Tensor))
             discriminator.zero_grad()
-            #batch_size = imgs.size(0)
-            batch_size = real_imgs.size(0)
+            batch_size = imgs.size(0)
             label = torch.full((batch_size,), real_label).cuda()
             d_real_output = discriminator(real_imgs)
 
@@ -96,10 +93,8 @@ def train(generator, discriminator, dataloader, opt):
 
 
             # train with fake
-            z = torch.randn(batch_size, opt.latent_dim, 1, 1).cuda()
-            #z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
-            #fake_imgs = generator(z.view(*z.size(), 1, 1))
-            fake_imgs = generator(z.view(z))
+            z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
+            fake_imgs = generator(z.view(*z.size(), 1, 1))
             label.fill_(fake_label)
             d_fake_output = discriminator(fake_imgs)
 
