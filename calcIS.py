@@ -78,7 +78,7 @@ for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
     os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
 
     for i in range(fake_imgs.size(0)):
-        vutils.save_image(calc_fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+        vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
     dataset = datasets.ImageFolder(root="./testdir/",
                             transform=transforms.Compose([
