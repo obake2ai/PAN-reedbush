@@ -15,8 +15,8 @@ opt = easydict.EasyDict({
     'img_size': 64,
     'n_critic': 1,
     'clip_value': 0.01,
-    'sample_interval': 3,
-    'log_interval': 1,
+    'sample_interval': 10,
+    'log_interval': 5,
     'dataset': 'cifar10',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
