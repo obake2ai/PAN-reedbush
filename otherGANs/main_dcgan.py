@@ -83,7 +83,7 @@ def train(generator, discriminator, dataloader, opt):
 
             # train with real
             real_imgs = Variable(imgs.type(Tensor))
-            optimizer_D.zero_grad()
+            discriminator.zero_grad()
             batch_size = imgs.size(0)
             label = torch.full((batch_size,), real_label).cuda()
             d_real_output = discriminator(real_imgs)
@@ -108,7 +108,7 @@ def train(generator, discriminator, dataloader, opt):
             # ---------------------
             #  Train Generator
             # ---------------------
-            optimizer_G.zero_grad()
+            generator.zero_grad()
             # Train the generator every n_critic steps
             if i % opt.n_critic == 0:
                 # Generate a batch of images
