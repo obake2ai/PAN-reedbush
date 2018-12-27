@@ -76,7 +76,8 @@ def train(generator, discriminator, dataloader, opt):
     criterion = nn.BCELoss()
 
     for epoch in range(opt.n_epochs):
-        for i, (imgs, _) in enumerate(dataloader):
+        for i, data in enumerate(dataloader):
+        #for i, (imgs, _) in enumerate(dataloader):
             # ---------------------
             #  Train Discriminator
             # ---------------------
