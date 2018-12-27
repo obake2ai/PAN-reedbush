@@ -40,7 +40,7 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
-    'loadDir' : './otherGANs/0712:181227_WGAN-GP_DCGANGenerator32_DCGANDiscriminator32_mnist'
+    'loadDir' : './otherGANs/1035:181227_WGAN-GP_DCGANGenerator32_DCGANDiscriminator32_mnist'
 })
 
 handler2 = logging.FileHandler(filename=os.path.join(opt.loadDir, "is.log"))
