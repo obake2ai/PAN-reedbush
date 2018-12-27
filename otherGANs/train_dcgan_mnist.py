@@ -12,7 +12,7 @@ opt = easydict.EasyDict({
     'b2': 0.999,
     'n_cpu': 8,
     'latent_dim': 128,
-    'img_size': 64,
+    'img_size': 32,
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 10,
@@ -27,7 +27,7 @@ opt = easydict.EasyDict({
 dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = past_models.DCGANGenerator64(opt)
-discriminator = past_models.DCGANDiscriminator64(opt)
+generator = past_models.DCGANGenerator32(opt)
+discriminator = past_models.DCGANDiscriminator32(opt)
 
 train(generator, discriminator, dataloader, opt)
