@@ -58,6 +58,9 @@ def train(generator, discriminator, dataloader, opt):
     logger.info(generator)
     logger.info(discriminator)
 
+    generator.apply(weights_init)
+    discriminator.apply(weights_init)
+
     # Optimizers
     optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
     optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
