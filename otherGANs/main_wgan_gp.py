@@ -95,15 +95,13 @@ def train(generator, discriminator, dataloader, opt):
     start = time.time()
     for epoch in range(opt.n_epochs):
         for i, (imgs, _) in enumerate(dataloader):
-
-            # Configure input
-            real_imgs = Variable(imgs.type(Tensor))
-
             # ---------------------
             #  Train Discriminator
             # ---------------------
 
-            optimizer_D.zero_grad()
+            # train with real
+            real_imgs = Variable(imgs.type(Tensor))
+            discriminator.zero_grad()
 
             # Sample noise as generator input
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
