@@ -111,13 +111,13 @@ def train(generator, discriminator, dataloader, opt):
             # ---------------------
             #  Train Generator
             # ---------------------
-            generator.zero_grad()
             # Train the generator every n_critic steps
             if i % opt.n_critic == 0:
+                generator.zero_grad()
                 # Generate a batch of images
                 fake_imgs = generator(z.view(*z.size(), 1, 1))
                 # Loss measures generator's ability to fool the discriminator
-                label.fill_(fake_label)
+                label.fill_(real_label)
 
                 g_fake_output = discriminator(fake_imgs)
                 g_loss = criterion(g_fake_output, label)
