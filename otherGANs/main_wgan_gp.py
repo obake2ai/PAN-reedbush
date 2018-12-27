@@ -142,14 +142,14 @@ def train(generator, discriminator, dataloader, opt):
                 g_loss.backward()
                 optimizer_G.step()
 
-                if batches_done / opt.batch_size % opt.log_interval == 0:
+                if batches_done % opt.log_interval == 0:
                     elapsed_time = time.time() - start
                     logger.info(
                         "[Epoch: %d/%d] [Batch: %d/%d] [D loss: %f] [G loss: %f] [ElapsedTime: %s]"
                         % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item(), "{0:.2f}".format(elapsed_time) + " [sec]")
                     )
 
-                if batches_done / opt.batch_size % opt.sample_interval == 0:
+                if batches_done % opt.sample_interval == 0:
                     if batches_done == 0:
                         vutils.save_image(real_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_real.png")), nrow=7, normalize=True)
                         vutils.save_image(fake_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
