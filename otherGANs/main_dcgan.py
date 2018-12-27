@@ -86,7 +86,8 @@ def train(generator, discriminator, dataloader, opt):
             #real_imgs = Variable(imgs.type(Tensor))
             real_imgs = data[0].cuda()
             discriminator.zero_grad()
-            batch_size = imgs.size(0)
+            #batch_size = imgs.size(0)
+            batch_size = real_imgs.size(0)
             label = torch.full((batch_size,), real_label).cuda()
             d_real_output = discriminator(real_imgs)
 
