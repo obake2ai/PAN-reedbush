@@ -1,6 +1,7 @@
 import models
 import dataset
 from main import train
+from otherGANs import past_models
 
 import easydict
 
@@ -28,6 +29,6 @@ dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
 generator = models.ArgNoiseGeneratorSimple(opt)
-discriminator = models.DiscriminatorConv(opt)
+discriminator = past_models.DCGANDiscriminator32(opt)
 
 train(generator, discriminator, dataloader, opt)
