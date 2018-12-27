@@ -95,6 +95,9 @@ def train(generator, discriminator, dataloader, opt):
             # Generate a batch of images
             fake_imgs = generator(z.view(*z.size(), 1, 1))
 
+            logger.debug(imgs.size())
+            logger.debug(imgs.size(0))
+
             label = torch.full((opt.batch_size,), real_label).cuda()
 
             # Real images
