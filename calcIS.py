@@ -72,7 +72,7 @@ for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
 
     fake_imgs = calcG(z.view(*z.size(), 1, 1))
 
-    saveDir = os.path.join(loadDir, 'fake_%s' % idx)
+    saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
 
     os.makedirs(saveDir, exist_ok = True)
     os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
