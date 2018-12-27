@@ -82,7 +82,8 @@ def train(generator, discriminator, dataloader, opt):
             # ---------------------
 
             # train with real
-            real_imgs = Variable(imgs.type(Tensor))
+            #real_imgs = Variable(imgs.type(Tensor))
+            real_imgs = data[0].cuda()
             discriminator.zero_grad()
             batch_size = imgs.size(0)
             label = torch.full((batch_size,), real_label).cuda()
@@ -97,7 +98,6 @@ def train(generator, discriminator, dataloader, opt):
             fake_imgs = generator(z.view(*z.size(), 1, 1))
             label.fill_(fake_label)
             d_fake_output = discriminator(fake_imgs)
-            logger.debug(d_fake_output)
 
             d_loss_fake = criterion(d_fake_output, label)
             d_loss_fake.backward()
