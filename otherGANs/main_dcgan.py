@@ -55,9 +55,7 @@ def train(generator, discriminator, dataloader, opt):
     logger.addHandler(handler2)
 
     logger.info(opt)
-    #logger.info(gName)
     logger.info(generator)
-    #logger.info(dName)
     logger.info(discriminator)
 
     # Optimizers
@@ -79,54 +77,47 @@ def train(generator, discriminator, dataloader, opt):
 
     for epoch in range(opt.n_epochs):
         for i, (imgs, _) in enumerate(dataloader):
-
-            # Configure input
-            real_imgs = Variable(imgs.type(Tensor))
-
             # ---------------------
             #  Train Discriminator
             # ---------------------
 
+            # train with real
+            real_imgs = Variable(imgs.type(Tensor))
             optimizer_D.zero_grad()
-
-            # Sample noise as generator input
-            z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
-
-            # Generate a batch of images
-            fake_imgs = generator(z.view(*z.size(), 1, 1))
-
             batch_size = imgs.size(0)
             label = torch.full((batch_size,), real_label).cuda()
+            d_real_output = discriminator(real_imgs)
 
-            # Real images
-            real_output = discriminator(real_imgs)
+            d_loss_real = criterion(d_real_output, label)
+            d_loss_real.backward()
 
 
-            # Adversarial loss
-            d_loss = criterion(real_output, label)
-            d_loss.backward()
+            # train with fake
+            z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
+            fake_imgs = generator(z.view(*z.size(), 1, 1))
+            label.fill_(fake_label)
+            d_fake_output = discriminator(fake_imgs)
+
+            d_loss_fake = criterion(d_fake_output, label)
+            d_loss_fake.backward()
+
+            d_loss = d_loss_real + d_loss_fake
+
             optimizer_D.step()
 
-            # Fake images
-            fake_output = discriminator(fake_imgs)
-
+            # ---------------------
+            #  Train Generator
+            # ---------------------
             optimizer_G.zero_grad()
-
             # Train the generator every n_critic steps
             if i % opt.n_critic == 0:
-
-                # -----------------
-                #  Train Generator
-                # -----------------
-
                 # Generate a batch of images
                 fake_imgs = generator(z.view(*z.size(), 1, 1))
                 # Loss measures generator's ability to fool the discriminator
-                # Train on fake images
                 label.fill_(fake_label)
 
-                fake_output = discriminator(fake_imgs)
-                g_loss = criterion(fake_output, label)
+                g_fake_output = discriminator(fake_imgs)
+                g_loss = criterion(g_fake_output, label)
 
                 g_loss.backward()
                 optimizer_G.step()
