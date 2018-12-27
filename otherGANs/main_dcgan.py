@@ -80,7 +80,7 @@ def train(generator, discriminator, dataloader, opt):
             # ---------------------
             #  Train Discriminator
             # ---------------------
-            print (imgs.size())
+
             # train with real
             real_imgs = Variable(imgs.type(Tensor))
             discriminator.zero_grad()
@@ -91,7 +91,7 @@ def train(generator, discriminator, dataloader, opt):
             d_loss_real = criterion(d_real_output, label)
             d_loss_real.backward()
 
-
+            print (d_loss_real)
             # train with fake
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
             fake_imgs = generator(z.view(*z.size(), 1, 1))
