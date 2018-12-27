@@ -6,7 +6,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 128,
+    'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -15,7 +15,7 @@ opt = easydict.EasyDict({
     'img_size': 32,
     'n_critic': 1,
     'clip_value': 0.01,
-    'sample_interval': 100,
+    'sample_interval': 10,
     'log_interval': 10,
     'dataset': 'mnist',
     'num_filters': 128, #for CNN Discriminator and Generator
