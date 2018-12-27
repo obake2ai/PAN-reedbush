@@ -11,8 +11,8 @@ from torch.autograd import Variable
 from torchvision import datasets
 import torchvision.transforms as transforms
 
-Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 cuda = True if torch.cuda.is_available() else False
+Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 
 import logging
 logger = logging.getLogger("logger")
