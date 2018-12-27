@@ -46,7 +46,7 @@ def train(generator, discriminator, dataloader, opt):
     datasetName = opt.dataset
     date = datetime.datetime.now()
     dateInfo =  str(date.hour).zfill(2) + str(date.minute).zfill(2) + ':' + str(date.year).replace('20','') + str(date.month).zfill(2) + str(date.day).zfill(2)
-    saveDir = dateInfo + '_VANILA_' + gName + '_' + dName + '_' + datasetName
+    saveDir = dateInfo + '_DCGAN_' + gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
 
     handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
