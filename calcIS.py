@@ -66,32 +66,30 @@ def calcurateInceptionScore(opt):
         name = os.path.basename(model_path)
         idx = name.replace('generator_model_', '')
 
-        if int(idx) >= 300:
+        calcG = past_models.DCGANGenerator32(opt).cuda()
 
-            calcG = past_models.DCGANGenerator32(opt).cuda()
+        calcG.load_state_dict(torch.load(model_path))
 
-            calcG.load_state_dict(torch.load(model_path))
+        fake_imgs = calcG(z.view(*z.size(), 1, 1))
 
-            fake_imgs = calcG(z.view(*z.size(), 1, 1))
+        saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
 
-            saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
+        os.makedirs(saveDir, exist_ok = True)
+        os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
 
-            os.makedirs(saveDir, exist_ok = True)
-            os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+        for i in range(fake_imgs.size(0)):
+            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
-            for i in range(fake_imgs.size(0)):
-                vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+        #dataset, _ = makeDataloader(opt)
+        dataset = datasets.ImageFolder(root=saveDir,
+                                transform=transforms.Compose([
+                                        transforms.ToTensor(),
+                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                        ]))
 
-            #dataset, _ = makeDataloader(opt)
-            dataset = datasets.ImageFolder(root=saveDir,
-                                    transform=transforms.Compose([
-                                            transforms.ToTensor(),
-                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                                            ]))
-
-            IgnoreLabelDataset(dataset)
-            calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
-            logger.info(str(int(idx)) + ',' + str(calcIS))
+        IgnoreLabelDataset(dataset)
+        calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
+        logger.info(str(int(idx)) + ',' + str(calcIS))
 
 if __name__ == '__main__':
     calcurateInceptionScore(opt)
