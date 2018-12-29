@@ -93,8 +93,8 @@ class Dataset(nn.Module):
 
         dataloader = torch.utils.data.DataLoader(
             dataset,
-            batch_size=opt.batch_size, s
-            huffle=True
+            batch_size=opt.batch_size,
+            shuffle=True
             )
         return dataset, dataloader
 
