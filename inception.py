@@ -20,11 +20,12 @@ def inception_v3(pretrained=False, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     if pretrained:
+        model_path = './inception/inception_v3_google-1a9a5a14.pth'
         if 'transform_input' not in kwargs:
             kwargs['transform_input'] = True
         model = Inception3(**kwargs)
         #model.load_state_dict(model_zoo.load_url(model_urls['inception_v3_google']))
-        model.load_state_dict('./inception/inception_v3_google-1a9a5a14.pth')
+        model.load_state_dict(torch.load(model_path))
         return model
 
     return Inception3(**kwargs)
