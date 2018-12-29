@@ -9,7 +9,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 import torch.utils.data
 
-from torchvision.models.inception import inception_v3
+from inception import inception_v3
 
 import numpy as np
 from scipy.stats import entropy
