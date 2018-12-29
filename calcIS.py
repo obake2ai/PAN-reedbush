@@ -58,36 +58,39 @@ class IgnoreLabelDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.orig)
 
-logger.info(opt)
+def calcurateInceptionScore(opt):
+    logger.info(opt)
+    for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
+        name = os.path.basename(model_path)
+        idx = name.replace('generator_model_', '')
 
-for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
-    name = os.path.basename(model_path)
-    idx = name.replace('generator_model_', '')
+        calcG = past_models.DCGANGenerator32(opt).cuda()
 
-    calcG = past_models.DCGANGenerator32(opt).cuda()
+        calcG.load_state_dict(torch.load(model_path))
 
-    calcG.load_state_dict(torch.load(model_path))
+        z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
-    z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
+        fake_imgs = calcG(z.view(*z.size(), 1, 1))
 
-    fake_imgs = calcG(z.view(*z.size(), 1, 1))
+        saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
 
-    saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
+        os.makedirs(saveDir, exist_ok = True)
+        os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
 
-    os.makedirs(saveDir, exist_ok = True)
-    os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+        for i in range(fake_imgs.size(0)):
+            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
-    for i in range(fake_imgs.size(0)):
-        vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+        dataset = datasets.ImageFolder(root="./testdir/",
+                                transform=transforms.Compose([
+                                        transforms.Resize(opt.img_size),
+                                        transforms.CenterCrop(opt.img_size),
+                                        transforms.ToTensor(),
+                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                        ]))
 
-    dataset = datasets.ImageFolder(root="./testdir/",
-                            transform=transforms.Compose([
-                                    transforms.Resize(opt.img_size),
-                                    transforms.CenterCrop(opt.img_size),
-                                    transforms.ToTensor(),
-                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                                    ]))
+        IgnoreLabelDataset(dataset)
+        calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
+        logger.info(str(int(idx)) + ',' + str(calcIS))
 
-    IgnoreLabelDataset(dataset)
-    calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
-    logger.info(str(int(idx)) + ',' + str(calcIS))
+if __name__ == '__main__':
+    calcurateInceptionScore(opt)
