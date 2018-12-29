@@ -60,6 +60,8 @@ def calcurateInceptionScore(opt):
     handler2.setFormatter(logging.Formatter("%(message)s"))
     logger.addHandler(handler2)
     logger.info(opt)
+
+    z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
     for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
         name = os.path.basename(model_path)
         idx = name.replace('generator_model_', '')
@@ -67,8 +69,6 @@ def calcurateInceptionScore(opt):
         calcG = past_models.DCGANGenerator32(opt).cuda()
 
         calcG.load_state_dict(torch.load(model_path))
-
-        z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
         fake_imgs = calcG(z.view(*z.size(), 1, 1))
 
@@ -80,14 +80,12 @@ def calcurateInceptionScore(opt):
         for i in range(fake_imgs.size(0)):
             vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
-        dataset, _ = makeDataloader(opt)
-        # dataset = datasets.ImageFolder(root="./testdir/",
-        #                         transform=transforms.Compose([
-        #                                 transforms.Resize(opt.img_size),
-        #                                 transforms.CenterCrop(opt.img_size),
-        #                                 transforms.ToTensor(),
-        #                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-        #                                 ]))
+        #dataset, _ = makeDataloader(opt)
+        dataset = datasets.ImageFolder(root=saveDir,
+                                transform=transforms.Compose([
+                                        transforms.ToTensor(),
+                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                        ]))
 
         IgnoreLabelDataset(dataset)
         calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
