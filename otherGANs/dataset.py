@@ -23,65 +23,80 @@ class Dataset(nn.Module):
         os.makedirs(os.path.join("data", opt.dataset), exist_ok=True)
 
     def mnist(self, opt):
+        dataset = datasets.MNIST(
+                        "./data/mnist",
+                        train=True,
+                        download=True,
+                        transform=transforms.Compose([
+                            transforms.Resize(opt.img_size),
+                            transforms.ToTensor(),
+                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                            ]),
+                    )
+
         dataloader = torch.utils.data.DataLoader(
-            datasets.MNIST(
-                "./data/mnist",
-                train=True,
-                download=True,
-                transform=transforms.Compose([transforms.Resize(opt.img_size), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]),
-            ),
+            dataset,
             batch_size=opt.batch_size,
             shuffle=True,
         )
-        return dataloader
+        return dataset, dataloader
 
     def cifar10(self, opt):
+        dataset = datasets.CIFAR10(
+                        "./data/cifar10",
+                        train=True,
+                        download=True,
+                        transform=transforms.Compose([
+                            transforms.Resize(opt.img_size),
+                            transforms.ToTensor(),
+                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                            ]),
+                    )
+
         dataloader = torch.utils.data.DataLoader(
-            datasets.CIFAR10(
-                "./data/cifar10",
-                train=True,
-                download=True,
-                transform=transforms.Compose([transforms.Resize(opt.img_size), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]),
-            ),
+            dataset,
             batch_size=opt.batch_size,
             shuffle=True,
         )
-        return dataloader
+        return dataset, dataloader
 
     def fashion(self, opt):
+        dataset = datasets.FashionMNIST(
+                        "./data/FashionMNIST",
+                        train=True,
+                        download=True,
+                        transform=transforms.Compose([
+                            transforms.Resize(opt.img_size),
+                            transforms.ToTensor(),
+                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                            ]),
+                    )
+
         dataloader = torch.utils.data.DataLoader(
-            datasets.FashionMNIST(
-                "./data/FashionMNIST",
-                train=True,
-                download=True,
-                transform=transforms.Compose([transforms.Resize(opt.img_size), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]),
-            ),
+            dataset,
             batch_size=opt.batch_size,
             shuffle=True,
         )
-        return dataloader
+        return dataset, dataloader
 
     def lsun(self, opt):
-        dataset = datasets.LSUN(root="./data/lsun", classes=['bedroom_train'],
-                            transform=transforms.Compose([
-                                transforms.Resize(opt.img_size),
-                                transforms.CenterCrop(opt.img_size),
-                                transforms.ToTensor(),
-                                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                            ]))
-        dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
-        return dataloader
+        dataset = datasets.LSUN(
+                        root="./data/lsun",
+                        classes=['bedroom_train'],
+                        transform=transforms.Compose([
+                            transforms.Resize(opt.img_size),
+                            transforms.CenterCrop(opt.img_size),
+                            transforms.ToTensor(),
+                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                        ]),
+                    )
 
-    def celeba(self, opt):
-        dataset = datasets.ImageFolder(root="./data/celeba",
-                            transform=transforms.Compose([
-                                transforms.Resize(opt.img_size),
-                                transforms.CenterCrop(opt.img_size),
-                                transforms.ToTensor(),
-                                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                            ]))
-        dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
-        return dataloader
+        dataloader = torch.utils.data.DataLoader(
+            dataset,
+            batch_size=opt.batch_size, s
+            huffle=True
+            )
+        return dataset, dataloader
 
 def makeDataloader(opt):
     dataset = Dataset(opt)
@@ -89,4 +104,3 @@ def makeDataloader(opt):
     if opt.dataset == 'cifar10': return dataset.cifar10(opt)
     if opt.dataset == 'fashion': return dataset.fashion(opt)
     if opt.dataset == 'lsun': return dataset.lsun(opt)
-    if opt.dataset == 'celeba': return dataset.celeba(opt)

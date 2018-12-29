@@ -25,7 +25,7 @@ opt = easydict.EasyDict({
     'loadDir' : None
 })
 
-dataloader = dataset.makeDataloader(opt)
+_, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
 generator = models.NoiseGeneratorSimple(opt)

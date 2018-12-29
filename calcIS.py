@@ -5,6 +5,7 @@ import numpy as np
 
 from otherGANs import past_models
 from inception_score import inception_score
+from dataset import makeDataloader
 
 import torchvision.utils as vutils
 from torch.autograd import Variable
@@ -79,13 +80,14 @@ def calcurateInceptionScore(opt):
         for i in range(fake_imgs.size(0)):
             vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
-        dataset = datasets.ImageFolder(root="./testdir/",
-                                transform=transforms.Compose([
-                                        transforms.Resize(opt.img_size),
-                                        transforms.CenterCrop(opt.img_size),
-                                        transforms.ToTensor(),
-                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                                        ]))
+        dataset, _ = makeDataloader(opt)
+        # dataset = datasets.ImageFolder(root="./testdir/",
+        #                         transform=transforms.Compose([
+        #                                 transforms.Resize(opt.img_size),
+        #                                 transforms.CenterCrop(opt.img_size),
+        #                                 transforms.ToTensor(),
+        #                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        #                                 ]))
 
         IgnoreLabelDataset(dataset)
         calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
