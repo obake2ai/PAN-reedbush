@@ -15,11 +15,6 @@ cuda = True if torch.cuda.is_available() else False
 Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 
 import logging
-logger = logging.getLogger("logger")
-logger.setLevel(logging.DEBUG)
-handler1 = logging.StreamHandler()
-handler1.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
-logger.addHandler(handler1)
 
 import easydict
 
@@ -43,11 +38,6 @@ opt = easydict.EasyDict({
     'loadDir' : './otherGANs/1035:181227_WGAN-GP_DCGANGenerator32_DCGANDiscriminator32_mnist'
 })
 
-handler2 = logging.FileHandler(filename=os.path.join(opt.loadDir, "is.log"))
-handler2.setLevel(logging.INFO)
-handler2.setFormatter(logging.Formatter("%(message)s"))
-logger.addHandler(handler2)
-
 class IgnoreLabelDataset(torch.utils.data.Dataset):
     def __init__(self, orig):
         self.orig = orig
@@ -59,6 +49,15 @@ class IgnoreLabelDataset(torch.utils.data.Dataset):
         return len(self.orig)
 
 def calcurateInceptionScore(opt):
+    logger = logging.getLogger("logger")
+    logger.setLevel(logging.DEBUG)
+    handler1 = logging.StreamHandler()
+    handler1.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
+    logger.addHandler(handler1)
+    handler2 = logging.FileHandler(filename=os.path.join(opt.loadDir, "is.log"))
+    handler2.setLevel(logging.INFO)
+    handler2.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler2)
     logger.info(opt)
     for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
         name = os.path.basename(model_path)
