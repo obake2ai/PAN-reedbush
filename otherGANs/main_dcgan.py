@@ -80,7 +80,6 @@ def train(generator, discriminator, dataloader, opt):
 
     for epoch in range(opt.n_epochs):
         for i, (imgs, _) in enumerate(dataloader):
-            print (i)
             # ---------------------
             #  Train Discriminator
             # ---------------------
