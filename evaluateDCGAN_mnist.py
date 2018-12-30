@@ -1,3 +1,5 @@
+import sys
+sys.path.append('./otherGANS')
 import easydict
 from otherGANs import past_models
 from otherGANs import train_dcgan_mnist
