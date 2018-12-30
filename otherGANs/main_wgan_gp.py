@@ -154,7 +154,7 @@ def train(generator, discriminator, dataloader, opt):
                         torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(batches_done).zfill(8))
                         torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
                     else:
-                        vutils.save_image(fake_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=10, normalize=True)
+                        vutils.save_image(fake_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
                         torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(batches_done).zfill(8))
                         torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
 
