@@ -142,4 +142,4 @@ def train(generator, discriminator, dataloader, opt):
                     torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(batches_done).zfill(8))
                     torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
 
-                batches_done += opt.n_critic
+            batches_done += opt.n_critic
