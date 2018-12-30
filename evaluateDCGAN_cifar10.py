@@ -1,6 +1,6 @@
 import easydict
 from otherGANs import past_models
-from calcIS import calcurateInceptionScore
+import calcIS
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
@@ -23,4 +23,4 @@ opt = easydict.EasyDict({
 })
 
 generator = past_models.DCGANGenerator32(opt)
-calcurateInceptionScore(opt ,generator)
+calcIS.main(opt ,generator)
