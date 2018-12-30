@@ -19,7 +19,7 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
-    'loadDir' : './otherGANs/pass/DCGAN_mnist'
+    'loadDir' : './otherGANs/pass/DCGAN_cifar10'
 })
 
 generator = past_models.DCGANGenerator32(opt)
