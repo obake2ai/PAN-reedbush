@@ -1,4 +1,5 @@
 import easydict
+import models
 import calcIS
 
 opt = easydict.EasyDict({
