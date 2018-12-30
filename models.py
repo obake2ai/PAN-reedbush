@@ -102,6 +102,36 @@ class ArgNoiseGeneratorSimple(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
+class ArgNoiseGeneratorDeeper(nn.Module):
+    def __init__(self, opt):
+        super(ArgNoiseGeneratorSimple, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        def block(in_feat, out_feat, level, normalize=True):
+            layers = [AlgorithmicNoiseLayer(in_feat, out_feat, level, normalize)]
+            return layers
+
+        self.model = nn.Sequential(
+            AlgorithmicNoiseLayer(opt.latent_dim, 128, 1, noise_seed=0, normalize=False),
+            AlgorithmicNoiseLayer(128, 256, 1, noise_seed=1),
+            AlgorithmicNoiseLayer(256, 512, 1, noise_seed=2),
+            AlgorithmicNoiseLayer(512, 512, 1, noise_seed=3),
+            AlgorithmicNoiseLayer(512, 1024, 1, noise_seed=3),
+            AlgorithmicNoiseLayer(1024, 1024, 1, noise_seed=3),
+            AlgorithmicNoiseLayer(1024, 1024, 1, noise_seed=3),
+            AlgorithmicNoiseLayer(1024, 1024, 1, noise_seed=3),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        img = self.model(z)
+        img = img.view(img.shape[0], *self.img_shape)
+        return img
+
 class NoiseGeneratorComplex(nn.Module):
     def __init__(self, opt):
         super(NoiseGeneratorComplex, self).__init__()
