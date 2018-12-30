@@ -90,11 +90,11 @@ def main(opt, generator):
     dataset, _ = makeDataloader(opt)
     IgnoreLabelDataset(dataset)
     calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
-    logger.info('real,' + str(calcIS[0]))
+    logger.info('real, ' + str(calcIS[0]))
 
     #calcurate fake dataset init IS
     calcIS = calcurateInceptionScore(opt, generator.cuda(), str(0))
-    logger.info('0,' + str(calcIS[0]))
+    logger.info('0, ' + str(calcIS[0]))
 
     #calcurate fake dataset IS per iter
     for model_path in sorted(glob.glob(os.path.join(opt.loadDir, 'generator_*'))):
@@ -106,4 +106,4 @@ def main(opt, generator):
 
         if int(idx) > 0:
             calcIS = calcurateInceptionScore(opt, calcG, idx)
-            logger.info(str(int(idx)) + ',' + str(calcIS[0]))
+            logger.info(str(int(idx)) + ', ' + str(calcIS[0]))
