@@ -23,4 +23,4 @@ opt = easydict.EasyDict({
 })
 
 generator = models.ArgNoiseGeneratorSimple(opt)
-calcIS.main(opt ,generator)
+calcIS.main(opt, generator)
