@@ -107,7 +107,7 @@ def train(generator, discriminator, dataloader, opt):
 
             # Sample noise as generator input
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
-            print (z)
+
             # Generate a batch of images
             fake_imgs = generator(z)
 
