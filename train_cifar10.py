@@ -7,7 +7,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 128,
+    'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
