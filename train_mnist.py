@@ -7,7 +7,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 128,
+    'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -28,7 +28,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorSimple(opt)
-discriminator = past_models.DCGANDiscriminator32(opt)
+generator = models.NoiseGeneratorDeeper(opt)
+discriminator = past_models.DCGANDiscriminator32_(opt)
 
 train(generator, discriminator, dataloader, opt)
