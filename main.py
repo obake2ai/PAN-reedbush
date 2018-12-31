@@ -107,7 +107,7 @@ def train(generator, discriminator, dataloader, opt):
 
             # Sample noise as generator input
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
-
+            print (z)
             # Generate a batch of images
             fake_imgs = generator(z)
 
@@ -119,7 +119,7 @@ def train(generator, discriminator, dataloader, opt):
 
             # Gradient penalty
             gradient_penalty = compute_gradient_penalty(discriminator, real_imgs.data, fake_imgs.data, Tensor)
-            
+
             # Adversarial loss
             d_loss = -torch.mean(real_validity) + torch.mean(fake_validity) + lambda_gp * gradient_penalty
 
