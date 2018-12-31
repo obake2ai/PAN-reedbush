@@ -211,7 +211,7 @@ class DCGANDiscriminator32_(nn.Module):
 
 class DCGANDiscriminator32_BN(nn.Module):
     def __init__(self, opt):
-        super(DCGANDiscriminator32_noBN, self).__init__()
+        super(DCGANDiscriminator32_BN, self).__init__()
         ndf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
         else: nc = 3
