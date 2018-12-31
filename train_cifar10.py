@@ -28,7 +28,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorDeeper(opt)
+generator = models.NoiseGeneratorDeeperDeeper(opt)
 discriminator = past_models.DCGANDiscriminator32_noBN(opt)
 
 train(generator, discriminator, dataloader, opt)
