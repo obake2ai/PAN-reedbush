@@ -29,6 +29,6 @@ _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
 generator = models.NoiseGeneratorDeeperDeeper(opt)
-discriminator = past_models.DCGANDiscriminator32_noBN(opt)
+discriminator = past_models.DCGANDiscriminator32_noBN_DO(opt)
 
 train(generator, discriminator, dataloader, opt)
