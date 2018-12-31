@@ -113,10 +113,13 @@ def train(generator, discriminator, dataloader, opt):
 
             # Real images
             real_validity = discriminator(real_imgs)
+
             # Fake images
             fake_validity = discriminator(fake_imgs)
+
             # Gradient penalty
             gradient_penalty = compute_gradient_penalty(discriminator, real_imgs.data, fake_imgs.data, Tensor)
+            
             # Adversarial loss
             d_loss = -torch.mean(real_validity) + torch.mean(fake_validity) + lambda_gp * gradient_penalty
 
@@ -134,11 +137,11 @@ def train(generator, discriminator, dataloader, opt):
 
                 # Generate a batch of images
                 fake_imgs = generator(z)
+
                 # Loss measures generator's ability to fool the discriminator
                 # Train on fake images
                 fake_validity = discriminator(fake_imgs)
                 g_loss = -torch.mean(fake_validity)
-
                 g_loss.backward()
                 optimizer_G.step()
 
