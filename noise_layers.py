@@ -77,9 +77,8 @@ class FitRandom:
         return self.pool
 
 class AlgorithmicNoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, noise_seed, normalize = True):
+    def __init__(self, in_planes, out_planes, noise_seed, level, normalize = True):
         super(AlgorithmicNoiseLayer, self).__init__()
-        print (in_planes, noise_seed)
         self.seed = noise_seed
         self.out_planes = out_planes
         self.level = level
@@ -126,8 +125,8 @@ class ArgNoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, seed, stride=1, shortcut=None, level=0.2, normalize=True):
         super(ArgNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
-            AlgorithmicNoiseLayer(in_planes, out_planes, level, seed, normalize),
-            AlgorithmicNoiseLayer(out_planes, out_planes, level, seed*2),
+            AlgorithmicNoiseLayer(in_planes, out_planes, seed, level, normalize),
+            AlgorithmicNoiseLayer(out_planes, out_planes, seed*2, level),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
