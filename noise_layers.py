@@ -26,11 +26,11 @@ class NoiseLayer(nn.Module):
             self.noise = (2 * self.noise - 1) * self.level
 
         x1 = torch.add(x, self.noise)
-        resized_x1 = x1.view(x1.size()[0], x1.size()[1], 1)
+        resized_x1 = x1.view(x1.size(0), x1.size()[1], 1)
         x2 = self.pre_layers(resized_x1)
 
         z = self.post_layers(x2)
-        return z.view(z.size()[0], z.size()[1])
+        return z.view(z.size(0), z.size(1))
 
 RAND_MAX = 0xffffffff #2^32
 M = 65539 #http://www.geocities.jp/m_hiroi/light/index.html#cite
@@ -101,3 +101,33 @@ class AlgorithmicNoiseLayer(nn.Module):
         x2 = self.pre_layers(x1.view(x.size()[0], x1.size()[1], 1))
         z = self.post_layers(x2)
         return z.view(z.size()[0], z.size()[1])
+
+class NoiseBasicBlock(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
+        super(NoiseBasicBlock, self).__init__()
+        if normalize:
+            self.layers = nn.Sequential(
+                NoiseLayer(in_planes, out_planes, level),
+                nn.BatchNorm2d(out_planes),
+                nn.ReLU(True),
+                NoiseLayer(out_planes, out_planes, level),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                NoiseLayer(in_planes, out_planes, level, normalize=False),
+                nn.BatchNorm2d(out_planes),
+                nn.ReLU(True),
+                NoiseLayer(out_planes, out_planes, level),
+                nn.BatchNorm2d(out_planes),
+            )
+        self.shortcut = shortcut
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = F.relu(y)
+        return y
