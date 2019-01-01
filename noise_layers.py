@@ -120,3 +120,22 @@ class NoiseBasicBlock(nn.Module):
         y += residual
         y = self.relu(y)
         return y
+
+class ArgNoiseBasicBlock(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
+        super(ArgNoiseBasicBlock, self).__init__()
+        self.layers = nn.Sequential(
+            ArgNoiseLayer(in_planes, out_planes, level, normalize),
+            ArgNoiseLayer(out_planes, out_planes, level),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
