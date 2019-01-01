@@ -57,6 +57,9 @@ def calcurateInceptionScore(opt, generator, idx):
     else:
         fake_imgs = generator(z.view(*z.size(), 1, 1))
 
+    if opt.dataset == 'mnist':
+        fake_imgs = fake_imgs.view(fake_imgs.size(0), fake_imgs.size(1), 1).expand(-1, -1, 3)
+
     saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
     os.makedirs(saveDir, exist_ok = True)
     os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
@@ -66,8 +69,8 @@ def calcurateInceptionScore(opt, generator, idx):
 
     dataset = datasets.ImageFolder(root=saveDir,
                             transform=transforms.Compose([
-                                    transforms.ToTensor(),
-                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                        transforms.ToTensor(),
+                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                                     ]))
 
     IgnoreLabelDataset(dataset)
@@ -92,6 +95,8 @@ def main(opt, generator):
 
     #calcurate real dataset IS
     dataset, _ = makeDataloader(opt)
+    if opt.dataset == 'mnist':
+        dataset.data = dataset.data.view(dataset.data.size(0), dataset.data.size(1), 1).expand(-1, -1, 3)
     IgnoreLabelDataset(dataset)
     calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
     logger.info('real, ' + str(calcIS[0]))
