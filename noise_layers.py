@@ -110,6 +110,7 @@ class NoiseBasicBlock(nn.Module):
             NoiseLayer(out_planes, out_planes, level),
         )
         self.shortcut = shortcut
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         residual = x
@@ -117,5 +118,5 @@ class NoiseBasicBlock(nn.Module):
         if self.shortcut:
             residual = self.shortcut(x)
         y += residual
-        y = F.relu(y)
+        y = self.relu(y)
         return y
