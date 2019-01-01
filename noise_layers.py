@@ -105,22 +105,10 @@ class AlgorithmicNoiseLayer(nn.Module):
 class NoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
         super(NoiseBasicBlock, self).__init__()
-        if normalize:
-            self.layers = nn.Sequential(
-                NoiseLayer(in_planes, out_planes, level),
-                nn.BatchNorm2d(out_planes),
-                nn.ReLU(True),
-                NoiseLayer(out_planes, out_planes, level),
-                nn.BatchNorm2d(out_planes),
-            )
-        else:
-            self.layers = nn.Sequential(
-                NoiseLayer(in_planes, out_planes, level, normalize=False),
-                nn.BatchNorm2d(out_planes),
-                nn.ReLU(True),
-                NoiseLayer(out_planes, out_planes, level),
-                nn.BatchNorm2d(out_planes),
-            )
+        self.layers = nn.Sequential(
+            NoiseLayer(in_planes, out_planes, level, normalize),
+            NoiseLayer(out_planes, out_planes, level),
+        )
         self.shortcut = shortcut
 
     def forward(self, x):
