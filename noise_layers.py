@@ -42,7 +42,6 @@ class Random:
         self.seed = seed
 
     def irand(self):
-        print (self.seed, type(self.seed))
         self.seed = (M * self.seed + 1) & RAND_MAX
         return self.seed / (RAND_MAX / 10) / 10
 
@@ -126,8 +125,8 @@ class ArgNoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, seed, stride=1, shortcut=None, level=0.2, normalize=True):
         super(ArgNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
-            AlgorithmicNoiseLayer(in_planes, out_planes, seed, level, normalize),
-            AlgorithmicNoiseLayer(out_planes, out_planes, seed*2, level),
+            AlgorithmicNoiseLayer(in_planes, out_planes, level, seed, normalize),
+            AlgorithmicNoiseLayer(out_planes, out_planes, level, seed*2),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
