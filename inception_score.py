@@ -45,7 +45,7 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, expand=False, 
         if resize:
             x = up(x)
         if expand:
-            x = x.view(299, 299, 1).expand(-1, -1, 3)
+            x = x.expand(-1, 3, -1, -1)
         x = inception_model(x)
         return F.softmax(x).data.cpu().numpy()
 
