@@ -469,7 +469,7 @@ class ArgNoiseResGenerator(nn.Module):
           channels = 3
         self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
-            layers = [ArgNoiseLayer(in_feat, out_feat, level, normalize)]
+            layers = [AlgorithmicNoiseLayer(in_feat, out_feat, level, normalize)]
             return layers
         def resblock(in_feat, out_feat, level, normalize=True):
             layers = [ArgNoiseBasicBlock(in_feat, out_feat, stride=1, shortcut=None, level=level, normalize=normalize)]
