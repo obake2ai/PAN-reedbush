@@ -209,7 +209,7 @@ class NoiseGeneratorDeeper(nn.Module):
 
 class NoiseGeneratorDeeperWider(nn.Module):
     def __init__(self, opt):
-        super(NoiseGeneratorDeeper, self).__init__()
+        super(NoiseGeneratorDeeperWider, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
