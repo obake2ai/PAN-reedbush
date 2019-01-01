@@ -432,7 +432,7 @@ class NoiseGeneratorDeeperSlim(nn.Module):
 
 class NoiseResGenerator(nn.Module):
     def __init__(self, opt):
-        super(NoiseGeneratorDeeperSlim, self).__init__()
+        super(NoiseResGenerator, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
