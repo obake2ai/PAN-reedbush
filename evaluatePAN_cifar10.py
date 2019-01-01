@@ -11,7 +11,7 @@ opt = easydict.EasyDict({
     'n_cpu': 8,
     'latent_dim': 128,
     'img_size': 32,
-    'n_critic': 1,
+    'n_critic': 5,
     'clip_value': 0.01,
     'sample_interval': 100,
     'log_interval': 10,
@@ -19,8 +19,8 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
-    'loadDir' : './pass/PAN_cifar10_NRG_D32'
+    'loadDir' : './pass/PAN_cifar10_NGD_D32_5'
 })
 
-generator = models.NoiseResGenerator(opt)
+generator = models.NoiseGeneratorDeeper(opt)
 calcIS.main(opt, generator)
