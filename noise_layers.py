@@ -79,6 +79,7 @@ class FitRandom:
 class AlgorithmicNoiseLayer(nn.Module):
     def __init__(self, in_planes, out_planes, level, noise_seed, normalize = True):
         super(AlgorithmicNoiseLayer, self).__init__()
+        print (in_planes, noise_seed)
         self.seed = noise_seed
         self.out_planes = out_planes
         self.level = level
