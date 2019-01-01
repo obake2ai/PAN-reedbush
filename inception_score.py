@@ -23,6 +23,9 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
     """
     N = len(imgs)
 
+    if imgs.size(0) != 3:
+        imgs = imgs.view(imgs.size(0), imgs.size(1), 1).expand(-1, -1, 3)
+
     assert batch_size > 0
     assert N > batch_size
 
