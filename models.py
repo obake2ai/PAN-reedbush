@@ -238,6 +238,37 @@ class NoiseGeneratorDeeperWider(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
+class NoiseGeneratorDeeperWiderMini(nn.Module):
+    def __init__(self, opt):
+        super(NoiseGeneratorDeeperWiderMini, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        def block(in_feat, out_feat, level, normalize=True):
+            layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
+            return layers
+
+        self.model = nn.Sequential(
+            *block(opt.latent_dim, 128, 0.1, normalize=False),
+            *block(128, 1024, 0.1),
+            *block(1024, 1024, 0.1),
+            *block(1024, 1024, 0.1),
+            *block(1024, 1024, 0.1),
+            *block(1024, 2048, 0.1),
+            *block(2048, 2048, 0.1),
+            *block(2048, 2048, 0.1),
+            *block(2048, 2048, 0.1),
+            nn.Linear(2048, int(np.prod(self.img_shape))),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        img = self.model(z)
+        img = img.view(img.shape[0], *self.img_shape)
+        return img
+
 class NoiseGeneratorDeeperDeeper(nn.Module):
     def __init__(self, opt):
         super(NoiseGeneratorDeeperDeeper, self).__init__()

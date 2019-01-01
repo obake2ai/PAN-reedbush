@@ -19,7 +19,7 @@ opt = easydict.EasyDict({
     'sample_interval': 100,
     'log_interval': 10,
     'dataset': 'cifar10',
-    'num_filters': 256, #for CNN Discriminator and Generator
+    'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
     'loadDir' : None
@@ -28,7 +28,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorDeeperWider(opt)
+generator = models.NoiseGeneratorDeeperWiderMini(opt)
 discriminator = past_models.DCGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
