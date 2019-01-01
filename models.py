@@ -471,8 +471,8 @@ class ArgNoiseResGenerator(nn.Module):
         def block(in_feat, out_feat, seed, level, normalize=True):
             layers = [AlgorithmicNoiseLayer(in_feat, out_feat, seed, level, normalize)]
             return layers
-        def resblock(in_feat, out_feat, seed, level, normalize=True):
-            layers = [ArgNoiseBasicBlock(in_feat, out_feat, seed, stride=1, shortcut=None, level=level, normalize=normalize)]
+        def resblock(in_feat, out_feat, seed, level, normalize=True, shortcut=None):
+            layers = [ArgNoiseBasicBlock(in_feat, out_feat, seed, 1, shortcut, level, normalize)]
             return layers
 
         self.model = nn.Sequential(
