@@ -96,7 +96,7 @@ def main(opt, generator):
     #calcurate real dataset IS
     dataset, _ = makeDataloader(opt)
     if opt.dataset == 'mnist':
-        dataset.data = dataset.data.view(dataset.data.size(0), dataset.data.size(1), 1).expand(-1, -1, 3)
+        dataset = dataset.view(dataset.size(0), dataset.size(1), 1).expand(-1, -1, 3)
     IgnoreLabelDataset(dataset)
     calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
     logger.info('real, ' + str(calcIS[0]))
