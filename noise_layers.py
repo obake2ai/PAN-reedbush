@@ -125,8 +125,8 @@ class ArgNoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
         super(ArgNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
-            ArgNoiseLayer(in_planes, out_planes, level, normalize),
-            ArgNoiseLayer(out_planes, out_planes, level),
+            AlgorithmicNoiseLayer(in_planes, out_planes, level, normalize),
+            AlgorithmicNoiseLayer(out_planes, out_planes, level),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
