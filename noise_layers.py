@@ -42,6 +42,7 @@ class Random:
         self.seed = seed
 
     def irand(self):
+        print (self.seed, type(self.seed))
         self.seed = (M * self.seed + 1) & RAND_MAX
         return self.seed / (RAND_MAX / 10) / 10
 
