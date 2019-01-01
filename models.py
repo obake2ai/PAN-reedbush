@@ -522,6 +522,35 @@ class ArgNoiseResGeneratorLonger(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
+class ArgNoiseResGeneratorIntent(nn.Module):
+    def __init__(self, opt):
+        super(ArgNoiseResGeneratorIntent, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        def block(in_feat, out_feat, seed, level, normalize=True):
+            layers = [AlgorithmicNoiseLayer(in_feat, out_feat, seed, level, normalize)]
+            return layers
+        def resblock(in_feat, out_feat, seed, level, normalize=True, shortcut=None):
+            layers = [ArgNoiseBasicBlock(in_feat, out_feat, seed, 1, shortcut, level, normalize)]
+            return layers
+
+        self.model = nn.Sequential(
+            *block(opt.latent_dim, 1024, 10, 0.1, normalize=False),
+            *resblock(1024, 1024, 40, 0.1),
+            *resblock(1024, 1024, 50, 0.1),
+            *resblock(1024, 1024, 60, 0.1),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        img = self.model(z)
+        img = img.view(img.shape[0], *self.img_shape)
+        return img
+
 class NoiseResGeneratorW(nn.Module):
     def __init__(self, opt):
         super(NoiseResGeneratorW, self).__init__()
