@@ -439,6 +439,9 @@ class NoiseResGenerator(nn.Module):
           channels = 3
         self.img_shape = (channels, opt.img_size, opt.img_size)
         def block(in_feat, out_feat, level, normalize=True):
+            layers = [NoiseLayer(in_feat, out_feat, level, normalize)]
+            return layers
+        def resblock(in_feat, out_feat, level, normalize=True):
             layers = [NoiseBasicBlock(in_feat, out_feat, stride=1, shortcut=None, level=level, normalize=normalize)]
             return layers
 
@@ -446,7 +449,8 @@ class NoiseResGenerator(nn.Module):
             *block(opt.latent_dim, 128, 0.1, normalize=False),
             *block(128, 512, 0.1),
             *block(512, 1024, 0.1),
-            *block(1024, 1024, 0.1),
+            *resblock(1024, 1024, 0.1),
+            *resblock(1024, 1024, 0.1),
             nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
