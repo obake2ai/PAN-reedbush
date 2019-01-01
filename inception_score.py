@@ -14,7 +14,7 @@ from inception import inception_v3
 import numpy as np
 from scipy.stats import entropy
 
-def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
+def inception_score(imgs, cuda=True, batch_size=32, resize=False, expand=False, splits=1):
     """Computes the inception score of the generated images imgs
     imgs -- Torch dataset of (3xHxW) numpy images normalized in the range [-1, 1]
     cuda -- whether or not to run on GPU
@@ -22,9 +22,6 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
     splits -- number of splits
     """
     N = len(imgs)
-
-    if imgs.size(0) != 3:
-        imgs = imgs.view(imgs.size(0), imgs.size(1), 1).expand(-1, -1, 3)
 
     assert batch_size > 0
     assert N > batch_size
@@ -47,6 +44,8 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
     def get_pred(x):
         if resize:
             x = up(x)
+        if expand:
+            x = x.view(x.size(0), x.size(1), 1).expand(-1, -1, 3)
         x = inception_model(x)
         return F.softmax(x).data.cpu().numpy()
 
