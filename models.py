@@ -331,9 +331,10 @@ class NoiseResGeneratorEco(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            *block(opt.latent_dim, 1024, 0.1, normalize=False),
-            *resblock(1024, 1024, 0.1),
-            *resblock(1024, 1024, 0.1),
+            *block(opt.latent_dim, 128, 0.1, normalize=False),
+            *block(128, 512, 0.1),
+            *block(128, 256, 0.1),
+            *block(512, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
