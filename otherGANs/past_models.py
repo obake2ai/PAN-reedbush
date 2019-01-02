@@ -120,7 +120,7 @@ class WGANGenerator32(nn.Module):
         super(WGANGenerator32, self).__init__()
         nz = opt.latent_dim
         self.ngf = opt.num_filters
-        self.image_size = opt.image_size
+        self.image_size = opt.img_size
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': self.nc = 1
         else: self.nc = 3
         self.pre_layer = nn.Linear(nz, self.ngf * 8 * 4 * 4)
