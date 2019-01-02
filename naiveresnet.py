@@ -207,8 +207,7 @@ class NoiseResNetEco32(nn.Module):
         x3 = self.layer2(x2)
         x4 = self.layer3(x3)
         x5 = self.layer4(x4)
-        x6 = x5.view(x5.size(0), -1)
-        return x6
+        return x5.view(x5.size(0), -1)
 
 def noiseresnet18(nchannels, nfilters, nclasses, pool=7, level=0.1):
     return NoiseResNet(NoiseBasicBlock, [2,2,2,2], nchannels=nchannels, nfilters=nfilters, nclasses=nclasses, pool=pool, level=level)
