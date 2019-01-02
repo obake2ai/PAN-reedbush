@@ -143,7 +143,7 @@ class WGANGenerator32(nn.Module):
         x1 = self.pre_layer(input)
         x2 = x1.view(-1, self.ngf * 8, 4, 4)
         x3 = self.main(x2)
-        return x3.view(-1, self.nc, self.image_size, self.image_size)
+        return x3
 
 class DCGANGenerator64(nn.Module):
     def __init__(self, opt):
