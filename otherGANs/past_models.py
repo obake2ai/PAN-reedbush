@@ -113,7 +113,6 @@ class DCGANGenerator32(nn.Module):
 
     def forward(self, input):
         output = self.main(input)
-        print (output.size())
         return output
 
 class WGANGenerator32(nn.Module):
@@ -144,6 +143,7 @@ class WGANGenerator32(nn.Module):
         x1 = self.pre_layer(input)
         x2 = x1.view(-1, self.ngf * 8, 4, 4)
         x3 = self.main(x2)
+        print (x3.view(-1, self.nc, self.image_size, self.image_size).size())
         return x3.view(-1, self.nc, self.image_size, self.image_size)
 
 class DCGANGenerator64(nn.Module):
