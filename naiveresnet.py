@@ -164,9 +164,7 @@ class NoiseResNet32(nn.Module):
         x3 = self.layer2(x2)
         x5 = self.layer3(x3)
         x6 = self.avgpool(x5)
-        print (x6.size())
         x7 = x6.view(x6.size(0), -1)
-        print (x7.size())
         x8 = self.linear(x7)
         return x8
 
