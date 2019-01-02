@@ -202,22 +202,13 @@ class NoiseResNetEco32(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        print (x.size())
         x1 = self.pre_layers(x)
-        print (x1.size())
         x2 = self.layer1(x1)
-        print (x2.size())
         x3 = self.layer2(x2)
-        print (x3.size())
-        x5 = self.layer3(x3)
-        print (x5.size())
-        x6 = x5
-        print (x6.size())
-        x7 = self.layer4(x6)
-        print (x7.size())
-        x8 = x7.view(x7.size(0), -1)
-        print (x8.size())
-        return x8
+        x4 = self.layer3(x3)
+        x5 = self.layer4(x4)
+        x6 = x5.view(x5.size(0), -1)
+        return x6
 
 def noiseresnet18(nchannels, nfilters, nclasses, pool=7, level=0.1):
     return NoiseResNet(NoiseBasicBlock, [2,2,2,2], nchannels=nchannels, nfilters=nfilters, nclasses=nclasses, pool=pool, level=level)
