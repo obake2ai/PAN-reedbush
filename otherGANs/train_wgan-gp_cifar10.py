@@ -6,7 +6,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 128,
+    'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -16,7 +16,8 @@ opt = easydict.EasyDict({
     'n_critic': 5,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'log_interval': 10,
+    'log_interval': 100,
+    'modelsave_interval': 1, #per epoch
     'dataset': 'cifar10',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
@@ -27,7 +28,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = past_models.DCGANGenerator32(opt)
-discriminator = past_models.DCGANDiscriminator32(opt)
+generator = past_models.WGANGenerator32(opt)
+discriminator = past_models.WGANDiscriminator32_(opt)
 
 train(generator, discriminator, dataloader, opt)

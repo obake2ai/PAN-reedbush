@@ -115,6 +115,35 @@ class DCGANGenerator32(nn.Module):
         output = self.main(input)
         return output
 
+class WGANGenerator32(nn.Module):
+    def __init__(self, opt):
+        super(DCGANGenerator32, self).__init__()
+        nz = opt.latent_dim
+        self.ngf = opt.num_filters
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
+        else: nc = 3
+        self.pre_layer = nn.Linear(nz, self.ngf * 8 * 4 * 4)
+        self.main = nn.Sequential(
+            # state size. (self.ngf*8) x 4 x 4
+            nn.ConvTranspose2d(self.ngf * 8, self.ngf * 4, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(self.ngf * 4),
+            nn.ReLU(True),
+            # state size. (self.ngf*8) x 8 x 8
+            nn.ConvTranspose2d(self.ngf * 4, self.ngf, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(self.ngf * 4),
+            nn.ReLU(True),
+            # state size. (self.ngf*4) x 16 x 16
+            nn.ConvTranspose2d(self.ngf, nc, 4, 2, 1, bias=False),
+            nn.Tanh()
+            # state size. (nc) x 64 x 64
+        )
+
+    def forward(self, input):
+        x1 = self.pre_layer(input)
+        x2 = x1.view(-1, self.ngf * 8, 4, 4)
+        x3 = self.main(x2)
+        return x3
+
 class DCGANGenerator64(nn.Module):
     def __init__(self, opt):
         super(DCGANGenerator64, self).__init__()
@@ -156,21 +185,17 @@ class DCGANDiscriminator32(nn.Module):
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
         else: nc = 3
         self.main = nn.Sequential(
-            # input is (nc) x 64 x 64
+            # input is (nc) x 32 x 32
             nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
-            # state size. (ndf) x 32 x 32
+            # state size. (ndf) x 16 x 16
             nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ndf * 2),
             nn.LeakyReLU(0.2, inplace=True),
-            # state size. (ndf*2) x 16 x 16
+            # state size. (ndf*2) x 8 x 8
             nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ndf * 4),
             nn.LeakyReLU(0.2, inplace=True),
-            # state size. (ndf*4) x 8 x 8
-            # nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
-            # nn.BatchNorm2d(ndf * 8),
-            # nn.LeakyReLU(0.2, inplace=True),
             # state size. (ndf*8) x 4 x 4
             nn.Conv2d(ndf * 4, 1, 4, 1, 0, bias=False),
             nn.Sigmoid()
@@ -208,6 +233,41 @@ class DCGANDiscriminator32_(nn.Module):
     def forward(self, input):
         output = self.main(input)
         return output.view(-1, 1).squeeze(1)
+
+class WGANDiscriminator32_(nn.Module):
+    def __init__(self, opt):
+        super(WGANDiscriminator32_, self).__init__()
+        ndf = opt.num_filters
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
+        else: nc = 3
+        self.main = nn.Sequential(
+            # input is (nc) x 32 x 32
+            nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf) x 16 x 16
+            nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 2),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*2) x 8 x 8
+            nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 4 x 4
+            nn.Conv2d(ndf * 4, ndf * 8, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 2 x 2
+            #nn.Sigmoid()
+        )
+        self.avgpool = nn.AvgPool2d(2, stride=1)
+        self.linear = nn.Linear(ndf * 8, 1)
+
+    def forward(self, input):
+        x1 = self.main(input)
+        x2 = self.avgpool(x1)
+        x3 = x2.view(x2.size(0), -1)
+        x4 = self.linear(x3)
+        return x4
 
 class DCGANDiscriminator32_BN(nn.Module):
     def __init__(self, opt):
