@@ -121,8 +121,8 @@ class WGANGenerator32(nn.Module):
         nz = opt.latent_dim
         self.ngf = opt.num_filters
         self.image_size = opt.image_size
-        if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
-        else: nc = 3
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion': self.nc = 1
+        else: self.nc = 3
         self.pre_layer = nn.Linear(nz, self.ngf * 8 * 4 * 4)
         self.main = nn.Sequential(
             # state size. (self.ngf*8) x 4 x 4
@@ -134,7 +134,7 @@ class WGANGenerator32(nn.Module):
             nn.BatchNorm2d(self.ngf),
             nn.ReLU(True),
             # state size. (self.ngf*4) x 16 x 16
-            nn.ConvTranspose2d(self.ngf, nc, 4, 2, 1, bias=False),
+            nn.ConvTranspose2d(self.ngf, self.nc, 4, 2, 1, bias=False),
             nn.Tanh()
             # state size. (nc) x 64 x 64
         )
@@ -143,7 +143,7 @@ class WGANGenerator32(nn.Module):
         x1 = self.pre_layer(input)
         x2 = x1.view(-1, self.ngf * 8, 4, 4)
         x3 = self.main(x2)
-        return x3.view(-1, self.image_size, self.image_size)
+        return x3.view(-1, self.nc, self.image_size, self.image_size)
 
 class DCGANGenerator64(nn.Module):
     def __init__(self, opt):
