@@ -4,7 +4,7 @@ import calcIS
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 128,
+    'batch_size': 64,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -19,8 +19,8 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
-    'loadDir' : './otherGANs/pass/WGAN-gp_cifar10'
+    'loadDir' : './otherGANs/pass/WGAN-gp_cifar10_b64'
 })
 
-generator = past_models.DCGANGenerator32(opt)
+generator = past_models.WGANGenerator32(opt)
 calcIS.main(opt ,generator)
