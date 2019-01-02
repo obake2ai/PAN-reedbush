@@ -117,7 +117,7 @@ class DCGANGenerator32(nn.Module):
 
 class WGANGenerator32(nn.Module):
     def __init__(self, opt):
-        super(DCGANGenerator32, self).__init__()
+        super(WGANGenerator32, self).__init__()
         nz = opt.latent_dim
         self.ngf = opt.num_filters
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
