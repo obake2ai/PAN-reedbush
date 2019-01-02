@@ -126,7 +126,7 @@ class WGANGenerator32(nn.Module):
         self.pre_layer = nn.Linear(nz, self.ngf * 8 * 4 * 4)
         self.main = nn.Sequential(
             # state size. (self.ngf*8) x 4 x 4
-            nn.ConvTranspose2d(self.ngf * 8, self.ngf * 4, 2, 1, 0, bias=False),
+            nn.ConvTranspose2d(self.ngf * 8, self.ngf * 4, 4, 2, 1, bias=False),
             nn.BatchNorm2d(self.ngf * 4),
             nn.ReLU(True),
             # state size. (self.ngf*8) x 8 x 8
