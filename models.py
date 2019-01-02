@@ -304,6 +304,8 @@ class NoiseResGeneratorIntent(nn.Module):
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
+            *resblock(1024, 1024, 0.1),
+            *resblock(1024, 1024, 0.1),
             nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
@@ -395,6 +397,8 @@ class ArgNoiseResGeneratorIntent(nn.Module):
             *resblock(1024, 1024, 40, 0.1),
             *resblock(1024, 1024, 50, 0.1),
             *resblock(1024, 1024, 60, 0.1),
+            *resblock(1024, 1024, 70, 0.1),
+            *resblock(1024, 1024, 80, 0.1),
             nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
