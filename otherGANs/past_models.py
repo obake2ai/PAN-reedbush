@@ -264,10 +264,11 @@ class WGANDiscriminator32_(nn.Module):
 
     def forward(self, input):
         x1 = self.main(input)
-        x2 = self.avgpool(x1)
-        x3 = x2.view(x2.size(0), -1)
-        x4 = self.linear(x3)
-        return x4
+        print (x1.size())
+        x2 = x1.view(x1.size(0), -1)
+        print (x2.size())
+        x3 = self.linear(x2)
+        return x3
 
 class DCGANDiscriminator32_BN(nn.Module):
     def __init__(self, opt):
