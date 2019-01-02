@@ -113,6 +113,7 @@ class DCGANGenerator32(nn.Module):
 
     def forward(self, input):
         output = self.main(input)
+        print (output.size())
         return output
 
 class WGANGenerator32(nn.Module):
