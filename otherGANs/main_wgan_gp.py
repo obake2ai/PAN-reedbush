@@ -107,7 +107,7 @@ def train(generator, discriminator, dataloader, opt):
             z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
 
             # Generate a batch of images
-            fake_imgs = generator(z.view(*z.size(), 1, 1))
+            fake_imgs = generator(z)
 
             # Real images
             real_validity = discriminator(real_imgs)
@@ -131,7 +131,7 @@ def train(generator, discriminator, dataloader, opt):
                 # -----------------
 
                 # Generate a batch of images
-                fake_imgs = generator(z.view(*z.size(), 1, 1))
+                fake_imgs = generator(z)
                 # Loss measures generator's ability to fool the discriminator
                 # Train on fake images
                 fake_validity = discriminator(fake_imgs)
