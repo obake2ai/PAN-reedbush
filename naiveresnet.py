@@ -128,7 +128,7 @@ class NoiseResNet(nn.Module):
 
 class NoiseResNet32(nn.Module):
     def __init__(self, block, nblocks, nchannels, nfilters, nclasses, pool, level):
-        super(NoiseResNet, self).__init__()
+        super(NoiseResNet32, self).__init__()
         self.in_planes = nfilters
         self.pre_layers = nn.Sequential(
             nn.Conv2d(nchannels,nfilters,kernel_size=7,stride=2,padding=3,bias=False),
