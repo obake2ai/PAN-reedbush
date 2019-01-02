@@ -211,7 +211,7 @@ class NoiseResNetEco32(nn.Module):
         print (x3.size())
         x5 = self.layer3(x3)
         print (x5.size())
-        x6 = self.avgpool(x5)
+        x6 = x5
         print (x6.size())
         x7 = self.layer4(x6)
         print (x7.size())
