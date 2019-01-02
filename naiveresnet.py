@@ -202,7 +202,7 @@ class NoiseResNetEco32(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        x1 = self.pre_layers(x)
+        x1 = self.pre_layers(x) #([64, 3, 32, 32]) => ([64, 128, 8, 8])
         x2 = self.layer1(x1)
         x3 = self.layer2(x2)
         x4 = self.layer3(x3)
