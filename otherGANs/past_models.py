@@ -120,6 +120,7 @@ class WGANGenerator32(nn.Module):
         super(WGANGenerator32, self).__init__()
         nz = opt.latent_dim
         self.ngf = opt.num_filters
+        self.image_size = opt.image_size
         if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
         else: nc = 3
         self.pre_layer = nn.Linear(nz, self.ngf * 8 * 4 * 4)
@@ -142,7 +143,7 @@ class WGANGenerator32(nn.Module):
         x1 = self.pre_layer(input)
         x2 = x1.view(-1, self.ngf * 8, 4, 4)
         x3 = self.main(x2)
-        return x3
+        return x3.view(-1, self.image_size, self.image_size)
 
 class DCGANGenerator64(nn.Module):
     def __init__(self, opt):
@@ -264,9 +265,7 @@ class WGANDiscriminator32_(nn.Module):
 
     def forward(self, input):
         x1 = self.main(input)
-        print (x1.size())
         x2 = x1.view(x1.size(0), -1)
-        print (x2.size())
         x3 = self.linear(x2)
         return x3
 
