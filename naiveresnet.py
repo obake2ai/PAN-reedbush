@@ -168,6 +168,56 @@ class NoiseResNet32(nn.Module):
         x8 = self.linear(x7)
         return x8
 
+class NoiseResNetEco32(nn.Module):
+    def __init__(self, block, nblocks, nchannels, nfilters, nclasses, pool, level):
+        super(NoiseResNetEco32, self).__init__()
+        self.in_planes = nfilters
+        self.pre_layers = nn.Sequential(
+            nn.Conv2d(nchannels,nfilters,kernel_size=7,stride=2,padding=3,bias=False),
+            nn.BatchNorm2d(nfilters),
+            nn.ReLU(True),
+            nn.MaxPool2d(kernel_size=3,stride=2,padding=1)
+        )
+        self.layer1 = self._make_layer(block, 1*nfilters, nblocks[0], level=level)
+        self.layer2 = self._make_layer(block, 2*nfilters, nblocks[1], stride=2, level=level)
+        self.layer3 = self._make_layer(block, 4*nfilters, nblocks[2], stride=2, level=level)
+        #self.layer4 = self._make_layer(block, 8*nfilters, nblocks[3], stride=2, level=level)
+        self.avgpool = nn.AvgPool2d(pool, stride=1)
+        self.linear = nn.Linear(4*nfilters*block.expansion, nclasses)
+
+    def _make_layer(self, block, planes, nblocks, stride=1, level=0.2):
+        shortcut = None
+        if stride != 1 or self.in_planes != planes * block.expansion:
+            shortcut = nn.Sequential(
+                nn.Conv2d(self.in_planes, planes * block.expansion,
+                          kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+        layers = []
+        layers.append(block(self.in_planes, planes, stride, shortcut, level=level))
+        self.in_planes = planes * block.expansion
+        for i in range(1, nblocks):
+            layers.append(block(self.in_planes, planes, level=level))
+        return nn.Sequential(*layers)
+
+    def forward(self, x):
+        print (x.size())
+        x1 = self.pre_layers(x)
+        print (x1.size())
+        x2 = self.layer1(x1)
+        print (x2.size())
+        x3 = self.layer2(x2)
+        print (x3.size())
+        x5 = self.layer3(x3)
+        print (x5.size())
+        x6 = self.avgpool(x5)
+        print (x6.size())
+        x7 = x6.view(x6.size(0), -1)
+        print (x7.size())
+        x8 = self.linear(x7)
+        print (x8.size())
+        return x8
+
 def noiseresnet18(nchannels, nfilters, nclasses, pool=7, level=0.1):
     return NoiseResNet(NoiseBasicBlock, [2,2,2,2], nchannels=nchannels, nfilters=nfilters, nclasses=nclasses, pool=pool, level=level)
 
