@@ -31,7 +31,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 generator = models.NoiseResGeneratorIntent(opt)
 nc = 3
-discriminator = NoiseResNet32(NoiseBasicBlock, [2,2,2,2], nchannels=nc, nfilters=opt.num_filters, nclasses=1, pool=7, level=0.1)
+discriminator = naiveresnet.NoiseResNet32(NoiseBasicBlock, [2,2,2,2], nchannels=nc, nfilters=opt.num_filters, nclasses=1, pool=7, level=0.1)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
