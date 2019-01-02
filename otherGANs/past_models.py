@@ -130,7 +130,7 @@ class WGANGenerator32(nn.Module):
             nn.ReLU(True),
             # state size. (self.ngf*8) x 8 x 8
             nn.ConvTranspose2d(self.ngf * 4, self.ngf, 4, 2, 1, bias=False),
-            nn.BatchNorm2d(self.ngf * 4),
+            nn.BatchNorm2d(self.ngf),
             nn.ReLU(True),
             # state size. (self.ngf*4) x 16 x 16
             nn.ConvTranspose2d(self.ngf, nc, 4, 2, 1, bias=False),
