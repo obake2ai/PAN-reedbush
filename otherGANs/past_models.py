@@ -140,14 +140,9 @@ class WGANGenerator32(nn.Module):
         )
 
     def forward(self, input):
-        print (input.size())
         x1 = self.pre_layer(input)
-        print (x1.size())
         x2 = x1.view(-1, self.ngf * 8, 4, 4)
-        print (x2.size())
         x3 = self.main(x2)
-        print (x3.size())
-        print (x3.view(-1, self.nc, self.image_size, self.image_size).size())
         return x3.view(-1, self.nc, self.image_size, self.image_size)
 
 class DCGANGenerator64(nn.Module):
