@@ -2,6 +2,7 @@ import models
 import dataset
 from main import train
 from otherGANs import past_models
+import naiveresnet
 
 import easydict
 
@@ -29,7 +30,9 @@ _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
 generator = models.NoiseResGeneratorIntent(opt)
-discriminator = past_models.DCGANDiscriminator32_(opt)
+nc = 3
+discriminator = noiseresnet18_32(nchannels=nc, nfilters=opt.num_filters, nclasses=1, pool=7, level=0.1)
+#discriminator = past_models.DCGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
 train(generator, discriminator, dataloader, opt)
