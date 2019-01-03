@@ -412,7 +412,7 @@ class NoiseResGeneratorHead(nn.Module):
     def forward(self, z):
         x1 = self.pre_layer(z)
         x2 = self.model(x1)
-        img = img.view(img.shape[0], *self.img_shape)
+        img = x2.view(x2.shape[0], *self.img_shape)
         return img
 
 class NoiseResGeneratorEcoLongB(nn.Module):
