@@ -1,0 +1,5 @@
+*.png
+*.zip
+generator_model_*
+discriminator_model_*
+testresult/
