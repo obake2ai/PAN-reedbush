@@ -53,9 +53,8 @@ def logInceptionScore(logger, opt, generator, epoch, loadDir):
     opt.loadDir = loadDir
     idx = str(epoch)
     score = calcurateInceptionScore(opt, generator, idx)
-    print (type(score[0]))
     logger.info(
-        "[Epoch: %d/%d] [Inception Score: %f]"
+        "[Epoch: %d/%d] [Inception Score: %s]"
         % (epoch, opt.n_epochs, "{0:.2f}".format(float(score[0])))
     )
 
