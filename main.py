@@ -53,10 +53,10 @@ def logInceptionScore(logger, opt, generator, epoch, loadDir):
     opt.loadDir = loadDir
     idx = str(epoch)
     score = calcurateInceptionScore(opt, generator, idx)
-    print (score)
+    print (type(score[0]))
     logger.info(
         "[Epoch: %d/%d] [Inception Score: %f]"
-        % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]))
+        % (epoch, opt.n_epochs, "{0:.2f}".format(float(score[0])))
     )
 
 def train(generator, discriminator, dataloader, opt):
