@@ -71,7 +71,7 @@ def calcurateInceptionScore(opt, generator, idx):
                                     ]))
 
     IgnoreLabelDataset(dataset)
-    
+
     if opt.dataset == 'mnist':
         calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True, expand=True)
     else:
@@ -95,13 +95,14 @@ def main(opt, generator):
     np.random.seed(seed=0)
 
     #calcurate real dataset IS
-    dataset, _ = makeDataloader(opt)
-    IgnoreLabelDataset(dataset)
-    if opt.dataset == 'mnist':
-        calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True, expand=True)
-    else:
-        calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
-    logger.info('real, ' + str(calcIS[0]))
+    if opt.calcRealIs:
+        dataset, _ = makeDataloader(opt)
+        IgnoreLabelDataset(dataset)
+        if opt.dataset == 'mnist':
+            calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True, expand=True)
+        else:
+            calcIS = inception_score(IgnoreLabelDataset(dataset), cuda=cuda, batch_size=32, resize=True)
+        logger.info('real, ' + str(calcIS[0]))
 
     #calcurate fake dataset init IS
     calcIS = calcurateInceptionScore(opt, generator.cuda(), str(0))
