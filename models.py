@@ -536,9 +536,9 @@ class NoiseResGeneratorEcoWideWide(nn.Module):
             *resblock(1024, 1024, 0.1),
             *block(1024, 4096, 0.1),
             *resblock(4096, 4096, 0.1),
-            *block(4096, 16384, 0.1),
-            *resblock(16384, 16384, 0.1),
-            *block(16384, int(np.prod(self.img_shape)), 0.1),
+            *block(4096, 8192, 0.1),
+            *resblock(8192, 8192, 0.1),
+            *block(8192, int(np.prod(self.img_shape)), 0.1),
             nn.Tanh()
         )
 
