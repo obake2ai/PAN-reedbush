@@ -20,8 +20,8 @@ opt = easydict.EasyDict({
     'saveDir' : None,
     'resume' : None,
     'calcRealIs': False,
-    'loadDir' : './pass/PAN_cifar10_NRGelB_NRD'
+    'loadDir' : './pass/PAN_cifar10_NRGelC_NRD'
 })
 
-generator = models.NoiseResGeneratorEcoLongB(opt)
+generator = models.NoiseResGeneratorEcoLongC(opt)
 calcIS.main(opt, generator)
