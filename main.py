@@ -26,6 +26,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
 
+from calcIS import calcurateInceptionScore
+
 def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     """Calculates the gradient penalty loss for WGAN GP"""
     # Random weight term for interpolation between real and fake samples
@@ -46,6 +48,15 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     gradients = gradients.view(gradients.size(0), -1)
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
+
+def logInceptionScore(logger, opt, generator, epoch, loadDir):
+    opt.loadDir = loadDir
+    idx = str(epoch)
+    score = calcurateInceptionScore(opt, generator, idx)
+    logger.info(
+        "[Epoch: %d/%d] [Inception Score: %f]"
+        % (epoch, opt.n_epochs, "{0:.2f}".format(score))
+    )
 
 def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
@@ -171,3 +182,5 @@ def train(generator, discriminator, dataloader, opt):
         if epoch % opt.modelsave_interval == 0:
             torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(epoch).zfill(4))
             torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(epoch).zfill(4))
+
+        logInceptionScore(logger, opt, generator, epoch, saveDir)
