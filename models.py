@@ -414,9 +414,9 @@ class NoiseResGeneratorHead(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
-class NoiseResGeneratorHead(nn.Module):
+class NoiseResGeneratorTail(nn.Module):
     def __init__(self, opt):
-        super(NoiseResGeneratorHead, self).__init__()
+        super(NoiseResGeneratorTail, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
@@ -430,14 +430,15 @@ class NoiseResGeneratorHead(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            nn.Linear(opt.latent_dim, 256),
+            *block(opt.latent_dim, 128, 0.1),
+            *block(128, 256, 0.1),
             *block(256, 512, 0.1),
             *resblock(512, 512, 0.1),
             *block(512, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
             *resblock(1024, 1024, 0.1),
-            *block(1024,int(np.prod(self.img_shape)), 0.1),
+            nn.Linear(1024, int(np.prod(self.img_shape))),
             nn.Tanh()
         )
 
