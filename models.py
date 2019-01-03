@@ -549,7 +549,7 @@ class NoiseResGeneratorEcoWideWide(nn.Module):
 
 class NoiseResGeneratorEcoBottle(nn.Module):
     def __init__(self, opt):
-        super(NoiseResGeneratorEcoWideWide, self).__init__()
+        super(NoiseResGeneratorEcoBottle, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
