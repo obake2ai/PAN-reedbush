@@ -19,6 +19,7 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
+    'calcRealIs': False,
     'loadDir' : './otherGANs/pass/WGAN-gp_cifar10_b64'
 })
 
