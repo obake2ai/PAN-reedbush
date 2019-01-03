@@ -52,7 +52,7 @@ class IgnoreLabelDataset(torch.utils.data.Dataset):
 def calcurateInceptionScore(opt, generator, idx):
     z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
-    if 'Noise' in generator.__class__.__name__:
+    if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
         fake_imgs = generator(z)
     else:
         fake_imgs = generator(z.view(*z.size(), 1, 1))
