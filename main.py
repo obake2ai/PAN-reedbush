@@ -105,6 +105,7 @@ def train(generator, discriminator, dataloader, opt):
     batches_done = 0
     start = time.time()
     for epoch in range(opt.n_epochs):
+        logInceptionScore(logger, opt, generator, epoch, saveDir)
         for i, (imgs, _) in enumerate(dataloader):
 
             # Configure input
@@ -182,5 +183,3 @@ def train(generator, discriminator, dataloader, opt):
         if epoch % opt.modelsave_interval == 0:
             torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(epoch).zfill(4))
             torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(epoch).zfill(4))
-
-        logInceptionScore(logger, opt, generator, epoch, saveDir)
