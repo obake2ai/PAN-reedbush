@@ -29,8 +29,8 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseResGeneratorEcoWide2(opt)
-#discriminator = past_models.DCGANDiscriminator32_(opt)
-discriminator = naiveresnet.NoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=1, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
+generator = models.NoiseResGenerator(opt)
+discriminator = past_models.DCGANDiscriminator32_(opt)
+#discriminator = naiveresnet.NoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=1, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
 
 train(generator, discriminator, dataloader, opt)
