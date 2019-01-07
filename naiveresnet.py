@@ -68,7 +68,7 @@ class ArgNoiseBasicBlock(nn.Module):
             nn.MaxPool2d(stride, stride),
             nn.BatchNorm2d(planes),
             nn.ReLU(True),
-            noise_layers.AlgorithmicNoiseLayer(planes, planes, level),
+            noise_layers.AlgorithmicNoiseLayer(planes, planes, seed+1, level),
             nn.BatchNorm2d(planes),
         )
         self.shortcut = shortcut
