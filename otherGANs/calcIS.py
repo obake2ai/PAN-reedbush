@@ -3,7 +3,7 @@ import glob
 import os
 import numpy as np
 
-from otherGANs import past_models
+import past_models
 from inception_score import inception_score
 from dataset import makeDataloader
 
