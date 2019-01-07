@@ -26,7 +26,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
 
-from ..calcIS import calcurateInceptionScore
+from calcIS import calcurateInceptionScore
 
 def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     """Calculates the gradient penalty loss for WGAN GP"""
