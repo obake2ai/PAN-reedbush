@@ -49,6 +49,15 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
 
+def logInceptionScore(logger, opt, generator, epoch, loadDir):
+    opt.loadDir = loadDir
+    idx = str(epoch)
+    score = calcurateInceptionScore(opt, generator, idx)
+    logger.info(
+        "[Epoch: %d/%d] [Inception Score: %s]"
+        % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]))
+    )
+
 def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
     dName = discriminator.__class__.__name__
