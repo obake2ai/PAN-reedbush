@@ -62,7 +62,7 @@ class NoiseBasicBlock(nn.Module):
 class ArgNoiseBasicBlock(nn.Module):
     expansion = 1
     def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2):
-        super(NoiseBasicBlock, self).__init__()
+        super(ArgNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
             noise_layers.AlgorithmicNoiseLayer(in_planes, planes, seed, level),
             nn.MaxPool2d(stride, stride),
@@ -195,7 +195,7 @@ class NoiseResNet32(nn.Module):
 
 class ArgNoiseResNet32(nn.Module):
     def __init__(self, block, nblocks, nchannels, nfilters, nclasses, pool, seeds, level):
-        super(NoiseResNet32, self).__init__()
+        super(ArgNoiseResNet32, self).__init__()
         self.in_planes = nfilters
         self.pre_layers = nn.Sequential(
             nn.Conv2d(nchannels,nfilters,kernel_size=7,stride=2,padding=3,bias=False),
