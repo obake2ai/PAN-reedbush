@@ -2,6 +2,7 @@ import models
 import dataset
 from main import train
 from otherGANs import past_models
+import naiveresnet
 
 import easydict
 
@@ -18,7 +19,7 @@ opt = easydict.EasyDict({
     'clip_value': 0.01,
     'sample_interval': 100,
     'modelsave_interval': 1,
-    'log_interval': 10,
+    'log_interval': 100,
     'dataset': 'celeba',
     'num_filters': 128,
     'saveDir' : None,
@@ -30,7 +31,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorUpV2(opt)
+generator = models.NoiseGeneratorUp3(opt)
 #discriminator = naiveresnet.ArgNoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
 discriminator = past_models.WGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
