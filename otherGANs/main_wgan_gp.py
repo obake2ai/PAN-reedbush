@@ -105,7 +105,7 @@ def train(generator, discriminator, dataloader, opt):
     batches_done = 0
     start = time.time()
     for epoch in range(opt.n_epochs):
-        if  if opt.logIS:
+        if opt.logIS:
             logInceptionScore(logger, opt, generator, epoch, saveDir)
         for i, (imgs, _) in enumerate(dataloader):
             # ---------------------
