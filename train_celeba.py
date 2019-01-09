@@ -17,18 +17,22 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
+    'modelsave_interval': 1,
     'log_interval': 10,
     'dataset': 'celeba',
     'num_filters': 128,
     'saveDir' : None,
     'resume' : None,
+    'logIS' : True,
     'loadDir' : None
 })
 
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorDeeper(opt)
-discriminator = past_models.DCGANDiscriminator32_(opt)
+generator = models.NoiseGeneratorUp(opt)
+#discriminator = naiveresnet.ArgNoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
+discriminator = past_models.WGANDiscriminator32_(opt)
+#discriminator = past_models.DCGANDiscriminator32_(opt)
 
 train(generator, discriminator, dataloader, opt)
