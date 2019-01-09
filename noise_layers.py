@@ -32,6 +32,30 @@ class NoiseLayer(nn.Module):
         z = self.post_layers(x2)
         return z.view(z.size(0), z.size(1))
 
+class NoiseLayerUP(nn.Module):
+    def __init__(self, in_planes, out_planes, level):
+        super(NoiseLayerUP, self).__init__()
+
+        self.noise = torch.randn(1,in_planes,1,1)
+        self.level = level
+        self.layers = nn.Sequential(
+            nn.ReLU(True),
+            nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            nn.BatchNorm2d(out_planes),
+        )
+
+    def forward(self, x):
+        tmp1 = x.data.shape
+        tmp2 = self.noise.shape
+
+        if (tmp1[1] != tmp2[1]) or (tmp1[2] != tmp2[2]) or (tmp1[3] != tmp2[3]):
+            self.noise = (2*torch.rand(x.data.shape)-1)*self.level
+            self.noise = self.noise.cuda()
+
+        x.data = x.data + self.noise
+        x = self.layers(x)
+        return x
+
 RAND_MAX = 0xffffffff #2^32
 M = 65539 #http://www.geocities.jp/m_hiroi/light/index.html#cite
 import random
