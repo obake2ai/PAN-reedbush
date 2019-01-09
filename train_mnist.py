@@ -24,6 +24,7 @@ opt = easydict.EasyDict({
     'num_filters': 128,
     'saveDir' : None,
     'resume' : None,
+    'logIS' : False,
     'loadDir' : None
 })
 
