@@ -24,7 +24,7 @@ opt = easydict.EasyDict({
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
-    'logIS' : False,
+    'logIS' : True,
     'loadDir' : None
 })
 
