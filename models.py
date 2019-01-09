@@ -868,6 +868,7 @@ class NoiseGeneratorUp(nn.Module):
     def forward(self, z):
         x = self.pre_layer(z)
         img = self.model(x.view(-1, 128 * 8, 4, 4))
+        print (img.size())
         return img
 
 class NoiseGenerator(nn.Module):
