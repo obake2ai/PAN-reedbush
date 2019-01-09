@@ -36,7 +36,7 @@ class NoiseLayerUP(nn.Module):
     def __init__(self, in_planes, out_planes, level):
         super(NoiseLayerUP, self).__init__()
 
-        self.noise = torch.randn(1,in_planes,1,1)
+        self.noise = torch.randn(1,in_planes,1,1).cuda()
         self.level = level
         self.layers = nn.Sequential(
             nn.ReLU(True),
