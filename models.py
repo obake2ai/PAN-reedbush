@@ -948,14 +948,15 @@ class NoiseGenerator2Dv4(nn.Module):
         self.model = nn.Sequential(
             NoiseLayer2D(128 * 8, 128 * 4, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(1, 1) -> (2, 2)
-            NoiseBasicBlock2D(128 * 4, 128 * 4, stride=1, shortcut=None, level=0.1),
+            NoiseLayer2D(128 * 4, 128 * 4, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(2, 2) -> (4, 4)
             NoiseLayer2D(128 * 4, 128 * 2, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
-            NoiseBasicBlock2D(128 * 2, 128 * 2, stride=1, shortcut=None, level=0.1),
+            NoiseLayer2D(128 * 2, 128 * 2, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
             NoiseLayer2D(128 * 2, 128 * 1, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
+            NoiseLayer2D(128 * 1, 128 * 1, 0.1),
             NoiseLayer2D(128 * 1, channels, 0.1),
             nn.Tanh()
         )
