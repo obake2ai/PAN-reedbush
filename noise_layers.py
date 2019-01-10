@@ -32,9 +32,9 @@ class NoiseLayer(nn.Module):
         z = self.post_layers(x2)
         return z.view(z.size(0), z.size(1))
 
-class NoiseLayerUP(nn.Module):
+class NoiseLayer2D(nn.Module):
     def __init__(self, in_planes, out_planes, level):
-        super(NoiseLayerUP, self).__init__()
+        super(NoiseLayer2D, self).__init__()
 
         self.noise = torch.randn(1,in_planes,1,1).cuda()
         self.level = level
@@ -134,6 +134,25 @@ class NoiseBasicBlock(nn.Module):
         self.layers = nn.Sequential(
             NoiseLayer(in_planes, out_planes, level, normalize),
             NoiseLayer(out_planes, out_planes, level),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
+
+class NoiseBasicBlock2D(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
+        super(NoiseBasicBlock2D, self).__init__()
+        self.layers = nn.Sequential(
+            NoiseLayer2D(in_planes, out_planes, level, normalize),
+            NoiseLayer2D(out_planes, out_planes, level),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
