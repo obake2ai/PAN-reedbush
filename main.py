@@ -53,7 +53,7 @@ def logInceptionScore(logger, opt, generator, epoch, loadDir, maxIS):
     opt.loadDir = loadDir
     idx = str(epoch)
     score = calcurateInceptionScore(opt, generator, idx)
-    maxIS = score[0] if score[0] > maxIS else
+    maxIS = score[0] if score[0] > maxIS else pass
     logger.info(
         "[Epoch: %d/%d] [Inception Score: %s] [Max Score Ever: %s]"
         % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]), "{0:.2f}".format(maxIS))
