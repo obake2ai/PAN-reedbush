@@ -993,7 +993,7 @@ class NoiseGenerator2Dv5(nn.Module):
         )
 
     def forward(self, z):
-        img = self.model(z.view(-1, -1, 1, 1))
+        img = self.model(z.view(-1, z.size(1), 1, 1))
         return img
 
 class NoiseGenerator(nn.Module):
