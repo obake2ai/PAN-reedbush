@@ -847,9 +847,9 @@ class NoiseResGeneratorW(nn.Module):
         img = img.view(img.shape[0], *self.img_shape)
         return img
 
-class NoiseGeneratorUp(nn.Module):
+class NoiseGenerator2Dv1(nn.Module):
     def __init__(self, opt):
-        super(NoiseGeneratorUp, self).__init__()
+        super(NoiseGenerator2Dv1, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
         else:
