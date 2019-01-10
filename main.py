@@ -49,14 +49,16 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
 
-def logInceptionScore(logger, opt, generator, epoch, loadDir):
+def logInceptionScore(logger, opt, generator, epoch, loadDir, maxIS):
     opt.loadDir = loadDir
     idx = str(epoch)
     score = calcurateInceptionScore(opt, generator, idx)
+    maxIS = score[0] if score[0] > maxIS else
     logger.info(
-        "[Epoch: %d/%d] [Inception Score: %s]"
-        % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]))
+        "[Epoch: %d/%d] [Inception Score: %s] [Max Score Ever: %s]"
+        % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]), "{0:.2f}".format(maxIS))
     )
+    return maxIS
 
 def train(generator, discriminator, dataloader, opt):
     gName = generator.__class__.__name__
@@ -104,9 +106,10 @@ def train(generator, discriminator, dataloader, opt):
     lambda_gp = 10
     batches_done = 0
     start = time.time()
+    maxIS = 0
     for epoch in range(opt.n_epochs):
         if opt.logIS:
-            logInceptionScore(logger, opt, generator, epoch, saveDir)
+            maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
         for i, (imgs, _) in enumerate(dataloader):
 
             # Configure input
