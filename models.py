@@ -1070,7 +1070,7 @@ class NoiseGenerator2Dv8(nn.Module):
             NoiseLayer2D(128 * 6, 128 * 4, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(2, 2) -> (4, 4)
             NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1),
-            NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1),
+            NoiseLayer2D(128 * 4, 128 * 4, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
             NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1),
             NoiseLayer2D(128 * 4, 128 * 2, 0.1),
