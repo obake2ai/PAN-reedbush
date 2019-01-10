@@ -33,16 +33,22 @@ class NoiseLayer(nn.Module):
         return z.view(z.size(0), z.size(1))
 
 class NoiseLayer2D(nn.Module):
-    def __init__(self, in_planes, out_planes, level):
+    def __init__(self, in_planes, out_planes, level, normalize=True):
         super(NoiseLayer2D, self).__init__()
 
         self.noise = torch.randn(1,in_planes,1,1).cuda()
         self.level = level
-        self.layers = nn.Sequential(
-            nn.ReLU(True),
-            nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
-            nn.BatchNorm2d(out_planes),
-        )
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
 
     def forward(self, x):
         tmp1 = x.data.shape
