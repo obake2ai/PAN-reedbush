@@ -4,8 +4,8 @@ import os
 import numpy as np
 
 from otherGANs import past_models
-from inception_score import inception_score
-from dataset import makeDataloader
+from otherGANs.inception_score import inception_score
+from otherGANs.dataset import makeDataloader
 
 import torchvision.utils as vutils
 from torch.autograd import Variable
@@ -16,28 +16,6 @@ cuda = True if torch.cuda.is_available() else False
 Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 
 import logging
-
-import easydict
-
-opt = easydict.EasyDict({
-    'n_epochs': 200,
-    'batch_size': 128,
-    'lr': 0.0002,
-    'b1': 0.5,
-    'b2': 0.999,
-    'n_cpu': 8,
-    'latent_dim': 128,
-    'img_size': 32,
-    'n_critic': 1,
-    'clip_value': 0.01,
-    'sample_interval': 100,
-    'log_interval': 10,
-    'dataset': 'cifar10',
-    'num_filters': 128, #for CNN Discriminator and Generator
-    'saveDir' : None,
-    'resume' : None,
-    'loadDir' : './otherGANs/1035:181227_WGAN-GP_DCGANGenerator32_DCGANDiscriminator32_mnist'
-})
 
 class IgnoreLabelDataset(torch.utils.data.Dataset):
     def __init__(self, orig):
@@ -53,7 +31,11 @@ def calcurateInceptionScore(opt, generator, idx):
     num4eval = 1024
     assert num4eval % opt.batch_size == 0, 'num4eval:%d % opt.batch_size:%d != 0' % (num4eval, opt.batch_size)
 
-    for _ in range(int(num4eval / opt.batch_size)):
+    saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
+    os.makedirs(saveDir, exist_ok = True)
+    os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+
+    for j in range(int(num4eval / opt.batch_size)):
         z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
         if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
@@ -61,12 +43,8 @@ def calcurateInceptionScore(opt, generator, idx):
         else:
             fake_imgs = generator(z.view(*z.size(), 1, 1))
 
-        saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
-        os.makedirs(saveDir, exist_ok = True)
-        os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
-
         for i in range(fake_imgs.size(0)):
-            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i+j*opt.batch_size).zfill(4), normalize=True)
 
     dataset = datasets.ImageFolder(root=saveDir,
                             transform=transforms.Compose([
