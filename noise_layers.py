@@ -110,6 +110,18 @@ class FitLCG:
         random.shuffle(self.pool)
         return self.pool
 
+class MaskLCG:
+    def __init__(self, gen, seed):
+        assert seed != None, 'set seed'
+        assert len(size) == 3, 'LCG Mask Dimention Error'
+        self.gen = gen(seed)
+
+    def makeMask(self, size, level):
+        mask = torch.zeros(*size)
+        for i, j, k in itertools.product(range(size[0]), range(size[1]), range(size[2])):
+          mask.data[i, j, k] = self.gen.irand() * level
+        return mask
+
 class AlgorithmicNoiseLayer(nn.Module):
     def __init__(self, in_planes, out_planes, noise_seed, level, normalize = True):
         super(AlgorithmicNoiseLayer, self).__init__()
@@ -205,12 +217,8 @@ class LCGNoiseLayer2D(nn.Module):
             )
 
     def forward(self, x):
-        noiseEmitter = LCG(self.seed)
-
-        noise = torch.zeros(x.size(1), x.size(2), x.size(3))
-        for i, j, k in itertools.product(range(x.size(1)), range(x.size(2)), range(x.size(3))):
-          noise.data[i, j, k] = noiseEmitter.irand() * self.level
-
+        noiseMaker = makeMask(LCG, self.seed)
+        noise = noiseMaker([x.size(1), x.size(2), x.size(3)], self.level)
         x2 = torch.add(x, noise.cuda())
         z = self.layers(x2)
         return z
