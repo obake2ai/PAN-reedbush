@@ -188,7 +188,7 @@ class MTstdNoiseLayer2D(nn.Module):
 
 class LCGNoiseLayer2D(nn.Module):
     def __init__(self, in_planes, out_planes, level, seed, normalize=True):
-        super(LCGstdNoiseLayer2D, self).__init__()
+        super(LCGNoiseLayer2D, self).__init__()
 
         self.level = level
         self.seed = seed
