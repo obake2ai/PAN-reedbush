@@ -211,7 +211,7 @@ class LCGNoiseLayer2D(nn.Module):
         for i, j, k in itertools.product(range(x.size(1)), range(x.size(2)), range(x.size(3))):
           noise.data[i, j, k] = noiseEmitter.irand() * self.level
 
-        x2 = torch.add(x, noise)
+        x2 = torch.add(x, noise.cuda())
         z = self.layers(x2)
         return z
 
