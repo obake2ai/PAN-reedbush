@@ -114,7 +114,7 @@ class LCGNoiseBasicBlock_(nn.Module):
             nn.MaxPool2d(stride, stride),
             nn.BatchNorm2d(planes),
             nn.ReLU(True),
-            noise_layers.LCGNoiseLayer2D_(planes, planes, level, seed+1, size),
+            noise_layers.LCGNoiseLayer2D_(planes, planes, level, seed+1, size/stride),
             nn.BatchNorm2d(planes),
         )
         self.shortcut = shortcut
