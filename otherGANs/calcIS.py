@@ -53,7 +53,7 @@ def calcurateInceptionScore(opt, generator, idx):
     num4eval = 1024
     assert num4eval % opt.batch_size == 0, 'num4eval:%d % opt.batch_size:%d != 0' % (num4eval, opt.batch_size)
 
-    for _ in range(num4eval / opt.batch_size):
+    for _ in range(int(num4eval / opt.batch_size)):
         print (_)
         z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
