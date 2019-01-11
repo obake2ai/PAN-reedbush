@@ -107,7 +107,7 @@ def train(generator, discriminator, dataloader, opt):
     batches_done = 0
     start = time.time()
     maxIS = 0
-    fixed_z = Variable(Tensor(np.random.normal(0, 1, (100, opt.latent_dim))))
+    fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
     for epoch in range(opt.n_epochs):
         if opt.logIS:
             maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
@@ -167,9 +167,9 @@ def train(generator, discriminator, dataloader, opt):
                 if batches_done % opt.sample_interval == 0:
                     if batches_done == 0:
                         vutils.save_image(real_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_real.png")), nrow=7, normalize=True)
-                        vutils.save_image(generator(fixed_z).data[:99], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=10, normalize=True)
+                        vutils.save_image(generator(fixed_z).data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
                     else:
-                        vutils.save_image(generator(fixed_z).data[:99], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=10, normalize=True)
+                        vutils.save_image(generator(fixed_z).data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
 
                 batches_done += opt.n_critic
 
