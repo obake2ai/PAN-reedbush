@@ -113,10 +113,10 @@ class FitLCG:
 class MaskLCG:
     def __init__(self, gen, seed):
         assert seed != None, 'set seed'
-        assert len(size) == 3, 'LCG Mask Dimention Error'
         self.gen = gen(seed)
 
     def makeMask(self, size, level):
+        assert len(size) == 3, 'LCG Mask Dimention Error'
         mask = torch.zeros(*size)
         for i, j, k in itertools.product(range(size[0]), range(size[1]), range(size[2])):
           mask.data[i, j, k] = self.gen.irand() * level
