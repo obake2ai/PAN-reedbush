@@ -154,6 +154,31 @@ class MTNoiseLayer2D(nn.Module):
 
     def forward(self, x):
         torch.manual_seed(self.seed)
+        x.data += torch.rand(x.size(1), x.size(2), x.size(3)).cuda() * self.level
+
+        x = self.layers(x)
+        return x
+
+class MTstdNoiseLayer2D(nn.Module):
+    def __init__(self, in_planes, out_planes, level, seed, normalize=True):
+        super(MTstdNoiseLayer2D, self).__init__()
+
+        self.level = level
+        self.seed = seed
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
+
+    def forward(self, x):
+        torch.manual_seed(self.seed)
         x.data += torch.randn(x.size(1), x.size(2), x.size(3)).cuda() * self.level
 
         x = self.layers(x)
