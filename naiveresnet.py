@@ -379,15 +379,10 @@ class LCGNoiseResNet32_(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        print ('x1-2')
         x1 = self.pre_layers(x)
-        print ('x2-3')
         x2 = self.layer1(x1)
-        print ('x3-4')
         x3 = self.layer2(x2)
-        print ('x4-5')
         x5 = self.layer3(x3)
-        print ('x5-6')
         x6 = self.avgpool(x5)
         x7 = x6.view(x6.size(0), -1)
         x8 = self.linear(x7)
