@@ -206,10 +206,12 @@ class LCGNoiseLayer2D(nn.Module):
 
     def forward(self, x):
         noiseEmitter = LCG(self.seed)
-        x2 = x
-        for i, j, k in itertools.product(range(x.size(1)), range(x.size(2)), range(x.size(3))):
-          x2[:].data[:, i, j, k] = torch.add(x[:].data[:, i, j, k], noiseEmitter.irand())
 
+        noise = torch.zeros(x.size(1), x.size(2), x.size(3))
+        for i, j, k in itertools.product(range(x.size(1)), range(x.size(2)), range(x.size(3))):
+          noise.data[i, j, k] = noiseEmitter.irand() * self.level
+
+        x2 = torch.add(x, noise)
         z = self.layers(x2)
         return z
 
