@@ -154,7 +154,7 @@ class MTNoiseLayer2D(nn.Module):
 
     def forward(self, x):
         torch.manual_seed(self.seed)
-        x2 += torch.add(x, torch.rand(x.size(1), x.size(2), x.size(3)).cuda() * self.level)
+        x2 = torch.add(x, torch.rand(x.size(1), x.size(2), x.size(3)).cuda() * self.level)
 
         z = self.layers(x2)
         return z
