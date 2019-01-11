@@ -241,8 +241,8 @@ class LCGNoiseLayer2D_(nn.Module):
             )
 
     def forward(self, x):
-        print (x.size())
-        print (self.noise.size())
+        print ('x',x.size())
+        print ('n',self.noise.size())
         x2 = torch.add(x, self.noise)
         z = self.layers(x2)
         return z
