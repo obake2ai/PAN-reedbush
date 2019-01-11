@@ -36,31 +36,6 @@ class NoiseLayer(nn.Module):
         z = self.layers(y)
         return z
 
-class MTNoiseLayer(nn.Module):
-    def __init__(self, in_planes, out_planes, level, seed, normalize=True):
-        super(MTNoiseLayer, self).__init__()
-
-        self.level = level
-        self.seed = seed
-        if normalize:
-            self.layers = nn.Sequential(
-                nn.ReLU(True),
-                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
-                nn.BatchNorm2d(out_planes),
-            )
-        else:
-            self.layers = nn.Sequential(
-                nn.ReLU(True),
-                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
-            )
-
-    def forward(self, x):
-        torch.manual_seed(self.seed)
-        x.data = x.data + torch.rand(x.size(1), x.size(2), x.size(3)).cuda() * self.level
-
-        x = self.layers(x)
-        return x
-
 class NoiseBasicBlock(nn.Module):
     expansion = 1
     def __init__(self, in_planes, planes, stride=1, shortcut=None, level=0.2):
@@ -89,11 +64,11 @@ class MTNoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2):
         super(MTNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
-            MTNoiseLayer(in_planes, planes, level, seed),
+            noise_layers.MTNoiseLayer2D(in_planes, planes, level, seed),
             nn.MaxPool2d(stride, stride),
             nn.BatchNorm2d(planes),
             nn.ReLU(True),
-            MTNoiseLayer(planes, planes, level, seed+1),
+            noise_layers.MTNoiseLayer2D(planes, planes, level, seed+1),
             nn.BatchNorm2d(planes),
         )
         self.shortcut = shortcut
