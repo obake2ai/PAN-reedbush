@@ -50,19 +50,23 @@ class IgnoreLabelDataset(torch.utils.data.Dataset):
         return len(self.orig)
 
 def calcurateInceptionScore(opt, generator, idx):
-    z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
+    num4eval = 1024
+    assert num4eval % opt.batch_size == 0, 'num4eval:%d % opt.batch_size:%d != 0' % (num4eval, opt.batch_size)
 
-    if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
-        fake_imgs = generator(z)
-    else:
-        fake_imgs = generator(z.view(*z.size(), 1, 1))
+    for _ in range(num4eval / opt.batch_size):
+        z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
-    saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
-    os.makedirs(saveDir, exist_ok = True)
-    os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+        if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
+            fake_imgs = generator(z)
+        else:
+            fake_imgs = generator(z.view(*z.size(), 1, 1))
 
-    for i in range(fake_imgs.size(0)):
-        vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+        saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
+        os.makedirs(saveDir, exist_ok = True)
+        os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+
+        for i in range(fake_imgs.size(0)):
+            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
 
     dataset = datasets.ImageFolder(root=saveDir,
                             transform=transforms.Compose([
