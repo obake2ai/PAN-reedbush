@@ -115,7 +115,7 @@ class MaskLCG:
         assert seed != None, 'set seed'
         self.gen = gen(seed)
 
-    def makeMask(self, size, level):
+    def make(self, size, level):
         assert len(size) == 3, 'LCG Mask Dimention Error'
         mask = torch.zeros(*size)
         for i, j, k in itertools.product(range(size[0]), range(size[1]), range(size[2])):
@@ -218,7 +218,7 @@ class LCGNoiseLayer2D(nn.Module):
 
     def forward(self, x):
         noiseMaker = MaskLCG(LCG, self.seed)
-        noise = noiseMaker([x.size(1), x.size(2), x.size(3)], self.level)
+        noise = noiseMaker.make([x.size(1), x.size(2), x.size(3)], self.level)
         x2 = torch.add(x, noise.cuda())
         z = self.layers(x2)
         return z
