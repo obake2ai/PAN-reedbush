@@ -375,8 +375,7 @@ class LCGNoiseResNet32_(nn.Module):
         layers.append(block(self.in_planes, planes, stride, shortcut, level=level, seed=seed, size=[self.in_planes, size, size]))
         self.in_planes = planes * block.expansion
         for i in range(1, nblocks):
-            print (i)
-            layers.append(block(self.in_planes, planes, level=level, seed=seed, size=[self.in_planes, int(size/i), int(size/i)]))
+            layers.append(block(self.in_planes, planes, level=level, seed=seed, size=[self.in_planes, int(size/(i+1)), int(size/(i+1))]))
         return nn.Sequential(*layers)
 
     def forward(self, x):
