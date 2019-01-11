@@ -199,7 +199,7 @@ class NoiseBasicBlock2D(nn.Module):
 
 class MTNoiseBasicBlock2D(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
-        super(NoiseBasicBlock2D, self).__init__()
+        super(MTNoiseBasicBlock2D, self).__init__()
         self.layers = nn.Sequential(
             MTNoiseLayer2D(in_planes, out_planes, level, seed, normalize),
             MTNoiseLayer2D(out_planes, out_planes, level, seed+1),
