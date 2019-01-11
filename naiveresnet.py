@@ -356,9 +356,9 @@ class LCGNoiseResNet32_(nn.Module):
             nn.ReLU(True),
             nn.MaxPool2d(kernel_size=3,stride=2,padding=1)
         )
-        self.layer1 = self._make_layer(block, 1*nfilters, nblocks[0], level=level, seed=seeds[0], sizes=sizes[0])
-        self.layer2 = self._make_layer(block, 2*nfilters, nblocks[1], stride=2, level=level, seed=seeds[1], sizes=sizes[1])
-        self.layer3 = self._make_layer(block, 4*nfilters, nblocks[2], stride=2, level=level, seed=seeds[2], sizes=sizes[2])
+        self.layer1 = self._make_layer(block, 1*nfilters, nblocks[0], level=level, seed=seeds[0], size=sizes[0])
+        self.layer2 = self._make_layer(block, 2*nfilters, nblocks[1], stride=2, level=level, seed=seeds[1], size=sizes[1])
+        self.layer3 = self._make_layer(block, 4*nfilters, nblocks[2], stride=2, level=level, seed=seeds[2], size=sizes[2])
         #self.layer4 = self._make_layer(block, 8*nfilters, nblocks[3], stride=2, level=level)
         self.avgpool = nn.AvgPool2d(pool, stride=1)
         self.linear = nn.Linear(4*nfilters*block.expansion, nclasses)
