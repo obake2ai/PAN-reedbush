@@ -134,6 +134,31 @@ class AlgorithmicNoiseLayer(nn.Module):
         z = self.post_layers(x2)
         return z.view(z.size()[0], z.size()[1])
 
+class MTNoiseLayer2D(nn.Module):
+    def __init__(self, in_planes, out_planes, level, seed, normalize=True):
+        super(MTNoiseLayer2D, self).__init__()
+
+        self.level = level
+        self.seed = seed
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
+
+    def forward(self, x):
+        torch.manual_seed(self.seed)
+        x.data += torch.randn(x.size(1), x.size(2), x.size(3)) * self.level
+
+        x = self.layers(x)
+        return x
+
 class NoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
         super(NoiseBasicBlock, self).__init__()
@@ -159,6 +184,25 @@ class NoiseBasicBlock2D(nn.Module):
         self.layers = nn.Sequential(
             NoiseLayer2D(in_planes, out_planes, level, normalize),
             NoiseLayer2D(out_planes, out_planes, level),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
+
+class MTNoiseBasicBlock2D(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
+        super(NoiseBasicBlock2D, self).__init__()
+        self.layers = nn.Sequential(
+            MTNoiseLayer2D(in_planes, out_planes, level, seed, normalize),
+            MTNoiseLayer2D(out_planes, out_planes, level, seed+1),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
