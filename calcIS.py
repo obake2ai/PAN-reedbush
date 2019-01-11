@@ -4,7 +4,7 @@ import os
 import numpy as np
 
 from otherGANs import past_models
-from otherGANs.inception_score import inception_score
+from inception_score import inception_score
 from otherGANs.dataset import makeDataloader
 
 import torchvision.utils as vutils
