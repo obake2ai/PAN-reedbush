@@ -156,8 +156,8 @@ class MTNoiseLayer2D(nn.Module):
         torch.manual_seed(self.seed)
         x.data += torch.rand(x.size(1), x.size(2), x.size(3)).cuda() * self.level
 
-        x = self.layers(x)
-        return x
+        z = self.layers(x)
+        return z
 
 class MTstdNoiseLayer2D(nn.Module):
     def __init__(self, in_planes, out_planes, level, seed, normalize=True):
