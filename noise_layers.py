@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+import itertools
+
 #Simple Noise Layer from PNN
 class NoiseLayer(nn.Module):
     def __init__(self, in_planes, out_planes, level, normalize = True):
@@ -68,7 +70,7 @@ RAND_MAX = 0xffffffff #2^32
 M = 65539 #http://www.geocities.jp/m_hiroi/light/index.html#cite
 import random
 
-class Random:
+class LCG:
     def __init__(self, seed):
         assert seed != None, 'set seed'
         self.seed = seed
@@ -77,7 +79,7 @@ class Random:
         self.seed = (M * self.seed + 1) & RAND_MAX
         return self.seed / (RAND_MAX / 10) / 10
 
-class PoolRandom:
+class PoolLCG:
     def __init__(self, gen, seed, dim, pool_size = 255):
         assert seed != None, 'set seed'
         self.gen = gen(seed)
@@ -93,7 +95,7 @@ class PoolRandom:
         #self.pool[self.next] = self.gen.irand()
         return x
 
-class FitRandom:
+class FitLCG:
     def __init__(self, gen, seed, dim):
         assert seed != None, 'set seed'
         self.gen = gen(seed)
@@ -128,7 +130,7 @@ class AlgorithmicNoiseLayer(nn.Module):
         )
 
     def forward(self, x):
-        noiseAdder = FitRandom(Random, self.seed, x.size()[1])
+        noiseAdder = FitLCG(LCG, self.seed, x.size()[1])
         x1 = torch.add(x, torch.Tensor(noiseAdder.irand()).cuda() * self.level)
         x2 = self.pre_layers(x1.view(x.size()[0], x1.size()[1], 1))
         z = self.post_layers(x2)
@@ -179,10 +181,37 @@ class MTstdNoiseLayer2D(nn.Module):
 
     def forward(self, x):
         torch.manual_seed(self.seed)
-        x.data += torch.randn(x.size(1), x.size(2), x.size(3)).cuda() * self.level
+        x2 = torch.add(x, torch.randn(x.size(1), x.size(2), x.size(3)).cuda() * self.level)
 
-        x = self.layers(x)
-        return x
+        z = self.layers(x2)
+        return z
+
+class LCGNoiseLayer2D(nn.Module):
+    def __init__(self, in_planes, out_planes, level, seed, normalize=True):
+        super(LCGstdNoiseLayer2D, self).__init__()
+
+        self.level = level
+        self.seed = seed
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
+
+    def forward(self, x):
+        noiseEmitter = LCG(self.seed)
+        x2 = x
+        for i, j, k in itertools.product(range(x.size(1)), range(x.size(2)), range(x.size(3))):
+          x2[:].data[:, i, j, k] += noiseEmitter.irand()
+
+        z = self.layers(x2)
+        return z
 
 class NoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
@@ -228,6 +257,25 @@ class MTNoiseBasicBlock2D(nn.Module):
         self.layers = nn.Sequential(
             MTNoiseLayer2D(in_planes, out_planes, level, seed, normalize),
             MTNoiseLayer2D(out_planes, out_planes, level, seed+1),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
+
+class LCGNoiseBasicBlock2D(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
+        super(MTNoiseBasicBlock2D, self).__init__()
+        self.layers = nn.Sequential(
+            LCGNoiseLayer2D(in_planes, out_planes, level, seed, normalize),
+            LCGNoiseLayer2D(out_planes, out_planes, level, seed+1),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
