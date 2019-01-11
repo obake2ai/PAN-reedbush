@@ -24,7 +24,7 @@ class Dataset(nn.Module):
 
     def mnist(self, opt):
         dataset = datasets.MNIST(
-                        "./data/mnist",
+                        "./otherGANs/data/mnist",
                         train=True,
                         download=True,
                         transform=transforms.Compose([
@@ -43,7 +43,7 @@ class Dataset(nn.Module):
 
     def cifar10(self, opt):
         dataset = datasets.CIFAR10(
-                        "./data/cifar10",
+                        "./otherGANs/data/cifar10",
                         train=True,
                         download=True,
                         transform=transforms.Compose([
@@ -62,7 +62,7 @@ class Dataset(nn.Module):
 
     def fashion(self, opt):
         dataset = datasets.FashionMNIST(
-                        "./data/FashionMNIST",
+                        "./otherGANs/data/FashionMNIST",
                         train=True,
                         download=True,
                         transform=transforms.Compose([
@@ -81,7 +81,7 @@ class Dataset(nn.Module):
 
     def lsun(self, opt):
         dataset = datasets.LSUN(
-                        root="./data/lsun",
+                        root="./otherGANs/data/lsun",
                         classes=['bedroom_train'],
                         transform=transforms.Compose([
                             transforms.Resize(opt.img_size),
@@ -99,7 +99,7 @@ class Dataset(nn.Module):
         return dataset, dataloader
 
     def celeba(self, opt):
-	    dataset = datasets.ImageFolder(root="./data/celeba/img_align_celeba",
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/celeba/img_align_celeba",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
 	                            transforms.CenterCrop(opt.img_size),
@@ -110,7 +110,7 @@ class Dataset(nn.Module):
 	    return dataset, dataloader
 
     def imagenet(self, opt):
-	    dataset = datasets.ImageFolder(root="./data/imagenet/ILSVRC2012_img_train",
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/imagenet/ILSVRC2012_img_train",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
 	                            transforms.CenterCrop(opt.img_size),
