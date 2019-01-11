@@ -57,7 +57,7 @@ def calcurateInceptionScore(opt, generator, idx):
     os.makedirs(saveDir, exist_ok = True)
     os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
 
-    for _ in range(int(num4eval / opt.batch_size)):
+    for j in range(int(num4eval / opt.batch_size)):
         z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
         if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
@@ -66,7 +66,7 @@ def calcurateInceptionScore(opt, generator, idx):
             fake_imgs = generator(z.view(*z.size(), 1, 1))
 
         for i in range(fake_imgs.size(0)):
-            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
+            vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i+j*opt.batch_size).zfill(4), normalize=True)
 
     dataset = datasets.ImageFolder(root=saveDir,
                             transform=transforms.Compose([
