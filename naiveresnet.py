@@ -89,11 +89,11 @@ class MTNoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2):
         super(MTNoiseBasicBlock, self).__init__()
         self.layers = nn.Sequential(
-            NoiseLayer(in_planes, planes, level, seed),
+            MTNoiseLayer(in_planes, planes, level, seed),
             nn.MaxPool2d(stride, stride),
             nn.BatchNorm2d(planes),
             nn.ReLU(True),
-            NoiseLayer(planes, planes, level, seed+1),
+            MTNoiseLayer(planes, planes, level, seed+1),
             nn.BatchNorm2d(planes),
         )
         self.shortcut = shortcut
