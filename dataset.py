@@ -110,7 +110,7 @@ class Dataset(nn.Module):
 	    return dataset, dataloader
 
     def imagenet(self, opt):
-	    dataset = datasets.ImageFolder(root="./otherGANs/data/imagenet/ILSVRC2012_img_train",
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/imagenet/train",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
 	                            transforms.CenterCrop(opt.img_size),
