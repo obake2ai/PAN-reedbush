@@ -99,7 +99,7 @@ class Dataset(nn.Module):
         return dataset, dataloader
 
     def celeba(self, opt):
-	    dataset = datasets.ImageFolder(root="./otherGANs/data/celeba/img_align_celeba",
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/celeba/",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
 	                            transforms.CenterCrop(opt.img_size),
