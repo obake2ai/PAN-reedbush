@@ -7,7 +7,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 200,
-    'batch_size': 64,
+    'batch_size': 32,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -17,18 +17,21 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'log_interval': 10,
+    'log_interval': 100,
     'dataset': 'lsun',
-    'num_filters': 128,
+    'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
+    'logIS' : True,
     'loadDir' : None
 })
 
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGeneratorDeeper(opt)
-discriminator = past_models.DCGANDiscriminator32_(opt)
+generator = models.NoiseGenerator2Dv6(opt)
+#discriminator = naiveresnet.ArgNoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
+discriminator = past_models.WGANDiscriminator32_(opt)
+#discriminator = past_models.DCGANDiscriminator32_(opt)
 
 train(generator, discriminator, dataloader, opt)
