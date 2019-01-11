@@ -5,7 +5,7 @@ import numpy as np
 
 from otherGANs import past_models
 from inception_score import inception_score
-from otherGANs.dataset import makeDataloader
+from dataset import makeDataloader
 
 import torchvision.utils as vutils
 from torch.autograd import Variable
