@@ -223,6 +223,28 @@ class LCGNoiseLayer2D(nn.Module):
         z = self.layers(x2)
         return z
 
+class LCGNoiseLayer2D_(nn.Module):
+    def __init__(self, in_planes, out_planes, level, seed, size, normalize=True):
+        super(LCGNoiseLayer2D_, self).__init__()
+        noiseMaker = MaskLCG(LCG, seed)
+        self.noise = noiseMaker.make(size, level).cuda()
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
+
+    def forward(self, x):
+        x2 = torch.add(x, self.noise)
+        z = self.layers(x2)
+        return z
+
 class NoiseBasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, normalize=True):
         super(NoiseBasicBlock, self).__init__()
@@ -286,6 +308,25 @@ class LCGNoiseBasicBlock2D(nn.Module):
         self.layers = nn.Sequential(
             LCGNoiseLayer2D(in_planes, out_planes, level, seed, normalize),
             LCGNoiseLayer2D(out_planes, out_planes, level, seed+1),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
+
+class LCGNoiseBasicBlock2D_(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, size=[128, 1, 1], normalize=True):
+        super(LCGNoiseBasicBlock2D_, self).__init__()
+        self.layers = nn.Sequential(
+            LCGNoiseLayer2D_(in_planes, out_planes, level, seed, size, normalize),
+            LCGNoiseLayer2D_(out_planes, out_planes, level, seed+1, size),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
