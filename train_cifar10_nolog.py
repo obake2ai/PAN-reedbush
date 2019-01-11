@@ -1,5 +1,5 @@
 import models
-from otherGANs dataset
+import dataset
 from main import train
 from otherGANs import past_models
 import naiveresnet
