@@ -976,16 +976,22 @@ class NoiseGenerator2Dv5(nn.Module):
         self.img_shape = (channels, opt.img_size, opt.img_size)
 
         self.model = nn.Sequential(
+            NoiseBasicBlock2D(opt.latent_dim, opt.latent_dim, level=0.1),
             NoiseLayer2D(opt.latent_dim, 128 * 8, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(1, 1) -> (2, 2)
+            NoiseBasicBlock2D(128 * 8, 128 * 8, level=0.1),
             NoiseLayer2D(128 * 8, 128 * 6, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(2, 2) -> (4, 4)
+            NoiseBasicBlock2D(128 * 6, 128 * 6, level=0.1),
             NoiseLayer2D(128 * 6, 128 * 4, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
+            NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1),
             NoiseLayer2D(128 * 4, 128 * 2, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
+            NoiseBasicBlock2D(128 * 2, 128 * 2, level=0.1),
             NoiseLayer2D(128 * 2, 128 * 1, 0.1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
+            NoiseBasicBlock2D(128 * 1, 128 * 1, level=0.1),
             NoiseLayer2D(128 * 1, channels, 0.1),
             nn.Tanh()
         )
