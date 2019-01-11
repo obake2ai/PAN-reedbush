@@ -239,6 +239,7 @@ class NoiseResNet32(nn.Module):
         x6 = self.avgpool(x5)
         x7 = x6.view(x6.size(0), -1)
         x8 = self.linear(x7)
+        print (x8)
         return x8
 
 class MTNoiseResNet32(nn.Module):
