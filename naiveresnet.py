@@ -110,7 +110,7 @@ class LCGNoiseBasicBlock_(nn.Module):
     def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2, size=[128, 1, 1]):
         super(LCGNoiseBasicBlock_, self).__init__()
         self.layers = nn.Sequential(
-            noise_layers.LCGNoiseLayer2D_(in_planes, planes, level, seed, size),
+            noise_layers.LCGNoiseLayer2D_(in_planes, planes, level, seed, size=[size[0]*stride, int(size[1]/stride), int(size[2]/stride)]),
             nn.MaxPool2d(stride, stride),
             nn.BatchNorm2d(planes),
             nn.ReLU(True),
