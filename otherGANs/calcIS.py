@@ -52,20 +52,18 @@ class IgnoreLabelDataset(torch.utils.data.Dataset):
 def calcurateInceptionScore(opt, generator, idx):
     num4eval = 1024
     assert num4eval % opt.batch_size == 0, 'num4eval:%d % opt.batch_size:%d != 0' % (num4eval, opt.batch_size)
-    sum = 0
+
+    saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
+    os.makedirs(saveDir, exist_ok = True)
+    os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
+
     for _ in range(int(num4eval / opt.batch_size)):
-        sum += opt.batch_size
-        print (sum)
         z = Variable(Tensor(np.random.normal(0, 1, (opt.batch_size, opt.latent_dim))))
 
         if 'Noise' in generator.__class__.__name__ or 'WGAN' in generator.__class__.__name__:
             fake_imgs = generator(z)
         else:
             fake_imgs = generator(z.view(*z.size(), 1, 1))
-
-        saveDir = os.path.join(opt.loadDir, 'fake_%s' % idx)
-        os.makedirs(saveDir, exist_ok = True)
-        os.makedirs(os.path.join(saveDir, 'img'), exist_ok = True)
 
         for i in range(fake_imgs.size(0)):
             vutils.save_image(fake_imgs.data[i], (os.path.join(saveDir, 'img', "fake_%s.png")) % str(i).zfill(4), normalize=True)
