@@ -16,11 +16,13 @@ opt = easydict.EasyDict({
     'n_critic': 5,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'log_interval': 10,
+    'log_interval': 100,
+    'modelsave_interval': 1, #per epoch
     'dataset': 'celeba',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : None,
+    'logIS' : True,
     'loadDir' : None
 })
 
