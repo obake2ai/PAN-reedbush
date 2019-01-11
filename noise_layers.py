@@ -217,7 +217,7 @@ class LCGNoiseLayer2D(nn.Module):
             )
 
     def forward(self, x):
-        noiseMaker = makeMask(LCG, self.seed)
+        noiseMaker = MaskLCG(LCG, self.seed)
         noise = noiseMaker([x.size(1), x.size(2), x.size(3)], self.level)
         x2 = torch.add(x, noise.cuda())
         z = self.layers(x2)
