@@ -42,13 +42,13 @@ class NoiseLayer2D(nn.Module):
         self.level = level
         if normalize:
             self.layers = nn.Sequential(
-                nn.ReLU(True),
+                nn.ReLU(),
                 nn.BatchNorm2d(in_planes),
                 nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
             )
         else:
             self.layers = nn.Sequential(
-                nn.ReLU(True),
+                nn.ReLU(),
                 nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
             )
 
