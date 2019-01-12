@@ -1205,6 +1205,7 @@ class NoiseResGenerator2Dv1(nn.Module):
         if scale != 1 or self.in_planes != planes * block.expansion:
             shortcut = nn.Sequential(
                 NoiseLayer2D(self.in_planes, planes * block.expansion, level=level),
+                nn.Upsample(scale_factor=scale, mode='bilinear'),
                 nn.BatchNorm2d(planes * block.expansion),
             )
         layers = []
