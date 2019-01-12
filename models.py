@@ -1197,8 +1197,10 @@ class NoiseResGenerator2Dv1(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 8*nfilters * 4 * 4)
         self.layer1 = self._make_layer(block, 8*nfilters, nblocks[0], level=level)
         self.layer2 = self._make_layer(block, 4*nfilters, nblocks[1], scale=2, level=level)
-        self.layer3 = self._make_layer(block, 1*nfilters, nblocks[2], scale=2, level=level)
-        self.layer4 = self._make_layer(block, channels, nblocks[3], scale=2, level=level)
+        self.layer3 = self._make_layer(block, 2*nfilters, nblocks[2], scale=2, level=level)
+        self.layer4 = self._make_layer(block, 1*nfilters, nblocks[3], scale=2, level=level)
+        self.layer5 = self._make_layer(block, channels, nblocks[4], scale=1, level=level)
+        self.tanh = nn.Tanh()
 
     def _make_layer(self, block, planes, nblocks, scale=1, level=0.2):
         shortcut = None
@@ -1220,8 +1222,9 @@ class NoiseResGenerator2Dv1(nn.Module):
         x2 = self.layer1(x1.view(-1, 128 * 8, 4, 4))    #(128*8, 4, 4) -> (128*8, 4, 4)
         x3 = self.layer2(x2)                            #(128*8, 4, 4) -> (128*4, 8, 8)
         x4 = self.layer3(x3)                            #(128*4, 8, 8) -> (128*2, 16, 16)
-        x5 = self.layer4(x4)                            #(128*1, 16, 16) -> (nc, 32, 32)
-        return x5
+        x5 = self.layer4(x4)                            #(128*2, 16, 16) -> (128*1, 32, 32)
+        x6 = self.layer4(x5)                            #(128*1, 32, 32) -> (nc, 32, 32)
+        return self.tanh(x6)
 
 class NoiseGenerator(nn.Module):
     def __init__(self, opt):
