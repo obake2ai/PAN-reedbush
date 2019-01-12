@@ -1200,7 +1200,7 @@ class NoiseResGenerator2Dv1(nn.Module):
         self.layer3 = self._make_layer(block, 2*nfilters, nblocks[2], scale=2, level=level)
         self.layer4 = self._make_layer(block, 1*nfilters, nblocks[3], scale=2, level=level)
 
-    def _make_layer(self, block, planes, nblocks, stride=1, level=0.2):
+    def _make_layer(self, block, planes, nblocks, scale=1, level=0.2):
         shortcut = None
         if stride != 1 or self.in_planes != planes * block.expansion:
             shortcut = nn.Sequential(
