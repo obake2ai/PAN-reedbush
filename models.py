@@ -1223,7 +1223,7 @@ class NoiseResGenerator2Dv1(nn.Module):
         x3 = self.layer2(x2)                            #(128*8, 4, 4) -> (128*4, 8, 8)
         x4 = self.layer3(x3)                            #(128*4, 8, 8) -> (128*2, 16, 16)
         x5 = self.layer4(x4)                            #(128*2, 16, 16) -> (128*1, 32, 32)
-        x6 = self.layer4(x5)                            #(128*1, 32, 32) -> (nc, 32, 32)
+        x6 = self.layer5(x5)                            #(128*1, 32, 32) -> (nc, 32, 32)
         return self.tanh(x6)
 
 class NoiseGenerator(nn.Module):
