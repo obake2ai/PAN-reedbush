@@ -284,6 +284,7 @@ class NoiseBasicBlock2D(nn.Module):
         return y
 
 class NoiseBasicBlock2Dv2(nn.Module):
+    expansion = 1
     def __init__(self, in_planes, out_planes, scale=1, shortcut=None, level=0.2, normalize=True):
         super(NoiseBasicBlock2D, self).__init__()
         self.layers = nn.Sequential(
