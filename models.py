@@ -1184,6 +1184,44 @@ class LCGNoiseGenerator2Dv6_(nn.Module):
         img = self.model(x.view(-1, 128 * 8, 4, 4))
         return img
 
+class NoiseResGenerator2Dv1(nn.Module):
+    def __init__(self, opt, block, nblocks, level):
+        super(NoiseResGenerator2Dv1, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        nfilters = opt.num_filters
+        self.in_planes = 8*nfilters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        self.pre_layer = nn.Linear(opt.latent_dim, 8*nfilters * 4 * 4)
+        self.layer1 = self._make_layer(block, 8*nfilters, nblocks[0], level=level)
+        self.layer2 = self._make_layer(block, 4*nfilters, nblocks[1], scale=2, level=level)
+        self.layer3 = self._make_layer(block, 2*nfilters, nblocks[2], scale=2, level=level)
+        self.layer4 = self._make_layer(block, 1*nfilters, nblocks[3], scale=2, level=level)
+
+    def _make_layer(self, block, planes, nblocks, stride=1, level=0.2):
+        shortcut = None
+        if stride != 1 or self.in_planes != planes * block.expansion:
+            shortcut = nn.Sequential(
+                NoiseLayer2D(self.in_planes, planes * block.expansion, level=level),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+        layers = []
+        layers.append(block(self.in_planes, planes, stride, shortcut, level=level))
+        self.in_planes = planes * block.expansion
+        for i in range(1, nblocks):
+            layers.append(block(self.in_planes, planes, level=level))
+        return nn.Sequential(*layers)
+
+    def forward(self, z):
+        x1 = self.pre_layer(z)                          #(128) -> (128*8, 4, 4)
+        x2 = self.layer1(x1.view(-1, 128 * 8, 4, 4))    #(128*8, 4, 4) -> (128*8, 4, 4)
+        x3 = self.layer2(x2)                            #(128*8, 4, 4) -> (128*4, 8, 8)
+        x4 = self.layer3(x3)                            #(128*4, 8, 8) -> (128*2, 16, 16)
+        x5 = self.layer4(x4)                            #(128*1, 16, 16) -> (nc, 32, 32)
+        return x5
+
 class NoiseGenerator(nn.Module):
     def __init__(self, opt):
         super(NoiseGenerator, self).__init__()

@@ -283,6 +283,29 @@ class NoiseBasicBlock2D(nn.Module):
         y = self.relu(y)
         return y
 
+class NoiseBasicBlock2Dv2(nn.Module):
+    def __init__(self, in_planes, out_planes, scale=1, shortcut=None, level=0.2, normalize=True):
+        super(NoiseBasicBlock2D, self).__init__()
+        self.layers = nn.Sequential(
+            NoiseLayer2D(in_planes, out_planes, level, normalize),
+            nn.Upsample(scale_factor=scale, mode='bilinear'),
+            nn.BatchNorm2d(planes),
+            nn.ReLU(True),
+            NoiseLayer2D(out_planes, out_planes, level),
+            nn.BatchNorm2d(planes),
+        )
+        self.shortcut = shortcut
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = self.relu(y)
+        return y
+
 class MTNoiseBasicBlock2D(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
         super(MTNoiseBasicBlock2D, self).__init__()
