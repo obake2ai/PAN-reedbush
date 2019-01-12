@@ -299,10 +299,13 @@ class NoiseBasicBlock2Dv2(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x):
+        print (x.size())
         residual = x
         y = self.layers(x)
+        print (y.size())
         if self.shortcut:
             residual = self.shortcut(x)
+            print (residual.size())
         y += residual
         y = self.relu(y)
         return y
