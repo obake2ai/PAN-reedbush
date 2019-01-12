@@ -291,7 +291,7 @@ class NoiseBasicBlock2Dv2(nn.Module):
             NoiseLayer2D(in_planes, out_planes, level, normalize),
             nn.Upsample(scale_factor=scale, mode='bilinear'),
             nn.BatchNorm2d(out_planes),
-            nn.ReLU(True),
+            nn.ReLU(),
             NoiseLayer2D(out_planes, out_planes, level),
             nn.BatchNorm2d(out_planes),
         )
@@ -299,13 +299,10 @@ class NoiseBasicBlock2Dv2(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x):
-        print ('x',x.size())
         residual = x
         y = self.layers(x)
-        print ('y',y.size())
         if self.shortcut:
             residual = self.shortcut(x)
-            print ('r',residual.size())
         y += residual
         y = self.relu(y)
         return y
