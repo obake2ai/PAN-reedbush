@@ -43,8 +43,8 @@ class NoiseLayer2D(nn.Module):
         if normalize:
             self.layers = nn.Sequential(
                 nn.ReLU(True),
+                nn.BatchNorm2d(in_planes),
                 nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
-                nn.BatchNorm2d(out_planes),
             )
         else:
             self.layers = nn.Sequential(
@@ -290,10 +290,10 @@ class NoiseBasicBlock2Dv2(nn.Module):
         self.layers = nn.Sequential(
             NoiseLayer2D(in_planes, out_planes, level, normalize),
             nn.Upsample(scale_factor=scale, mode='bilinear'),
-            nn.BatchNorm2d(planes),
+            nn.BatchNorm2d(out_planes),
             nn.ReLU(True),
             NoiseLayer2D(out_planes, out_planes, level),
-            nn.BatchNorm2d(planes),
+            nn.BatchNorm2d(out_planes),
         )
         self.shortcut = shortcut
         self.relu = nn.ReLU()
