@@ -1197,8 +1197,8 @@ class NoiseResGenerator2Dv1(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 8*nfilters * 4 * 4)
         self.layer1 = self._make_layer(block, 8*nfilters, nblocks[0], level=level)
         self.layer2 = self._make_layer(block, 4*nfilters, nblocks[1], scale=2, level=level)
-        self.layer3 = self._make_layer(block, 2*nfilters, nblocks[2], scale=2, level=level)
-        self.layer4 = self._make_layer(block, 1*nfilters, nblocks[3], scale=2, level=level)
+        self.layer3 = self._make_layer(block, 1*nfilters, nblocks[2], scale=2, level=level)
+        self.layer4 = self._make_layer(block, nchannels, nblocks[3], scale=2, level=level)
 
     def _make_layer(self, block, planes, nblocks, scale=1, level=0.2):
         shortcut = None
