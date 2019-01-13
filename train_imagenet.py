@@ -32,7 +32,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGenerator2Dv6(opt)
+generator = models.NoiseGenerator2Dv7(opt)
 #generator = models.MTNoiseGenerator2Dv6(opt)
 #generator = models.LCGNoiseGenerator2Dv6(opt)
 #generator = models.NoiseResGenerator2Dv1(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
