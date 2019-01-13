@@ -6,6 +6,7 @@ import math
 import sys
 import time
 import datetime
+import shutil
 
 import logging
 logger = logging.getLogger("logger")
@@ -77,17 +78,6 @@ def train(generator, discriminator, dataloader, opt):
     saveDir = dateInfo + '_' + gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
 
-    handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
-    handler2.setLevel(logging.INFO)
-    handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
-    logger.addHandler(handler2)
-
-    logger.info(opt)
-    #logger.info(gName)
-    logger.info(generator)
-    #logger.info(dName)
-    logger.info(discriminator)
-
     # Optimizers
     optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
     optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
@@ -111,8 +101,25 @@ def train(generator, discriminator, dataloader, opt):
         epoch_done += int(opt.resume/len(dataloader))
         generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model__%s") % str(epoch_done-1).zfill(4)))
         discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model__%s") % str(epoch_done-1).zfill(4)))
+        shutil.rmtree(saveDir)
+        saveDir = opt.loadDir
+        handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
+        handler2.setLevel(logging.INFO)
+        handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
+        logger.addHandler(handler2)
 
+        logger.info('resume')
+    else:
+        handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
+        handler2.setLevel(logging.INFO)
+        handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
+        logger.addHandler(handler2)
 
+        logger.info(opt)
+        #logger.info(gName)
+        logger.info(generator)
+        #logger.info(dName)
+        logger.info(discriminator)
 
     for epoch in range(opt.n_epochs):
         if epoch == 0 and epoch_done != 0: epoch += epoch_done
