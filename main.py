@@ -71,10 +71,6 @@ def train(generator, discriminator, dataloader, opt):
         #discriminator = torch.nn.DataParallel(discriminator) # make parallel
         torch.backends.cudnn.benchmark = True
 
-    if opt.resume != None:
-        generator.load_state_dict(torch.load(os.path.join(loadDir, "generator_model__%s") % str(batches_done).zfill(8)))
-        discriminator.load_state_dict(torch.load(os.path.join(loadDir, "discriminator_model__%s") % str(batches_done).zfill(8)))
-
     datasetName = opt.dataset
     date = datetime.datetime.now()
     dateInfo =  str(date.hour).zfill(2) + str(date.minute).zfill(2) + ':' + str(date.year).replace('20','') + str(date.month).zfill(2) + str(date.day).zfill(2)
@@ -108,6 +104,12 @@ def train(generator, discriminator, dataloader, opt):
     start = time.time()
     maxIS = 0
     fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
+
+    if opt.resume != 0:
+        generator.load_state_dict(torch.load(os.path.join(loadDir, "generator_model__%s") % str(opt.resume).zfill(8)))
+        discriminator.load_state_dict(torch.load(os.path.join(loadDir, "discriminator_model__%s") % str(opt.resume).zfill(8)))
+        batches_done += opt.resume
+
     for epoch in range(opt.n_epochs):
         if opt.logIS:
             maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
