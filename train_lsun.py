@@ -24,7 +24,7 @@ opt = easydict.EasyDict({
     'dataset': 'lsun',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : None,
+    'resume' : 0,
     'logIS' : True,
     'loadDir' : None
 })
@@ -34,7 +34,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6(opt)
-generator = models.NoiseResGenerator2Dv1(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
+generator = models.NoiseResGenerator2Dv6(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
 discriminator = naiveresnet.NoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
 #discriminator = naiveresnet.LCGNoiseResNet32_(naiveresnet.LCGNoiseBasicBlock_, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300], sizes=[8, 8, 4])
 #discriminator = naiveresnet.MTNoiseResNet32(naiveresnet.MTNoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300])
