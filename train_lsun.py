@@ -24,21 +24,21 @@ opt = easydict.EasyDict({
     'dataset': 'lsun',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 205100,
+    'resume' : 173600,
     'logIS' : True,
-    'loadDir' : '0043:190112_LCGNoiseGenerator2Dv6__LCGNoiseResNet32__lsun'
+    'loadDir' : '1704:190111_MTNoiseGenerator2Dv6_MTNoiseResNet32_lsun'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
-#generator = models.MTNoiseGenerator2Dv6(opt)
-generator = models.LCGNoiseGenerator2Dv6(opt)
+generator = models.MTNoiseGenerator2Dv6(opt)
+#generator = models.LCGNoiseGenerator2Dv6(opt)
 #generator = models.NoiseResGenerator2Dv6(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
 #discriminator = naiveresnet.NoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
-discriminator = naiveresnet.LCGNoiseResNet32_(naiveresnet.LCGNoiseBasicBlock_, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300], sizes=[8, 8, 4])
-#discriminator = naiveresnet.MTNoiseResNet32(naiveresnet.MTNoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300])
+#discriminator = naiveresnet.LCGNoiseResNet32_(naiveresnet.LCGNoiseBasicBlock_, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300], sizes=[8, 8, 4])
+discriminator = naiveresnet.MTNoiseResNet32(naiveresnet.MTNoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1, seeds=[100, 200, 300])
 #discriminator = naiveresnet.NoiseResNet32(naiveresnet.NoiseBasicBlock, [2,2,2,2], nchannels=3, nfilters=opt.num_filters, nclasses=1, pool=2, level=0.1)
 #discriminator = past_models.WGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
