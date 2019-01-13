@@ -24,15 +24,15 @@ opt = easydict.EasyDict({
     'dataset': 'celeba',
     'num_filters': 128,
     'saveDir' : None,
-    'resume' : 0, #0 = train from scratch
+    'resume' : 57100, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : False
+    'loadDir' : '1527:190111_NoiseGenerator2Dv6_WGANDiscriminator32__celeba'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGenerator2Dv8(opt)
+generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6(opt)
 #generator = models.LCGNoiseGenerator2Dv6(opt)
 #generator = models.NoiseResGenerator2Dv1(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
