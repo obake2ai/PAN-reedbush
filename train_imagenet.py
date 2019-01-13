@@ -26,7 +26,7 @@ opt = easydict.EasyDict({
     'saveDir' : None,
     'resume' : 22000, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : '1024:190112_NoiseGenerator2Dv6_WGANDiscriminator32__imagenet '
+    'loadDir' : '1024:190112_NoiseGenerator2Dv6_WGANDiscriminator32__imagenet'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
