@@ -1092,7 +1092,7 @@ class NoiseGenerator2Dv8(nn.Module):
         return img
 
 class MTNoiseGenerator2Dv6(nn.Module):
-    def __init__(self, opt):
+    def __init__(self, opt, seed):
         super(MTNoiseGenerator2Dv6, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
@@ -1103,17 +1103,17 @@ class MTNoiseGenerator2Dv6(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
 
         self.model = nn.Sequential(
-            MTNoiseBasicBlock2D(128 * 8, 128 * 8, level=0.1, seed=0),
-            MTNoiseLayer2D(128 * 8, 128 * 4, 0.1, seed=10),
+            MTNoiseBasicBlock2D(128 * 8, 128 * 8, level=0.1, seed=seed),
+            MTNoiseLayer2D(128 * 8, 128 * 4, 0.1, seed=seed+1),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
-            MTNoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1, seed=20),
-            MTNoiseLayer2D(128 * 4, 128 * 2, 0.1, seed=30),
+            MTNoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1, seed=seed+2),
+            MTNoiseLayer2D(128 * 4, 128 * 2, 0.1, seed=seed+3),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
-            MTNoiseBasicBlock2D(128 * 2, 128 * 2, level=0.1, seed=40),
-            MTNoiseLayer2D(128 * 2, 128 * 1, 0.1, seed=50),
+            MTNoiseBasicBlock2D(128 * 2, 128 * 2, level=0.1, seed=seed+4),
+            MTNoiseLayer2D(128 * 2, 128 * 1, 0.1, seed=seed+5),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
-            MTNoiseBasicBlock2D(128 * 1, 128 * 1, level=0.1, seed=60),
-            MTNoiseLayer2D(128 * 1, channels, 0.1, seed=70),
+            MTNoiseBasicBlock2D(128 * 1, 128 * 1, level=0.1, seed=seed+6),
+            MTNoiseLayer2D(128 * 1, channels, 0.1, seed=seed+7),
             nn.Tanh()
         )
 
