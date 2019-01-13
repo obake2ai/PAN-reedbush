@@ -24,9 +24,9 @@ opt = easydict.EasyDict({
     'dataset': 'celeba',
     'num_filters': 128,
     'saveDir' : None,
-    'resume' : 57100, #0 = train from scratch
+    'resume' : 0, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : '1527:190111_NoiseGenerator2Dv6_WGANDiscriminator32__celeba'
+    'loadDir' : False
 })
 
 _, dataloader = dataset.makeDataloader(opt)
