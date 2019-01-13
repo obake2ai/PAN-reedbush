@@ -1154,7 +1154,7 @@ class LCGNoiseGenerator2Dv6(nn.Module):
         return img
 
 class LCGNoiseGenerator2Dv6_(nn.Module):
-    def __init__(self, opt):
+    def __init__(self, opt, seed):
         super(LCGNoiseGenerator2Dv6_, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
@@ -1165,17 +1165,17 @@ class LCGNoiseGenerator2Dv6_(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
 
         self.model = nn.Sequential(
-            LCGNoiseBasicBlock2D_(128 * 8, 128 * 8, level=0.1, seed=0, size=[128*8, 4, 4]),
-            LCGNoiseLayer2D_(128 * 8, 128 * 4, 0.1, seed=10, size=[128*8, 4, 4]),
+            LCGNoiseBasicBlock2D_(128 * 8, 128 * 8, level=0.1, seed=seed, size=[128*8, 4, 4]),
+            LCGNoiseLayer2D_(128 * 8, 128 * 4, 0.1, seed=seed+10, size=[128*8, 4, 4]),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
-            LCGNoiseBasicBlock2D_(128 * 4, 128 * 4, level=0.1, seed=20, size=[128*4, 8, 8]),
-            LCGNoiseLayer2D_(128 * 4, 128 * 2, 0.1, seed=30, size=[128*4, 8, 8]),
+            LCGNoiseBasicBlock2D_(128 * 4, 128 * 4, level=0.1, seed=seed+20, size=[128*4, 8, 8]),
+            LCGNoiseLayer2D_(128 * 4, 128 * 2, 0.1, seed=seed+30, size=[128*4, 8, 8]),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
-            LCGNoiseBasicBlock2D_(128 * 2, 128 * 2, level=0.1, seed=40, size=[128*2, 16, 16]),
-            LCGNoiseLayer2D_(128 * 2, 128 * 1, 0.1, seed=50, size=[128*2, 16, 16]),
+            LCGNoiseBasicBlock2D_(128 * 2, 128 * 2, level=0.1, seed=seed+40, size=[128*2, 16, 16]),
+            LCGNoiseLayer2D_(128 * 2, 128 * 1, 0.1, seed=seed+50, size=[128*2, 16, 16]),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
-            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=60, size=[128*1, 32, 32]),
-            LCGNoiseLayer2D_(128 * 1, channels, 0.1, seed=70, size=[128*1, 32, 32]),
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 32, 32]),
+            LCGNoiseLayer2D_(128 * 1, channels, 0.1, seed=seed+70, size=[128*1, 32, 32]),
             nn.Tanh()
         )
 
