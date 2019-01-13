@@ -101,18 +101,22 @@ def train(generator, discriminator, dataloader, opt):
     # Loss weight for gradient penalty
     lambda_gp = 10
     batches_done = 0
+    epoch_done = 0
     start = time.time()
     maxIS = 0
     fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
 
     if opt.resume != 0:
-        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model__%s") % str(opt.resume).zfill(8)))
-        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model__%s") % str(opt.resume).zfill(8)))
         batches_done += opt.resume
+        epoch_done += int(opt.resume/len(dataloader))
+        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model__%s") % str(epoch_done).zfill(4)))
+        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model__%s") % str(epoch_done).zfill(4)))
+
+
 
     for epoch in range(opt.n_epochs):
-        if opt.logIS:
-            maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
+        if epoch == 0 and epoch_done != 0: epoch += epoch_done
+        if opt.logIS: maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
         for i, (imgs, _) in enumerate(dataloader):
 
             # Configure input
