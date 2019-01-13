@@ -99,8 +99,8 @@ def train(generator, discriminator, dataloader, opt):
     if opt.resume != 0:
         batches_done += opt.resume
         epoch_done += int(opt.resume/len(dataloader))
-        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model__%s") % str(epoch_done-1).zfill(4)))
-        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model__%s") % str(epoch_done-1).zfill(4)))
+        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model_%s") % str(epoch_done-1).zfill(4)))
+        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model_%s") % str(epoch_done-1).zfill(4)))
         shutil.rmtree(saveDir)
         saveDir = opt.loadDir
         handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
