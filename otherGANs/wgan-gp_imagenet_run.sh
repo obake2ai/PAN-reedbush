@@ -1,8 +1,8 @@
 #!/bin/sh
-#PBS -q h-regular
+#PBS -q l-regular
 #PBS -l select=1:mpiprocs=1:ompthreads=32
 #PBS -W group_list=gj16
-#PBS -l walltime=20:00:00
+#PBS -l walltime=100:00:00
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 module load cuda9/9.1.85

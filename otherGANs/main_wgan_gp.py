@@ -71,7 +71,7 @@ def train(generator, discriminator, dataloader, opt):
         #discriminator = torch.nn.DataParallel(discriminator) # make parallel
         torch.backends.cudnn.benchmark = True
 
-    if opt.resume != None:
+    if opt.resume != 0:
         generator.load_state_dict(torch.load(os.path.join(loadDir, "generator_model__%s") % str(batches_done).zfill(8)))
         discriminator.load_state_dict(torch.load(os.path.join(loadDir, "discriminator_model__%s") % str(batches_done).zfill(8)))
 
