@@ -106,8 +106,8 @@ def train(generator, discriminator, dataloader, opt):
     fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
 
     if opt.resume != 0:
-        generator.load_state_dict(torch.load(os.path.join(loadDir, "generator_model__%s") % str(opt.resume).zfill(8)))
-        discriminator.load_state_dict(torch.load(os.path.join(loadDir, "discriminator_model__%s") % str(opt.resume).zfill(8)))
+        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model__%s") % str(opt.resume).zfill(8)))
+        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model__%s") % str(opt.resume).zfill(8)))
         batches_done += opt.resume
 
     for epoch in range(opt.n_epochs):
