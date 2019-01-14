@@ -109,8 +109,8 @@ def train(generator, discriminator, dataloader, opt):
         logger.addHandler(handler2)
 
         logger.info('resume')
-        logger.info('G loaded %s' %(os.path.join(opt.loadDir, "generator_model_%s") % str(epoch_done-1).zfill(4)))
-        logger.info('D loaded $s' %(os.path.join(opt.loadDir, "discriminator_model_%s") % str(epoch_done-1).zfill(4)))
+        logger.info('G loaded %s' %("generator_model_%s" % str(epoch_done-1).zfill(4)))
+        logger.info('D loaded $s' %("discriminator_model_%s" % str(epoch_done-1).zfill(4)))
     else:
         handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
         handler2.setLevel(logging.INFO)
