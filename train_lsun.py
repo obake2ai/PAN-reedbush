@@ -24,9 +24,9 @@ opt = easydict.EasyDict({
     'dataset': 'lsun',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 214900, #0 = train from scratch
+    'resume' : 0, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : '1137:190113_NoiseGenerator2Dv6_WGANDiscriminator32__lsun'
+    'loadDir' : False
 })
 
 _, dataloader = dataset.makeDataloader(opt)
