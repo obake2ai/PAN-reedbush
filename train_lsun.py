@@ -19,7 +19,7 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'modelsave_interval': 1,
+    'modelsave_interval': 1000,
     'log_interval': 100,
     'dataset': 'lsun',
     'num_filters': 128, #for CNN Discriminator and Generator
@@ -32,7 +32,7 @@ opt = easydict.EasyDict({
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGenerator2Dv8(opt)
+generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=0)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=0)
 #generator = models.NoiseResGenerator2Dv6(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
