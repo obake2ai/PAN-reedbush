@@ -81,17 +81,6 @@ def train(generator, discriminator, dataloader, opt):
     saveDir = dateInfo + '_' + gName + '_' + dName + '_' + datasetName
     os.makedirs(saveDir, exist_ok = True)
 
-    handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
-    handler2.setLevel(logging.INFO)
-    handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
-    logger.addHandler(handler2)
-
-    logger.info(opt)
-    #logger.info(gName)
-    logger.info(generator)
-    #logger.info(dName)
-    logger.info(discriminator)
-
     # Optimizers
     optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
     optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
