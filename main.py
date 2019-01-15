@@ -125,7 +125,6 @@ def train(generator, discriminator, dataloader, opt):
 
     for epoch in range(opt.n_epochs):
         if epoch == 0 and epoch_done != 0: epoch += epoch_done
-        if epoch == 0 and opt.logIS: maxIS = logInceptionScore(logger, opt, generator, epoch, batches_done, saveDir, maxIS)
         for i, (imgs, _) in enumerate(dataloader, batches_done % len(dataloader)):
             # Configure input
             real_imgs = Variable(imgs.type(Tensor))

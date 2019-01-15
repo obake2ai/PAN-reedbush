@@ -19,7 +19,7 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'modelsave_interval': 100,
+    'modelsave_interval': 1000,
     'log_interval': 100,
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
