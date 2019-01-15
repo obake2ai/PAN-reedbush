@@ -140,6 +140,7 @@ def train(generator, discriminator, dataloader, opt):
     for epoch in range(opt.n_epochs):
         if epoch == 0 and epoch_done != 0: epoch += epoch_done
         for i, (imgs, _) in enumerate(dataloader):
+            print (i)
             # ---------------------
             #  Train Discriminator
             # ---------------------
