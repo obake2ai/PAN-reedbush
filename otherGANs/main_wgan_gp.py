@@ -49,14 +49,14 @@ def compute_gradient_penalty(D, real_samples, fake_samples, Tensor):
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
 
-def logInceptionScore(logger, opt, generator, epoch, loadDir, maxIS):
+def logInceptionScore(logger, opt, generator, epoch, batches_done, loadDir, maxIS):
     opt.loadDir = loadDir
-    idx = str(epoch)
-    score = calcurateInceptionScore(opt, generator, idx)
+    idx = str(batches_done)
+    score = calcurateInceptionScore(opt, generator, idx.zfill(8))
     maxIS = score[0] if score[0] > maxIS else maxIS
     logger.info(
-        "[Epoch: %d/%d] [Inception Score: %s] [Max Score Ever: %s]"
-        % (epoch, opt.n_epochs, "{0:.2f}".format(score[0]), "{0:.2f}".format(maxIS))
+        "[Epoch: %d/%d] [Iteration: %d] [Inception Score: %s] [Max Score Ever: %s]"
+        % (epoch, opt.n_epochs,  batches_done, "{0:.2f}".format(score[0]), "{0:.2f}".format(maxIS))
     )
     return maxIS
 
@@ -105,12 +105,40 @@ def train(generator, discriminator, dataloader, opt):
     # Loss weight for gradient penalty
     lambda_gp = 10
     batches_done = 0
+    epoch_done = 0
     start = time.time()
     maxIS = 0
     fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
+
+    if opt.resume != 0:
+        batches_done += opt.resume
+        epoch_done += int(opt.resume/len(dataloader))
+        generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model_%s") % str(epoch_done-1).zfill(4)))
+        discriminator.load_state_dict(torch.load(os.path.join(opt.loadDir, "discriminator_model_%s") % str(epoch_done-1).zfill(4)))
+        shutil.rmtree(saveDir)
+        saveDir = opt.loadDir
+        handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
+        handler2.setLevel(logging.INFO)
+        handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
+        logger.addHandler(handler2)
+
+        logger.info('resume: loaded models')
+        logger.info("generator_model_%s" % str(epoch_done-1).zfill(4))
+        logger.info("discriminator_model_%s" % str(epoch_done-1).zfill(4))
+    else:
+        handler2 = logging.FileHandler(filename=os.path.join(saveDir, "train.log"))
+        handler2.setLevel(logging.INFO)
+        handler2.setFormatter(logging.Formatter("%(asctime)s :%(message)s"))
+        logger.addHandler(handler2)
+
+        logger.info(opt)
+        #logger.info(gName)
+        logger.info(generator)
+        #logger.info(dName)
+        logger.info(discriminator)
+
     for epoch in range(opt.n_epochs):
-        if opt.logIS:
-            maxIS = logInceptionScore(logger, opt, generator, epoch, saveDir, maxIS)
+        if epoch == 0 and epoch_done != 0: epoch += epoch_done
         for i, (imgs, _) in enumerate(dataloader):
             # ---------------------
             #  Train Discriminator
@@ -171,8 +199,9 @@ def train(generator, discriminator, dataloader, opt):
                     else:
                         vutils.save_image(generator(fixed_z).data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
 
-                batches_done += opt.n_critic
+                if batches_done % opt.modelsave_interval == 0:
+                    torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(batches_done).zfill(8))
+                    torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(batches_done).zfill(8))
+                    if opt.logIS: maxIS = logInceptionScore(logger, opt, generator, epoch, batches_done, saveDir, maxIS)
 
-        if epoch % opt.modelsave_interval == 0:
-            torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(epoch).zfill(4))
-            torch.save(discriminator.state_dict(), os.path.join(saveDir, "discriminator_model_%s") % str(epoch).zfill(4))
+                batches_done += opt.n_critic
