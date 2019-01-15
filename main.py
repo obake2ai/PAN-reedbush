@@ -68,8 +68,8 @@ def train(generator, discriminator, dataloader, opt):
     if cuda:
         generator.cuda()
         discriminator.cuda()
-        generator = torch.nn.DataParallel(generator) # make parallel
-        discriminator = torch.nn.DataParallel(discriminator) # make parallel
+        #generator = torch.nn.DataParallel(generator) # make parallel
+        #discriminator = torch.nn.DataParallel(discriminator) # make parallel
         torch.backends.cudnn.benchmark = True
 
     datasetName = opt.dataset
