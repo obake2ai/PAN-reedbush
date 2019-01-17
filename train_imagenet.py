@@ -24,15 +24,15 @@ opt = easydict.EasyDict({
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 46000, #0 = train from scratch
+    'resume' : 45600, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : '0115:190116_NoiseGenerator2Dv6_WGANDiscriminator32__imagenet'
+    'loadDir' : '0115:190116_NoiseGenerator2Dv7_WGANDiscriminator32__imagenet'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
 
 # Initialize generator and discriminator
-generator = models.NoiseGenerator2Dv6(opt)
+generator = models.NoiseGenerator2Dv7(opt)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=0)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=0)
 #generator = models.NoiseResGenerator2Dv1(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
