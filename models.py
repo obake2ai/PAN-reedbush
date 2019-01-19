@@ -1001,7 +1001,7 @@ class NoiseGenerator2Dv5(nn.Module):
         return img
 
 class NoiseGenerator2Dv6(nn.Module):
-    def __init__(self, opt):
+    def __init__(self, opt, seed=None):
         super(NoiseGenerator2Dv6, self).__init__()
         if opt.dataset == 'mnist' or opt.dataset == 'fashion':
           channels = 1
@@ -1012,17 +1012,17 @@ class NoiseGenerator2Dv6(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
 
         self.model = nn.Sequential(
-            NoiseBasicBlock2D(128 * 8, 128 * 8, level=0.1),
-            NoiseLayer2D(128 * 8, 128 * 4, 0.1),
+            NoiseBasicBlock2D(128 * 8, 128 * 8, level=0.1, seed=seed),
+            NoiseLayer2D(128 * 8, 128 * 4, 0.1, seed=seed),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
-            NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1),
-            NoiseLayer2D(128 * 4, 128 * 2, 0.1),
+            NoiseBasicBlock2D(128 * 4, 128 * 4, level=0.1, seed=seed),
+            NoiseLayer2D(128 * 4, 128 * 2, 0.1, seed=seed),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
-            NoiseBasicBlock2D(128 * 2, 128 * 2, level=0.1),
-            NoiseLayer2D(128 * 2, 128 * 1, 0.1),
+            NoiseBasicBlock2D(128 * 2, 128 * 2, level=0.1, seed=seed),
+            NoiseLayer2D(128 * 2, 128 * 1, 0.1, seed=seed),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
-            NoiseBasicBlock2D(128 * 1, 128 * 1, level=0.1),
-            NoiseLayer2D(128 * 1, channels, 0.1),
+            NoiseBasicBlock2D(128 * 1, 128 * 1, level=0.1, seed=seed),
+            NoiseLayer2D(128 * 1, channels, 0.1, seed=seed),
             nn.Tanh()
         )
 
