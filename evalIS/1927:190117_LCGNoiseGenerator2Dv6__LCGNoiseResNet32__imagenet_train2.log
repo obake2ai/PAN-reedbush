@@ -1,0 +1,809 @@
+2019-01-17 19:27:41,836 :{'n_epochs': 200, 'batch_size': 64, 'lr': 0.0002, 'b1': 0.5, 'b2': 0.999, 'n_cpu': 8, 'latent_dim': 128, 'img_size': 32, 'n_critic': 1, 'clip_value': 0.01, 'sample_interval': 100, 'modelsave_interval': 1000, 'log_interval': 100, 'dataset': 'imagenet', 'num_filters': 128, 'saveDir': None, 'resume': 0, 'logIS': True, 'loadDir': False}
+2019-01-17 19:27:41,837 :LCGNoiseGenerator2Dv6_(
+  (pre_layer): Linear(in_features=128, out_features=16384, bias=True)
+  (model): Sequential(
+    (0): LCGNoiseBasicBlock2D_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (1): LCGNoiseLayer2D_(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): Upsample(scale_factor=2, mode=bilinear)
+    (3): LCGNoiseBasicBlock2D_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (4): LCGNoiseLayer2D_(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (5): Upsample(scale_factor=2, mode=bilinear)
+    (6): LCGNoiseBasicBlock2D_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (7): LCGNoiseLayer2D_(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (8): Upsample(scale_factor=2, mode=bilinear)
+    (9): LCGNoiseBasicBlock2D_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (10): LCGNoiseLayer2D_(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(128, 3, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (11): Tanh()
+  )
+)
+2019-01-17 19:27:41,838 :LCGNoiseResNet32_(
+  (pre_layers): Sequential(
+    (0): Conv2d(3, 128, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace)
+    (3): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (layer1): Sequential(
+    (0): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer2): Sequential(
+    (0): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer3): Sequential(
+    (0): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): LCGNoiseBasicBlock_(
+      (layers): Sequential(
+        (0): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): LCGNoiseLayer2D_(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (avgpool): AvgPool2d(kernel_size=2, stride=1, padding=0)
+  (linear): Linear(in_features=512, out_features=1, bias=True)
+)
+2019-01-17 19:27:46,538 :[Epoch: 0/200] [Batch: 0/20019] [D loss: 3.344050] [G loss: 0.266826] [ElapsedTime: 4.67 [sec]]
+2019-01-17 19:28:07,980 :[Epoch: 0/200] [Iteration: 0] [Inception Score: 1.42] [Max Score Ever: 1.42]
+2019-01-17 19:32:32,672 :[Epoch: 0/200] [Batch: 100/20019] [D loss: 0.069470] [G loss: 0.218856] [ElapsedTime: 290.81 [sec]]
+2019-01-17 19:36:55,383 :[Epoch: 0/200] [Batch: 200/20019] [D loss: -0.141551] [G loss: 0.266999] [ElapsedTime: 553.52 [sec]]
+2019-01-17 19:41:21,343 :[Epoch: 0/200] [Batch: 300/20019] [D loss: -0.128024] [G loss: 0.221928] [ElapsedTime: 819.48 [sec]]
+2019-01-17 19:45:38,809 :[Epoch: 0/200] [Batch: 400/20019] [D loss: -0.116180] [G loss: 0.139389] [ElapsedTime: 1076.95 [sec]]
+2019-01-17 19:49:59,079 :[Epoch: 0/200] [Batch: 500/20019] [D loss: 0.046274] [G loss: 0.170469] [ElapsedTime: 1337.22 [sec]]
+2019-01-17 19:54:14,885 :[Epoch: 0/200] [Batch: 600/20019] [D loss: -0.156806] [G loss: 0.486971] [ElapsedTime: 1593.02 [sec]]
+2019-01-17 19:58:25,590 :[Epoch: 0/200] [Batch: 700/20019] [D loss: -0.211742] [G loss: 0.628075] [ElapsedTime: 1843.73 [sec]]
+2019-01-17 20:02:52,465 :[Epoch: 0/200] [Batch: 800/20019] [D loss: -0.318192] [G loss: 0.274169] [ElapsedTime: 2110.60 [sec]]
+2019-01-17 20:07:18,524 :[Epoch: 0/200] [Batch: 900/20019] [D loss: -0.139466] [G loss: 0.308178] [ElapsedTime: 2376.66 [sec]]
+2019-01-17 20:11:51,639 :[Epoch: 0/200] [Batch: 1000/20019] [D loss: -0.268298] [G loss: 0.790501] [ElapsedTime: 2649.75 [sec]]
+2019-01-17 20:12:04,032 :[Epoch: 0/200] [Iteration: 1000] [Inception Score: 3.77] [Max Score Ever: 3.77]
+2019-01-17 20:16:28,164 :[Epoch: 0/200] [Batch: 1100/20019] [D loss: -0.563851] [G loss: 1.122582] [ElapsedTime: 2926.30 [sec]]
+2019-01-17 20:20:51,021 :[Epoch: 0/200] [Batch: 1200/20019] [D loss: -0.263585] [G loss: 1.244034] [ElapsedTime: 3189.16 [sec]]
+2019-01-17 20:25:08,252 :[Epoch: 0/200] [Batch: 1300/20019] [D loss: -0.331646] [G loss: 1.126019] [ElapsedTime: 3446.39 [sec]]
+2019-01-17 20:29:24,246 :[Epoch: 0/200] [Batch: 1400/20019] [D loss: -0.506215] [G loss: 0.484440] [ElapsedTime: 3702.37 [sec]]
+2019-01-17 20:33:54,648 :[Epoch: 0/200] [Batch: 1500/20019] [D loss: -0.157062] [G loss: 0.647878] [ElapsedTime: 3972.79 [sec]]
+2019-01-17 20:39:11,482 :[Epoch: 0/200] [Batch: 1600/20019] [D loss: -0.174830] [G loss: 0.412372] [ElapsedTime: 4289.62 [sec]]
+2019-01-17 20:44:28,413 :[Epoch: 0/200] [Batch: 1700/20019] [D loss: -0.130379] [G loss: 0.991860] [ElapsedTime: 4606.55 [sec]]
+2019-01-17 20:49:35,934 :[Epoch: 0/200] [Batch: 1800/20019] [D loss: -0.281402] [G loss: 1.020082] [ElapsedTime: 4914.07 [sec]]
+2019-01-17 20:54:37,187 :[Epoch: 0/200] [Batch: 1900/20019] [D loss: -0.261606] [G loss: 0.744880] [ElapsedTime: 5215.27 [sec]]
+2019-01-17 20:59:21,118 :[Epoch: 0/200] [Batch: 2000/20019] [D loss: -0.516100] [G loss: 0.876473] [ElapsedTime: 5499.26 [sec]]
+2019-01-17 20:59:31,995 :[Epoch: 0/200] [Iteration: 2000] [Inception Score: 4.37] [Max Score Ever: 4.37]
+2019-01-17 21:05:05,935 :[Epoch: 0/200] [Batch: 2100/20019] [D loss: -0.376745] [G loss: 0.808061] [ElapsedTime: 5844.07 [sec]]
+2019-01-17 21:10:42,857 :[Epoch: 0/200] [Batch: 2200/20019] [D loss: -0.308184] [G loss: 1.120329] [ElapsedTime: 6181.00 [sec]]
+2019-01-17 21:16:37,769 :[Epoch: 0/200] [Batch: 2300/20019] [D loss: -0.369552] [G loss: 1.057863] [ElapsedTime: 6535.90 [sec]]
+2019-01-17 21:22:42,569 :[Epoch: 0/200] [Batch: 2400/20019] [D loss: -0.286256] [G loss: 0.402214] [ElapsedTime: 6900.60 [sec]]
+2019-01-17 21:28:27,164 :[Epoch: 0/200] [Batch: 2500/20019] [D loss: -0.364344] [G loss: -0.006816] [ElapsedTime: 7245.30 [sec]]
+2019-01-17 21:34:09,105 :[Epoch: 0/200] [Batch: 2600/20019] [D loss: -0.181241] [G loss: 1.306971] [ElapsedTime: 7587.24 [sec]]
+2019-01-17 21:39:44,269 :[Epoch: 0/200] [Batch: 2700/20019] [D loss: -0.049625] [G loss: 1.482647] [ElapsedTime: 7922.41 [sec]]
+2019-01-17 21:44:58,240 :[Epoch: 0/200] [Batch: 2800/20019] [D loss: -0.394656] [G loss: 0.598525] [ElapsedTime: 8236.38 [sec]]
+2019-01-17 21:50:14,287 :[Epoch: 0/200] [Batch: 2900/20019] [D loss: -0.360374] [G loss: 0.720161] [ElapsedTime: 8552.37 [sec]]
+2019-01-17 21:55:25,972 :[Epoch: 0/200] [Batch: 3000/20019] [D loss: -0.434600] [G loss: 0.631891] [ElapsedTime: 8864.11 [sec]]
+2019-01-17 21:55:47,997 :[Epoch: 0/200] [Iteration: 3000] [Inception Score: 4.42] [Max Score Ever: 4.42]
+2019-01-17 22:00:54,188 :[Epoch: 0/200] [Batch: 3100/20019] [D loss: -0.456879] [G loss: 0.745441] [ElapsedTime: 9192.33 [sec]]
+2019-01-17 22:07:03,187 :[Epoch: 0/200] [Batch: 3200/20019] [D loss: -0.582287] [G loss: 0.606304] [ElapsedTime: 9561.32 [sec]]
+2019-01-17 22:12:07,658 :[Epoch: 0/200] [Batch: 3300/20019] [D loss: -0.343356] [G loss: -0.143900] [ElapsedTime: 9865.79 [sec]]
+2019-01-17 22:17:10,246 :[Epoch: 0/200] [Batch: 3400/20019] [D loss: -0.936242] [G loss: 1.190131] [ElapsedTime: 10168.37 [sec]]
+2019-01-17 22:22:09,400 :[Epoch: 0/200] [Batch: 3500/20019] [D loss: -0.542218] [G loss: 0.528417] [ElapsedTime: 10467.54 [sec]]
+2019-01-17 22:27:15,369 :[Epoch: 0/200] [Batch: 3600/20019] [D loss: 0.411901] [G loss: 1.099771] [ElapsedTime: 10773.51 [sec]]
+2019-01-17 22:32:15,727 :[Epoch: 0/200] [Batch: 3700/20019] [D loss: -0.404774] [G loss: 1.594603] [ElapsedTime: 11073.87 [sec]]
+2019-01-17 22:37:12,392 :[Epoch: 0/200] [Batch: 3800/20019] [D loss: -0.385258] [G loss: 0.646461] [ElapsedTime: 11370.48 [sec]]
+2019-01-17 22:42:07,535 :[Epoch: 0/200] [Batch: 3900/20019] [D loss: -0.764665] [G loss: 0.469791] [ElapsedTime: 11665.67 [sec]]
+2019-01-17 22:47:12,278 :[Epoch: 0/200] [Batch: 4000/20019] [D loss: -0.425957] [G loss: 0.733829] [ElapsedTime: 11970.42 [sec]]
+2019-01-17 22:47:34,815 :[Epoch: 0/200] [Iteration: 4000] [Inception Score: 4.97] [Max Score Ever: 4.97]
+2019-01-17 22:52:36,886 :[Epoch: 0/200] [Batch: 4100/20019] [D loss: -0.506956] [G loss: 1.303440] [ElapsedTime: 12295.02 [sec]]
+2019-01-17 22:57:38,629 :[Epoch: 0/200] [Batch: 4200/20019] [D loss: -0.721432] [G loss: 1.175485] [ElapsedTime: 12596.64 [sec]]
+2019-01-17 23:03:25,773 :[Epoch: 0/200] [Batch: 4300/20019] [D loss: -0.377127] [G loss: 1.236248] [ElapsedTime: 12943.91 [sec]]
+2019-01-17 23:09:00,334 :[Epoch: 0/200] [Batch: 4400/20019] [D loss: -0.314356] [G loss: 1.156672] [ElapsedTime: 13278.47 [sec]]
+2019-01-17 23:14:38,898 :[Epoch: 0/200] [Batch: 4500/20019] [D loss: -0.599819] [G loss: 0.794340] [ElapsedTime: 13617.04 [sec]]
+2019-01-17 23:20:20,526 :[Epoch: 0/200] [Batch: 4600/20019] [D loss: -0.520775] [G loss: 0.299363] [ElapsedTime: 13958.66 [sec]]
+2019-01-17 23:25:58,868 :[Epoch: 0/200] [Batch: 4700/20019] [D loss: -0.302069] [G loss: 0.453923] [ElapsedTime: 14296.98 [sec]]
+2019-01-17 23:31:11,013 :[Epoch: 0/200] [Batch: 4800/20019] [D loss: -0.170989] [G loss: 0.336514] [ElapsedTime: 14609.15 [sec]]
+2019-01-17 23:36:20,731 :[Epoch: 0/200] [Batch: 4900/20019] [D loss: -0.641508] [G loss: 0.500821] [ElapsedTime: 14918.87 [sec]]
+2019-01-17 23:41:26,732 :[Epoch: 0/200] [Batch: 5000/20019] [D loss: -0.552157] [G loss: 2.034422] [ElapsedTime: 15224.87 [sec]]
+2019-01-17 23:41:50,152 :[Epoch: 0/200] [Iteration: 5000] [Inception Score: 5.04] [Max Score Ever: 5.04]
+2019-01-17 23:47:15,192 :[Epoch: 0/200] [Batch: 5100/20019] [D loss: -0.070681] [G loss: 0.020840] [ElapsedTime: 15573.33 [sec]]
+2019-01-17 23:52:43,758 :[Epoch: 0/200] [Batch: 5200/20019] [D loss: -0.288813] [G loss: 0.427721] [ElapsedTime: 15901.88 [sec]]
+2019-01-17 23:58:31,153 :[Epoch: 0/200] [Batch: 5300/20019] [D loss: -0.420509] [G loss: 1.061969] [ElapsedTime: 16249.29 [sec]]
+2019-01-18 00:05:10,060 :[Epoch: 0/200] [Batch: 5400/20019] [D loss: -0.310001] [G loss: 0.299946] [ElapsedTime: 16648.20 [sec]]
+2019-01-18 00:11:01,027 :[Epoch: 0/200] [Batch: 5500/20019] [D loss: -0.702402] [G loss: 0.152886] [ElapsedTime: 16999.17 [sec]]
+2019-01-18 00:17:03,822 :[Epoch: 0/200] [Batch: 5600/20019] [D loss: -0.375819] [G loss: 2.012138] [ElapsedTime: 17361.96 [sec]]
+2019-01-18 00:22:57,530 :[Epoch: 0/200] [Batch: 5700/20019] [D loss: -0.371200] [G loss: 0.378773] [ElapsedTime: 17715.65 [sec]]
+2019-01-18 00:28:42,659 :[Epoch: 0/200] [Batch: 5800/20019] [D loss: -0.394494] [G loss: 0.213237] [ElapsedTime: 18060.80 [sec]]
+2019-01-18 00:34:27,730 :[Epoch: 0/200] [Batch: 5900/20019] [D loss: -0.349464] [G loss: 0.714149] [ElapsedTime: 18405.87 [sec]]
+2019-01-18 00:40:10,673 :[Epoch: 0/200] [Batch: 6000/20019] [D loss: -0.450300] [G loss: 0.353826] [ElapsedTime: 18748.81 [sec]]
+2019-01-18 00:40:38,198 :[Epoch: 0/200] [Iteration: 6000] [Inception Score: 4.19] [Max Score Ever: 5.04]
+2019-01-18 00:46:17,064 :[Epoch: 0/200] [Batch: 6100/20019] [D loss: -0.761720] [G loss: 1.017633] [ElapsedTime: 19115.20 [sec]]
+2019-01-18 00:51:44,634 :[Epoch: 0/200] [Batch: 6200/20019] [D loss: -0.435912] [G loss: 0.639137] [ElapsedTime: 19442.77 [sec]]
+2019-01-18 00:56:56,787 :[Epoch: 0/200] [Batch: 6300/20019] [D loss: -0.549685] [G loss: 0.622408] [ElapsedTime: 19754.93 [sec]]
+2019-01-18 01:02:49,807 :[Epoch: 0/200] [Batch: 6400/20019] [D loss: -0.639379] [G loss: 0.342231] [ElapsedTime: 20107.94 [sec]]
+2019-01-18 01:08:27,849 :[Epoch: 0/200] [Batch: 6500/20019] [D loss: -0.508540] [G loss: 0.720899] [ElapsedTime: 20445.92 [sec]]
+2019-01-18 01:14:03,939 :[Epoch: 0/200] [Batch: 6600/20019] [D loss: -0.153887] [G loss: 0.544213] [ElapsedTime: 20782.08 [sec]]
+2019-01-18 01:19:38,066 :[Epoch: 0/200] [Batch: 6700/20019] [D loss: -0.308059] [G loss: 0.344239] [ElapsedTime: 21116.20 [sec]]
+2019-01-18 01:25:04,153 :[Epoch: 0/200] [Batch: 6800/20019] [D loss: -0.489449] [G loss: 0.969482] [ElapsedTime: 21442.29 [sec]]
+2019-01-18 01:30:29,065 :[Epoch: 0/200] [Batch: 6900/20019] [D loss: -0.230092] [G loss: 0.967843] [ElapsedTime: 21767.16 [sec]]
+2019-01-18 01:35:58,916 :[Epoch: 0/200] [Batch: 7000/20019] [D loss: -0.606177] [G loss: 1.269299] [ElapsedTime: 22097.05 [sec]]
+2019-01-18 01:36:22,776 :[Epoch: 0/200] [Iteration: 7000] [Inception Score: 4.62] [Max Score Ever: 5.04]
+2019-01-18 01:41:50,597 :[Epoch: 0/200] [Batch: 7100/20019] [D loss: -0.551427] [G loss: 0.038920] [ElapsedTime: 22448.74 [sec]]
+2019-01-18 01:47:14,640 :[Epoch: 0/200] [Batch: 7200/20019] [D loss: 0.079808] [G loss: 0.983802] [ElapsedTime: 22772.78 [sec]]
+2019-01-18 01:52:26,844 :[Epoch: 0/200] [Batch: 7300/20019] [D loss: -0.545558] [G loss: 0.538803] [ElapsedTime: 23084.93 [sec]]
+2019-01-18 01:57:40,736 :[Epoch: 0/200] [Batch: 7400/20019] [D loss: -0.620561] [G loss: -0.060195] [ElapsedTime: 23398.87 [sec]]
+2019-01-18 02:03:28,068 :[Epoch: 0/200] [Batch: 7500/20019] [D loss: -0.505633] [G loss: 1.309419] [ElapsedTime: 23746.21 [sec]]
+2019-01-18 02:08:56,125 :[Epoch: 0/200] [Batch: 7600/20019] [D loss: -0.639681] [G loss: 0.312032] [ElapsedTime: 24074.26 [sec]]
+2019-01-18 02:14:19,061 :[Epoch: 0/200] [Batch: 7700/20019] [D loss: -0.644932] [G loss: 2.139095] [ElapsedTime: 24397.18 [sec]]
+2019-01-18 02:20:03,748 :[Epoch: 0/200] [Batch: 7800/20019] [D loss: -0.575274] [G loss: 1.341628] [ElapsedTime: 24741.89 [sec]]
+2019-01-18 02:25:20,978 :[Epoch: 0/200] [Batch: 7900/20019] [D loss: -0.860497] [G loss: 0.961392] [ElapsedTime: 25059.12 [sec]]
+2019-01-18 02:30:35,213 :[Epoch: 0/200] [Batch: 8000/20019] [D loss: -0.410240] [G loss: 1.561730] [ElapsedTime: 25373.35 [sec]]
+2019-01-18 02:30:59,229 :[Epoch: 0/200] [Iteration: 8000] [Inception Score: 5.01] [Max Score Ever: 5.04]
+2019-01-18 02:36:12,846 :[Epoch: 0/200] [Batch: 8100/20019] [D loss: -0.666305] [G loss: 1.670339] [ElapsedTime: 25710.91 [sec]]
+2019-01-18 02:41:14,579 :[Epoch: 0/200] [Batch: 8200/20019] [D loss: -0.417362] [G loss: 0.671184] [ElapsedTime: 26012.67 [sec]]
+2019-01-18 02:46:33,343 :[Epoch: 0/200] [Batch: 8300/20019] [D loss: -0.388158] [G loss: 1.879283] [ElapsedTime: 26331.48 [sec]]
+2019-01-18 02:51:45,676 :[Epoch: 0/200] [Batch: 8400/20019] [D loss: -0.598807] [G loss: 1.600592] [ElapsedTime: 26643.81 [sec]]
+2019-01-18 02:56:44,221 :[Epoch: 0/200] [Batch: 8500/20019] [D loss: -0.376469] [G loss: -0.309659] [ElapsedTime: 26942.31 [sec]]
+2019-01-18 03:02:11,733 :[Epoch: 0/200] [Batch: 8600/20019] [D loss: -0.240952] [G loss: 0.324319] [ElapsedTime: 27269.87 [sec]]
+2019-01-18 03:08:15,220 :[Epoch: 0/200] [Batch: 8700/20019] [D loss: -0.498535] [G loss: 0.180365] [ElapsedTime: 27633.36 [sec]]
+2019-01-18 03:14:17,786 :[Epoch: 0/200] [Batch: 8800/20019] [D loss: -0.674389] [G loss: 1.742174] [ElapsedTime: 27995.93 [sec]]
+2019-01-18 03:20:10,751 :[Epoch: 0/200] [Batch: 8900/20019] [D loss: -0.837657] [G loss: 0.573079] [ElapsedTime: 28348.80 [sec]]
+2019-01-18 03:25:49,482 :[Epoch: 0/200] [Batch: 9000/20019] [D loss: -0.200717] [G loss: 0.991000] [ElapsedTime: 28687.62 [sec]]
+2019-01-18 03:26:14,099 :[Epoch: 0/200] [Iteration: 9000] [Inception Score: 4.98] [Max Score Ever: 5.04]
+2019-01-18 03:31:58,047 :[Epoch: 0/200] [Batch: 9100/20019] [D loss: -0.837753] [G loss: 1.913619] [ElapsedTime: 29056.19 [sec]]
+2019-01-18 03:37:26,529 :[Epoch: 0/200] [Batch: 9200/20019] [D loss: -0.834375] [G loss: 0.790785] [ElapsedTime: 29384.58 [sec]]
+2019-01-18 03:42:38,670 :[Epoch: 0/200] [Batch: 9300/20019] [D loss: -0.649878] [G loss: 0.899241] [ElapsedTime: 29696.81 [sec]]
+2019-01-18 03:47:46,677 :[Epoch: 0/200] [Batch: 9400/20019] [D loss: -0.576333] [G loss: 1.511285] [ElapsedTime: 30004.81 [sec]]
+2019-01-18 03:53:04,096 :[Epoch: 0/200] [Batch: 9500/20019] [D loss: -0.726835] [G loss: 2.024845] [ElapsedTime: 30322.19 [sec]]
+2019-01-18 03:58:23,889 :[Epoch: 0/200] [Batch: 9600/20019] [D loss: -0.743958] [G loss: 1.875942] [ElapsedTime: 30642.03 [sec]]
+2019-01-18 04:04:30,771 :[Epoch: 0/200] [Batch: 9700/20019] [D loss: -0.370240] [G loss: 0.497388] [ElapsedTime: 31008.91 [sec]]
+2019-01-18 04:10:07,961 :[Epoch: 0/200] [Batch: 9800/20019] [D loss: -0.514225] [G loss: 1.334687] [ElapsedTime: 31346.10 [sec]]
+2019-01-18 04:15:43,992 :[Epoch: 0/200] [Batch: 9900/20019] [D loss: -0.785760] [G loss: 0.573743] [ElapsedTime: 31682.12 [sec]]
+2019-01-18 04:21:15,298 :[Epoch: 0/200] [Batch: 10000/20019] [D loss: -0.707405] [G loss: 0.943726] [ElapsedTime: 32013.44 [sec]]
+2019-01-18 04:21:41,002 :[Epoch: 0/200] [Iteration: 10000] [Inception Score: 5.21] [Max Score Ever: 5.21]
+2019-01-18 04:27:10,633 :[Epoch: 0/200] [Batch: 10100/20019] [D loss: -0.190710] [G loss: 0.683309] [ElapsedTime: 32368.77 [sec]]
+2019-01-18 04:32:34,889 :[Epoch: 0/200] [Batch: 10200/20019] [D loss: -0.459184] [G loss: 0.029317] [ElapsedTime: 32693.03 [sec]]
+2019-01-18 04:38:08,354 :[Epoch: 0/200] [Batch: 10300/20019] [D loss: -0.523024] [G loss: 2.032313] [ElapsedTime: 33026.47 [sec]]
+2019-01-18 04:43:35,851 :[Epoch: 0/200] [Batch: 10400/20019] [D loss: -0.861262] [G loss: 0.322080] [ElapsedTime: 33353.99 [sec]]
+2019-01-18 04:49:03,142 :[Epoch: 0/200] [Batch: 10500/20019] [D loss: -0.395040] [G loss: 1.898521] [ElapsedTime: 33681.28 [sec]]
+2019-01-18 04:54:36,845 :[Epoch: 0/200] [Batch: 10600/20019] [D loss: -0.870724] [G loss: 1.239550] [ElapsedTime: 34014.96 [sec]]
+2019-01-18 04:59:57,348 :[Epoch: 0/200] [Batch: 10700/20019] [D loss: -0.776061] [G loss: 1.296315] [ElapsedTime: 34335.49 [sec]]
+2019-01-18 05:06:29,586 :[Epoch: 0/200] [Batch: 10800/20019] [D loss: -0.534403] [G loss: 2.178428] [ElapsedTime: 34727.72 [sec]]
+2019-01-18 05:11:59,820 :[Epoch: 0/200] [Batch: 10900/20019] [D loss: -0.863062] [G loss: 0.324296] [ElapsedTime: 35057.98 [sec]]
+2019-01-18 05:17:35,584 :[Epoch: 0/200] [Batch: 11000/20019] [D loss: -0.553452] [G loss: 1.276211] [ElapsedTime: 35393.72 [sec]]
+2019-01-18 05:17:59,590 :[Epoch: 0/200] [Iteration: 11000] [Inception Score: 4.94] [Max Score Ever: 5.21]
+2019-01-18 05:23:47,270 :[Epoch: 0/200] [Batch: 11100/20019] [D loss: -0.108364] [G loss: 1.153363] [ElapsedTime: 35765.39 [sec]]
+2019-01-18 05:29:27,799 :[Epoch: 0/200] [Batch: 11200/20019] [D loss: -0.747441] [G loss: 1.844360] [ElapsedTime: 36105.94 [sec]]
+2019-01-18 05:34:58,972 :[Epoch: 0/200] [Batch: 11300/20019] [D loss: -0.880939] [G loss: -0.030231] [ElapsedTime: 36437.07 [sec]]
+2019-01-18 05:40:19,836 :[Epoch: 0/200] [Batch: 11400/20019] [D loss: 0.006665] [G loss: 1.266891] [ElapsedTime: 36757.97 [sec]]
+2019-01-18 05:45:34,323 :[Epoch: 0/200] [Batch: 11500/20019] [D loss: -0.078873] [G loss: 1.087083] [ElapsedTime: 37072.29 [sec]]
+2019-01-18 05:50:48,950 :[Epoch: 0/200] [Batch: 11600/20019] [D loss: -0.008646] [G loss: 0.443701] [ElapsedTime: 37387.08 [sec]]
+2019-01-18 05:56:00,905 :[Epoch: 0/200] [Batch: 11700/20019] [D loss: -0.125769] [G loss: 0.982964] [ElapsedTime: 37699.04 [sec]]
+2019-01-18 06:01:08,673 :[Epoch: 0/200] [Batch: 11800/20019] [D loss: -0.365835] [G loss: 1.123123] [ElapsedTime: 38006.78 [sec]]
+2019-01-18 06:06:56,852 :[Epoch: 0/200] [Batch: 11900/20019] [D loss: -0.119878] [G loss: 0.761872] [ElapsedTime: 38354.98 [sec]]
+2019-01-18 06:12:10,604 :[Epoch: 0/200] [Batch: 12000/20019] [D loss: -0.207893] [G loss: 0.867129] [ElapsedTime: 38668.74 [sec]]
+2019-01-18 06:12:35,441 :[Epoch: 0/200] [Iteration: 12000] [Inception Score: 4.73] [Max Score Ever: 5.21]
+2019-01-18 06:18:11,974 :[Epoch: 0/200] [Batch: 12100/20019] [D loss: -0.463005] [G loss: 0.380755] [ElapsedTime: 39030.10 [sec]]
+2019-01-18 06:23:49,171 :[Epoch: 0/200] [Batch: 12200/20019] [D loss: -0.204922] [G loss: 0.847797] [ElapsedTime: 39367.24 [sec]]
+2019-01-18 06:29:17,429 :[Epoch: 0/200] [Batch: 12300/20019] [D loss: -0.428817] [G loss: 1.098655] [ElapsedTime: 39695.57 [sec]]
+2019-01-18 06:34:43,254 :[Epoch: 0/200] [Batch: 12400/20019] [D loss: -0.427203] [G loss: 1.106237] [ElapsedTime: 40021.38 [sec]]
+2019-01-18 06:40:04,456 :[Epoch: 0/200] [Batch: 12500/20019] [D loss: -0.628009] [G loss: 0.470937] [ElapsedTime: 40342.59 [sec]]
+2019-01-18 06:45:24,544 :[Epoch: 0/200] [Batch: 12600/20019] [D loss: -0.058796] [G loss: 1.672865] [ElapsedTime: 40662.60 [sec]]
+2019-01-18 06:50:48,672 :[Epoch: 0/200] [Batch: 12700/20019] [D loss: -0.648222] [G loss: 1.031648] [ElapsedTime: 40986.81 [sec]]
+2019-01-18 06:56:02,353 :[Epoch: 0/200] [Batch: 12800/20019] [D loss: -0.573536] [G loss: 2.291180] [ElapsedTime: 41300.49 [sec]]
+2019-01-18 07:01:41,367 :[Epoch: 0/200] [Batch: 12900/20019] [D loss: -0.655010] [G loss: -0.012751] [ElapsedTime: 41639.40 [sec]]
+2019-01-18 07:08:18,697 :[Epoch: 0/200] [Batch: 13000/20019] [D loss: -0.783728] [G loss: 1.426748] [ElapsedTime: 42036.84 [sec]]
+2019-01-18 07:08:46,461 :[Epoch: 0/200] [Iteration: 13000] [Inception Score: 5.40] [Max Score Ever: 5.40]
+2019-01-18 07:14:41,429 :[Epoch: 0/200] [Batch: 13100/20019] [D loss: -0.404188] [G loss: 0.510562] [ElapsedTime: 42419.57 [sec]]
+2019-01-18 07:20:35,395 :[Epoch: 0/200] [Batch: 13200/20019] [D loss: -0.345440] [G loss: 0.234999] [ElapsedTime: 42773.52 [sec]]
+2019-01-18 07:26:21,351 :[Epoch: 0/200] [Batch: 13300/20019] [D loss: -0.538308] [G loss: 2.289588] [ElapsedTime: 43119.49 [sec]]
+2019-01-18 07:31:56,322 :[Epoch: 0/200] [Batch: 13400/20019] [D loss: -0.366745] [G loss: 1.052403] [ElapsedTime: 43454.43 [sec]]
+2019-01-18 07:37:19,494 :[Epoch: 0/200] [Batch: 13500/20019] [D loss: -0.998790] [G loss: 1.133909] [ElapsedTime: 43777.63 [sec]]
+2019-01-18 07:42:38,709 :[Epoch: 0/200] [Batch: 13600/20019] [D loss: -1.017545] [G loss: 0.643315] [ElapsedTime: 44096.85 [sec]]
+2019-01-18 07:48:02,430 :[Epoch: 0/200] [Batch: 13700/20019] [D loss: -0.778719] [G loss: 1.529898] [ElapsedTime: 44420.52 [sec]]
+2019-01-18 07:53:25,207 :[Epoch: 0/200] [Batch: 13800/20019] [D loss: -0.307522] [G loss: 1.224551] [ElapsedTime: 44743.35 [sec]]
+2019-01-18 07:58:57,285 :[Epoch: 0/200] [Batch: 13900/20019] [D loss: -0.740921] [G loss: 0.149845] [ElapsedTime: 45075.42 [sec]]
+2019-01-18 08:05:35,573 :[Epoch: 0/200] [Batch: 14000/20019] [D loss: -0.913622] [G loss: 1.601281] [ElapsedTime: 45473.69 [sec]]
+2019-01-18 08:06:05,108 :[Epoch: 0/200] [Iteration: 14000] [Inception Score: 5.16] [Max Score Ever: 5.40]
+2019-01-18 08:11:42,762 :[Epoch: 0/200] [Batch: 14100/20019] [D loss: -0.372150] [G loss: 0.900392] [ElapsedTime: 45840.86 [sec]]
+2019-01-18 08:17:27,090 :[Epoch: 0/200] [Batch: 14200/20019] [D loss: -0.366886] [G loss: 0.952279] [ElapsedTime: 46185.23 [sec]]
+2019-01-18 08:22:52,678 :[Epoch: 0/200] [Batch: 14300/20019] [D loss: -0.364235] [G loss: 0.592999] [ElapsedTime: 46510.82 [sec]]
+2019-01-18 08:27:59,248 :[Epoch: 0/200] [Batch: 14400/20019] [D loss: -0.901194] [G loss: 1.303409] [ElapsedTime: 46817.34 [sec]]
+2019-01-18 08:33:01,067 :[Epoch: 0/200] [Batch: 14500/20019] [D loss: -1.024900] [G loss: 0.589231] [ElapsedTime: 47119.21 [sec]]
+2019-01-18 08:38:27,191 :[Epoch: 0/200] [Batch: 14600/20019] [D loss: -0.293652] [G loss: 1.342778] [ElapsedTime: 47445.33 [sec]]
+2019-01-18 08:43:50,754 :[Epoch: 0/200] [Batch: 14700/20019] [D loss: -0.543823] [G loss: 1.915069] [ElapsedTime: 47768.86 [sec]]
+2019-01-18 08:49:22,296 :[Epoch: 0/200] [Batch: 14800/20019] [D loss: -0.363857] [G loss: 0.604045] [ElapsedTime: 48100.43 [sec]]
+2019-01-18 08:54:55,775 :[Epoch: 0/200] [Batch: 14900/20019] [D loss: -0.639270] [G loss: 1.139222] [ElapsedTime: 48433.89 [sec]]
+2019-01-18 09:00:22,385 :[Epoch: 0/200] [Batch: 15000/20019] [D loss: -0.712500] [G loss: 2.372389] [ElapsedTime: 48760.52 [sec]]
+2019-01-18 09:00:48,527 :[Epoch: 0/200] [Iteration: 15000] [Inception Score: 4.76] [Max Score Ever: 5.40]
+2019-01-18 09:07:32,557 :[Epoch: 0/200] [Batch: 15100/20019] [D loss: -0.166771] [G loss: 1.790943] [ElapsedTime: 49190.70 [sec]]
+2019-01-18 09:13:11,125 :[Epoch: 0/200] [Batch: 15200/20019] [D loss: -0.528848] [G loss: 0.817502] [ElapsedTime: 49529.26 [sec]]
+2019-01-18 09:18:37,137 :[Epoch: 0/200] [Batch: 15300/20019] [D loss: -0.580569] [G loss: 1.328212] [ElapsedTime: 49855.25 [sec]]
+2019-01-18 09:24:11,914 :[Epoch: 0/200] [Batch: 15400/20019] [D loss: 0.055680] [G loss: 0.574709] [ElapsedTime: 50190.05 [sec]]
+2019-01-18 09:29:55,160 :[Epoch: 0/200] [Batch: 15500/20019] [D loss: -1.062902] [G loss: 1.072029] [ElapsedTime: 50533.29 [sec]]
+2019-01-18 09:35:35,100 :[Epoch: 0/200] [Batch: 15600/20019] [D loss: -0.261361] [G loss: 1.095481] [ElapsedTime: 50873.14 [sec]]
+2019-01-18 09:41:04,193 :[Epoch: 0/200] [Batch: 15700/20019] [D loss: -0.663385] [G loss: 0.809920] [ElapsedTime: 51202.33 [sec]]
+2019-01-18 09:46:20,960 :[Epoch: 0/200] [Batch: 15800/20019] [D loss: -0.628024] [G loss: -0.032897] [ElapsedTime: 51519.10 [sec]]
+2019-01-18 09:51:32,449 :[Epoch: 0/200] [Batch: 15900/20019] [D loss: -0.352472] [G loss: 1.296388] [ElapsedTime: 51830.54 [sec]]
+2019-01-18 09:56:32,252 :[Epoch: 0/200] [Batch: 16000/20019] [D loss: -0.820081] [G loss: 0.382438] [ElapsedTime: 52130.39 [sec]]
+2019-01-18 09:56:52,258 :[Epoch: 0/200] [Iteration: 16000] [Inception Score: 5.08] [Max Score Ever: 5.40]
+2019-01-18 10:02:09,061 :[Epoch: 0/200] [Batch: 16100/20019] [D loss: -0.602414] [G loss: 1.678178] [ElapsedTime: 52467.19 [sec]]
+2019-01-18 10:07:11,759 :[Epoch: 0/200] [Batch: 16200/20019] [D loss: -0.820561] [G loss: 1.149150] [ElapsedTime: 52769.82 [sec]]
+2019-01-18 10:12:30,967 :[Epoch: 0/200] [Batch: 16300/20019] [D loss: -0.693261] [G loss: 0.290843] [ElapsedTime: 53089.11 [sec]]
+2019-01-18 10:18:04,967 :[Epoch: 0/200] [Batch: 16400/20019] [D loss: -0.331249] [G loss: 1.278626] [ElapsedTime: 53423.10 [sec]]
+2019-01-18 10:23:36,426 :[Epoch: 0/200] [Batch: 16500/20019] [D loss: -0.292142] [G loss: 2.085443] [ElapsedTime: 53754.56 [sec]]
+2019-01-18 10:29:00,300 :[Epoch: 0/200] [Batch: 16600/20019] [D loss: -0.131393] [G loss: 0.055773] [ElapsedTime: 54078.39 [sec]]
+2019-01-18 10:34:25,243 :[Epoch: 0/200] [Batch: 16700/20019] [D loss: -0.116531] [G loss: 1.784382] [ElapsedTime: 54403.38 [sec]]
+2019-01-18 10:39:41,651 :[Epoch: 0/200] [Batch: 16800/20019] [D loss: 0.098391] [G loss: 1.552589] [ElapsedTime: 54719.77 [sec]]
+2019-01-18 10:44:52,597 :[Epoch: 0/200] [Batch: 16900/20019] [D loss: -0.176027] [G loss: 1.454281] [ElapsedTime: 55030.74 [sec]]
+2019-01-18 10:49:55,412 :[Epoch: 0/200] [Batch: 17000/20019] [D loss: -0.125689] [G loss: 1.767925] [ElapsedTime: 55333.55 [sec]]
+2019-01-18 10:50:15,886 :[Epoch: 0/200] [Iteration: 17000] [Inception Score: 5.35] [Max Score Ever: 5.40]
+2019-01-18 10:55:12,880 :[Epoch: 0/200] [Batch: 17100/20019] [D loss: -0.440946] [G loss: 1.724666] [ElapsedTime: 55651.02 [sec]]
+2019-01-18 11:00:24,825 :[Epoch: 0/200] [Batch: 17200/20019] [D loss: -0.734317] [G loss: 1.566069] [ElapsedTime: 55962.96 [sec]]
+2019-01-18 11:06:50,908 :[Epoch: 0/200] [Batch: 17300/20019] [D loss: -0.471450] [G loss: 1.242549] [ElapsedTime: 56349.05 [sec]]
+2019-01-18 11:12:27,682 :[Epoch: 0/200] [Batch: 17400/20019] [D loss: -0.445194] [G loss: 1.529092] [ElapsedTime: 56685.82 [sec]]
+2019-01-18 11:18:04,522 :[Epoch: 0/200] [Batch: 17500/20019] [D loss: -0.792895] [G loss: 0.186928] [ElapsedTime: 57022.66 [sec]]
+2019-01-18 11:23:34,901 :[Epoch: 0/200] [Batch: 17600/20019] [D loss: -0.411614] [G loss: 0.955165] [ElapsedTime: 57353.04 [sec]]
+2019-01-18 11:29:08,749 :[Epoch: 0/200] [Batch: 17700/20019] [D loss: -0.731248] [G loss: 2.317941] [ElapsedTime: 57686.89 [sec]]
+2019-01-18 11:34:36,777 :[Epoch: 0/200] [Batch: 17800/20019] [D loss: -0.300768] [G loss: 0.797332] [ElapsedTime: 58014.91 [sec]]
+2019-01-18 11:40:08,638 :[Epoch: 0/200] [Batch: 17900/20019] [D loss: -0.572396] [G loss: 2.027491] [ElapsedTime: 58346.78 [sec]]
+2019-01-18 11:45:40,954 :[Epoch: 0/200] [Batch: 18000/20019] [D loss: -0.636981] [G loss: 1.272256] [ElapsedTime: 58679.06 [sec]]
+2019-01-18 11:46:08,178 :[Epoch: 0/200] [Iteration: 18000] [Inception Score: 5.91] [Max Score Ever: 5.91]
+2019-01-18 11:51:42,896 :[Epoch: 0/200] [Batch: 18100/20019] [D loss: -0.437969] [G loss: 1.086105] [ElapsedTime: 59041.03 [sec]]
+2019-01-18 11:57:23,710 :[Epoch: 0/200] [Batch: 18200/20019] [D loss: -0.682801] [G loss: 1.318030] [ElapsedTime: 59381.85 [sec]]
+2019-01-18 12:03:55,332 :[Epoch: 0/200] [Batch: 18300/20019] [D loss: -0.043340] [G loss: 2.253967] [ElapsedTime: 59773.47 [sec]]
+2019-01-18 12:09:33,304 :[Epoch: 0/200] [Batch: 18400/20019] [D loss: -0.456582] [G loss: 1.002998] [ElapsedTime: 60111.30 [sec]]
+2019-01-18 12:15:10,291 :[Epoch: 0/200] [Batch: 18500/20019] [D loss: -0.663403] [G loss: 0.847038] [ElapsedTime: 60448.43 [sec]]
+2019-01-18 12:20:32,195 :[Epoch: 0/200] [Batch: 18600/20019] [D loss: -0.557228] [G loss: 1.329314] [ElapsedTime: 60770.33 [sec]]
+2019-01-18 12:25:53,508 :[Epoch: 0/200] [Batch: 18700/20019] [D loss: -0.303364] [G loss: 1.243006] [ElapsedTime: 61091.65 [sec]]
+2019-01-18 12:31:26,054 :[Epoch: 0/200] [Batch: 18800/20019] [D loss: -0.806384] [G loss: 1.256456] [ElapsedTime: 61424.19 [sec]]
+2019-01-18 12:37:04,574 :[Epoch: 0/200] [Batch: 18900/20019] [D loss: -0.769815] [G loss: 1.304275] [ElapsedTime: 61762.71 [sec]]
+2019-01-18 12:42:33,169 :[Epoch: 0/200] [Batch: 19000/20019] [D loss: -0.617764] [G loss: 1.340738] [ElapsedTime: 62091.31 [sec]]
+2019-01-18 12:42:58,707 :[Epoch: 0/200] [Iteration: 19000] [Inception Score: 4.90] [Max Score Ever: 5.91]
+2019-01-18 12:48:30,280 :[Epoch: 0/200] [Batch: 19100/20019] [D loss: -0.843404] [G loss: 1.160000] [ElapsedTime: 62448.42 [sec]]
+2019-01-18 12:53:56,259 :[Epoch: 0/200] [Batch: 19200/20019] [D loss: -0.506493] [G loss: 1.696419] [ElapsedTime: 62774.39 [sec]]
+2019-01-18 12:59:03,286 :[Epoch: 0/200] [Batch: 19300/20019] [D loss: -1.031045] [G loss: 2.119278] [ElapsedTime: 63081.42 [sec]]
+2019-01-18 13:04:26,138 :[Epoch: 0/200] [Batch: 19400/20019] [D loss: -0.320999] [G loss: 1.597000] [ElapsedTime: 63404.28 [sec]]
+2019-01-18 13:09:40,059 :[Epoch: 0/200] [Batch: 19500/20019] [D loss: -0.818619] [G loss: 2.218259] [ElapsedTime: 63718.20 [sec]]
+2019-01-18 13:14:39,522 :[Epoch: 0/200] [Batch: 19600/20019] [D loss: -0.499072] [G loss: 3.196392] [ElapsedTime: 64017.61 [sec]]
+2019-01-18 13:19:38,868 :[Epoch: 0/200] [Batch: 19700/20019] [D loss: -0.652746] [G loss: 0.995455] [ElapsedTime: 64317.01 [sec]]
+2019-01-18 13:24:50,774 :[Epoch: 0/200] [Batch: 19800/20019] [D loss: -0.927271] [G loss: 1.478215] [ElapsedTime: 64628.91 [sec]]
+2019-01-18 13:29:41,374 :[Epoch: 0/200] [Batch: 19900/20019] [D loss: -0.727980] [G loss: 2.242614] [ElapsedTime: 64919.51 [sec]]
+2019-01-18 13:34:32,221 :[Epoch: 0/200] [Batch: 20000/20019] [D loss: -0.666137] [G loss: 2.157078] [ElapsedTime: 65210.35 [sec]]
+2019-01-18 13:34:42,784 :[Epoch: 0/200] [Iteration: 20000] [Inception Score: 5.03] [Max Score Ever: 5.91]
+2019-01-18 13:39:23,344 :[Epoch: 1/200] [Batch: 81/20019] [D loss: -0.787086] [G loss: 1.565989] [ElapsedTime: 65501.48 [sec]]
+2019-01-18 13:44:04,594 :[Epoch: 1/200] [Batch: 181/20019] [D loss: -0.435895] [G loss: 2.567590] [ElapsedTime: 65782.63 [sec]]
+2019-01-18 13:48:52,578 :[Epoch: 1/200] [Batch: 281/20019] [D loss: -0.443721] [G loss: 2.296288] [ElapsedTime: 66070.72 [sec]]
+2019-01-18 13:53:36,675 :[Epoch: 1/200] [Batch: 381/20019] [D loss: -0.356190] [G loss: 0.838481] [ElapsedTime: 66354.81 [sec]]
+2019-01-18 13:58:13,419 :[Epoch: 1/200] [Batch: 481/20019] [D loss: -1.491502] [G loss: 1.840376] [ElapsedTime: 66631.49 [sec]]
+2019-01-18 14:03:37,746 :[Epoch: 1/200] [Batch: 581/20019] [D loss: -0.765382] [G loss: 2.395737] [ElapsedTime: 66955.89 [sec]]
+2019-01-18 14:08:29,278 :[Epoch: 1/200] [Batch: 681/20019] [D loss: -0.456238] [G loss: 2.429634] [ElapsedTime: 67247.42 [sec]]
+2019-01-18 14:13:15,908 :[Epoch: 1/200] [Batch: 781/20019] [D loss: -1.084517] [G loss: 2.081713] [ElapsedTime: 67534.05 [sec]]
+2019-01-18 14:18:25,862 :[Epoch: 1/200] [Batch: 881/20019] [D loss: -0.251063] [G loss: 2.353028] [ElapsedTime: 67844.00 [sec]]
+2019-01-18 14:23:28,658 :[Epoch: 1/200] [Batch: 981/20019] [D loss: -0.341363] [G loss: 2.357280] [ElapsedTime: 68146.79 [sec]]
+2019-01-18 14:23:47,093 :[Epoch: 1/200] [Iteration: 21000] [Inception Score: 5.74] [Max Score Ever: 5.91]
+2019-01-18 14:28:49,372 :[Epoch: 1/200] [Batch: 1081/20019] [D loss: -0.832017] [G loss: 2.885747] [ElapsedTime: 68467.48 [sec]]
+2019-01-18 14:33:40,956 :[Epoch: 1/200] [Batch: 1181/20019] [D loss: -1.066313] [G loss: 1.812814] [ElapsedTime: 68759.09 [sec]]
+2019-01-18 14:38:27,115 :[Epoch: 1/200] [Batch: 1281/20019] [D loss: -0.243531] [G loss: 5.155065] [ElapsedTime: 69045.25 [sec]]
+2019-01-18 14:43:22,671 :[Epoch: 1/200] [Batch: 1381/20019] [D loss: -0.810300] [G loss: 2.418193] [ElapsedTime: 69340.78 [sec]]
+2019-01-18 14:48:03,868 :[Epoch: 1/200] [Batch: 1481/20019] [D loss: -0.666176] [G loss: 1.335220] [ElapsedTime: 69622.02 [sec]]
+2019-01-18 14:52:47,209 :[Epoch: 1/200] [Batch: 1581/20019] [D loss: -0.539770] [G loss: 1.702204] [ElapsedTime: 69905.35 [sec]]
+2019-01-18 14:57:22,806 :[Epoch: 1/200] [Batch: 1681/20019] [D loss: -0.887489] [G loss: 2.451055] [ElapsedTime: 70180.89 [sec]]
+2019-01-18 15:02:41,756 :[Epoch: 1/200] [Batch: 1781/20019] [D loss: -0.200747] [G loss: 2.617632] [ElapsedTime: 70499.84 [sec]]
+2019-01-18 15:08:07,014 :[Epoch: 1/200] [Batch: 1881/20019] [D loss: -1.809379] [G loss: 2.427606] [ElapsedTime: 70825.15 [sec]]
+2019-01-18 15:13:30,175 :[Epoch: 1/200] [Batch: 1981/20019] [D loss: -0.106766] [G loss: 4.384476] [ElapsedTime: 71148.31 [sec]]
+2019-01-18 15:13:52,249 :[Epoch: 1/200] [Iteration: 22000] [Inception Score: 5.42] [Max Score Ever: 5.91]
+2019-01-18 15:19:07,829 :[Epoch: 1/200] [Batch: 2081/20019] [D loss: -0.479969] [G loss: 3.097956] [ElapsedTime: 71485.94 [sec]]
+2019-01-18 15:24:05,912 :[Epoch: 1/200] [Batch: 2181/20019] [D loss: -0.319219] [G loss: 2.654301] [ElapsedTime: 71784.05 [sec]]
+2019-01-18 15:29:03,217 :[Epoch: 1/200] [Batch: 2281/20019] [D loss: -0.693537] [G loss: 3.860529] [ElapsedTime: 72081.36 [sec]]
+2019-01-18 15:34:04,899 :[Epoch: 1/200] [Batch: 2381/20019] [D loss: -0.757050] [G loss: 2.581965] [ElapsedTime: 72382.96 [sec]]
+2019-01-18 15:39:16,610 :[Epoch: 1/200] [Batch: 2481/20019] [D loss: -0.489574] [G loss: 2.095030] [ElapsedTime: 72694.75 [sec]]
+2019-01-18 15:44:39,150 :[Epoch: 1/200] [Batch: 2581/20019] [D loss: -0.735557] [G loss: 2.987695] [ElapsedTime: 73017.29 [sec]]
+2019-01-18 15:49:53,479 :[Epoch: 1/200] [Batch: 2681/20019] [D loss: -0.124189] [G loss: 3.075128] [ElapsedTime: 73331.57 [sec]]
+2019-01-18 15:55:07,767 :[Epoch: 1/200] [Batch: 2781/20019] [D loss: -0.404220] [G loss: 2.321368] [ElapsedTime: 73645.88 [sec]]
+2019-01-18 16:00:15,311 :[Epoch: 1/200] [Batch: 2881/20019] [D loss: -0.860673] [G loss: 3.847486] [ElapsedTime: 73953.45 [sec]]
+2019-01-18 16:06:44,984 :[Epoch: 1/200] [Batch: 2981/20019] [D loss: -0.305239] [G loss: 2.631613] [ElapsedTime: 74343.10 [sec]]
+2019-01-18 16:07:08,649 :[Epoch: 1/200] [Iteration: 23000] [Inception Score: 5.35] [Max Score Ever: 5.91]
+2019-01-18 16:12:54,854 :[Epoch: 1/200] [Batch: 3081/20019] [D loss: -0.865118] [G loss: 2.458307] [ElapsedTime: 74712.99 [sec]]
+2019-01-18 16:18:25,887 :[Epoch: 1/200] [Batch: 3181/20019] [D loss: -0.602172] [G loss: 3.394754] [ElapsedTime: 75044.03 [sec]]
+2019-01-18 16:23:50,406 :[Epoch: 1/200] [Batch: 3281/20019] [D loss: -0.584345] [G loss: 1.967838] [ElapsedTime: 75368.49 [sec]]
+2019-01-18 16:29:02,526 :[Epoch: 1/200] [Batch: 3381/20019] [D loss: -0.551488] [G loss: 2.769660] [ElapsedTime: 75680.66 [sec]]
+2019-01-18 16:34:09,124 :[Epoch: 1/200] [Batch: 3481/20019] [D loss: -0.602452] [G loss: 2.344062] [ElapsedTime: 75987.26 [sec]]
+2019-01-18 16:39:13,762 :[Epoch: 1/200] [Batch: 3581/20019] [D loss: -0.640413] [G loss: 3.341390] [ElapsedTime: 76291.82 [sec]]
+2019-01-18 16:44:24,302 :[Epoch: 1/200] [Batch: 3681/20019] [D loss: -0.765834] [G loss: 2.018732] [ElapsedTime: 76602.41 [sec]]
+2019-01-18 16:49:33,175 :[Epoch: 1/200] [Batch: 3781/20019] [D loss: -0.569797] [G loss: 2.273912] [ElapsedTime: 76911.31 [sec]]
+2019-01-18 16:54:43,428 :[Epoch: 1/200] [Batch: 3881/20019] [D loss: -0.542053] [G loss: 2.661662] [ElapsedTime: 77221.57 [sec]]
+2019-01-18 16:59:41,827 :[Epoch: 1/200] [Batch: 3981/20019] [D loss: -1.043167] [G loss: 2.470676] [ElapsedTime: 77519.95 [sec]]
+2019-01-18 17:00:04,626 :[Epoch: 1/200] [Iteration: 24000] [Inception Score: 4.98] [Max Score Ever: 5.91]
+2019-01-18 17:05:29,839 :[Epoch: 1/200] [Batch: 4081/20019] [D loss: -0.821545] [G loss: 2.227194] [ElapsedTime: 77867.98 [sec]]
+2019-01-18 17:10:22,505 :[Epoch: 1/200] [Batch: 4181/20019] [D loss: -0.587499] [G loss: 3.119683] [ElapsedTime: 78160.64 [sec]]
+2019-01-18 17:15:29,626 :[Epoch: 1/200] [Batch: 4281/20019] [D loss: -0.342972] [G loss: 4.407323] [ElapsedTime: 78467.76 [sec]]
+2019-01-18 17:20:29,097 :[Epoch: 1/200] [Batch: 4381/20019] [D loss: -0.494660] [G loss: 3.434678] [ElapsedTime: 78767.24 [sec]]
+2019-01-18 17:25:26,946 :[Epoch: 1/200] [Batch: 4481/20019] [D loss: -0.482188] [G loss: 3.008852] [ElapsedTime: 79065.05 [sec]]
+2019-01-18 17:30:08,198 :[Epoch: 1/200] [Batch: 4581/20019] [D loss: -0.431688] [G loss: 2.377237] [ElapsedTime: 79346.34 [sec]]
+2019-01-18 17:34:49,368 :[Epoch: 1/200] [Batch: 4681/20019] [D loss: -0.522682] [G loss: 2.818932] [ElapsedTime: 79627.51 [sec]]
+2019-01-18 17:39:28,114 :[Epoch: 1/200] [Batch: 4781/20019] [D loss: -0.528089] [G loss: 3.100237] [ElapsedTime: 79906.22 [sec]]
+2019-01-18 17:44:12,517 :[Epoch: 1/200] [Batch: 4881/20019] [D loss: -0.360587] [G loss: 2.403654] [ElapsedTime: 80190.65 [sec]]
+2019-01-18 17:49:09,799 :[Epoch: 1/200] [Batch: 4981/20019] [D loss: -0.351870] [G loss: 1.811981] [ElapsedTime: 80487.94 [sec]]
+2019-01-18 17:49:30,108 :[Epoch: 1/200] [Iteration: 25000] [Inception Score: 5.17] [Max Score Ever: 5.91]
+2019-01-18 17:54:19,838 :[Epoch: 1/200] [Batch: 5081/20019] [D loss: -1.427423] [G loss: 3.620627] [ElapsedTime: 80797.96 [sec]]
+2019-01-18 17:59:13,039 :[Epoch: 1/200] [Batch: 5181/20019] [D loss: -0.896298] [G loss: 2.089103] [ElapsedTime: 81091.18 [sec]]
+2019-01-18 18:04:47,311 :[Epoch: 1/200] [Batch: 5281/20019] [D loss: -0.790781] [G loss: 2.387238] [ElapsedTime: 81425.39 [sec]]
+2019-01-18 18:10:17,474 :[Epoch: 1/200] [Batch: 5381/20019] [D loss: -0.341593] [G loss: 2.974957] [ElapsedTime: 81755.56 [sec]]
+2019-01-18 18:15:34,757 :[Epoch: 1/200] [Batch: 5481/20019] [D loss: -0.366712] [G loss: 2.611891] [ElapsedTime: 82072.89 [sec]]
+2019-01-18 18:20:58,432 :[Epoch: 1/200] [Batch: 5581/20019] [D loss: -0.291352] [G loss: 2.379060] [ElapsedTime: 82396.57 [sec]]
+2019-01-18 18:26:09,341 :[Epoch: 1/200] [Batch: 5681/20019] [D loss: -0.235284] [G loss: 2.856942] [ElapsedTime: 82707.44 [sec]]
+2019-01-18 18:31:15,381 :[Epoch: 1/200] [Batch: 5781/20019] [D loss: -0.287860] [G loss: 3.711936] [ElapsedTime: 83013.52 [sec]]
+2019-01-18 18:36:21,470 :[Epoch: 1/200] [Batch: 5881/20019] [D loss: -0.566380] [G loss: 2.509472] [ElapsedTime: 83319.55 [sec]]
+2019-01-18 18:41:25,000 :[Epoch: 1/200] [Batch: 5981/20019] [D loss: -1.004576] [G loss: 2.912592] [ElapsedTime: 83623.14 [sec]]
+2019-01-18 18:41:44,362 :[Epoch: 1/200] [Iteration: 26000] [Inception Score: 4.93] [Max Score Ever: 5.91]
+2019-01-18 18:46:37,984 :[Epoch: 1/200] [Batch: 6081/20019] [D loss: -0.301095] [G loss: 3.229307] [ElapsedTime: 83936.12 [sec]]
+2019-01-18 18:51:13,992 :[Epoch: 1/200] [Batch: 6181/20019] [D loss: -0.277177] [G loss: 3.201954] [ElapsedTime: 84212.13 [sec]]
+2019-01-18 18:55:53,393 :[Epoch: 1/200] [Batch: 6281/20019] [D loss: -0.624677] [G loss: 2.068014] [ElapsedTime: 84491.53 [sec]]
+2019-01-18 19:00:23,500 :[Epoch: 1/200] [Batch: 6381/20019] [D loss: -0.308384] [G loss: 3.074620] [ElapsedTime: 84761.64 [sec]]
+2019-01-18 19:06:15,635 :[Epoch: 1/200] [Batch: 6481/20019] [D loss: -0.740318] [G loss: 3.040779] [ElapsedTime: 85113.77 [sec]]
+2019-01-18 19:11:35,913 :[Epoch: 1/200] [Batch: 6581/20019] [D loss: -1.257695] [G loss: 4.152033] [ElapsedTime: 85434.05 [sec]]
+2019-01-18 19:16:45,779 :[Epoch: 1/200] [Batch: 6681/20019] [D loss: -0.486390] [G loss: 2.273344] [ElapsedTime: 85743.92 [sec]]
+2019-01-18 19:21:53,154 :[Epoch: 1/200] [Batch: 6781/20019] [D loss: -0.423970] [G loss: 3.048976] [ElapsedTime: 86051.29 [sec]]
+2019-01-18 19:26:54,687 :[Epoch: 1/200] [Batch: 6881/20019] [D loss: -0.343569] [G loss: 3.453584] [ElapsedTime: 86352.80 [sec]]
+2019-01-18 19:31:50,852 :[Epoch: 1/200] [Batch: 6981/20019] [D loss: -0.268982] [G loss: 3.588331] [ElapsedTime: 86648.99 [sec]]
+2019-01-18 19:32:12,978 :[Epoch: 1/200] [Iteration: 27000] [Inception Score: 5.44] [Max Score Ever: 5.91]
+2019-01-18 19:37:07,660 :[Epoch: 1/200] [Batch: 7081/20019] [D loss: -0.152290] [G loss: 4.917905] [ElapsedTime: 86965.80 [sec]]
+2019-01-18 19:42:11,271 :[Epoch: 1/200] [Batch: 7181/20019] [D loss: -0.454492] [G loss: 2.583408] [ElapsedTime: 87269.39 [sec]]
+2019-01-18 19:47:30,603 :[Epoch: 1/200] [Batch: 7281/20019] [D loss: -0.701631] [G loss: 2.695813] [ElapsedTime: 87588.74 [sec]]
+2019-01-18 19:52:28,694 :[Epoch: 1/200] [Batch: 7381/20019] [D loss: -0.060136] [G loss: 1.506949] [ElapsedTime: 87886.79 [sec]]
+2019-01-18 19:57:24,689 :[Epoch: 1/200] [Batch: 7481/20019] [D loss: -0.139274] [G loss: 4.243326] [ElapsedTime: 88182.82 [sec]]
+2019-01-18 20:02:56,241 :[Epoch: 1/200] [Batch: 7581/20019] [D loss: -0.479861] [G loss: 2.871538] [ElapsedTime: 88514.38 [sec]]
+2019-01-18 20:07:57,065 :[Epoch: 1/200] [Batch: 7681/20019] [D loss: -0.498058] [G loss: 3.497651] [ElapsedTime: 88815.20 [sec]]
+2019-01-18 20:13:05,497 :[Epoch: 1/200] [Batch: 7781/20019] [D loss: -0.132039] [G loss: 2.767457] [ElapsedTime: 89123.63 [sec]]
+2019-01-18 20:18:21,570 :[Epoch: 1/200] [Batch: 7881/20019] [D loss: -0.658082] [G loss: 3.192612] [ElapsedTime: 89439.71 [sec]]
+2019-01-18 20:23:41,879 :[Epoch: 1/200] [Batch: 7981/20019] [D loss: -0.902937] [G loss: 3.152478] [ElapsedTime: 89759.98 [sec]]
+2019-01-18 20:24:04,496 :[Epoch: 1/200] [Iteration: 28000] [Inception Score: 4.86] [Max Score Ever: 5.91]
+2019-01-18 20:29:19,597 :[Epoch: 1/200] [Batch: 8081/20019] [D loss: -0.117536] [G loss: 2.897165] [ElapsedTime: 90097.71 [sec]]
+2019-01-18 20:34:37,100 :[Epoch: 1/200] [Batch: 8181/20019] [D loss: -0.406876] [G loss: 3.058712] [ElapsedTime: 90415.24 [sec]]
+2019-01-18 20:39:53,296 :[Epoch: 1/200] [Batch: 8281/20019] [D loss: -0.127946] [G loss: 2.226804] [ElapsedTime: 90731.43 [sec]]
+2019-01-18 20:45:07,359 :[Epoch: 1/200] [Batch: 8381/20019] [D loss: -0.640333] [G loss: 2.839459] [ElapsedTime: 91045.46 [sec]]
+2019-01-18 20:50:10,471 :[Epoch: 1/200] [Batch: 8481/20019] [D loss: -0.259928] [G loss: 3.510040] [ElapsedTime: 91348.61 [sec]]
+2019-01-18 20:55:18,479 :[Epoch: 1/200] [Batch: 8581/20019] [D loss: -1.036601] [G loss: 2.417061] [ElapsedTime: 91656.62 [sec]]
+2019-01-18 21:00:22,323 :[Epoch: 1/200] [Batch: 8681/20019] [D loss: -1.148496] [G loss: 3.127385] [ElapsedTime: 91960.46 [sec]]
+2019-01-18 21:06:19,855 :[Epoch: 1/200] [Batch: 8781/20019] [D loss: 0.062051] [G loss: 3.941384] [ElapsedTime: 92317.98 [sec]]
+2019-01-18 21:11:38,803 :[Epoch: 1/200] [Batch: 8881/20019] [D loss: -0.125873] [G loss: 4.322977] [ElapsedTime: 92636.94 [sec]]
+2019-01-18 21:17:03,406 :[Epoch: 1/200] [Batch: 8981/20019] [D loss: -0.073928] [G loss: 2.888300] [ElapsedTime: 92961.54 [sec]]
+2019-01-18 21:17:28,077 :[Epoch: 1/200] [Iteration: 29000] [Inception Score: 4.97] [Max Score Ever: 5.91]
+2019-01-18 21:22:49,134 :[Epoch: 1/200] [Batch: 9081/20019] [D loss: -0.008284] [G loss: 2.342601] [ElapsedTime: 93307.27 [sec]]
+2019-01-18 21:28:09,978 :[Epoch: 1/200] [Batch: 9181/20019] [D loss: -0.649069] [G loss: 3.124393] [ElapsedTime: 93628.10 [sec]]
+2019-01-18 21:33:48,302 :[Epoch: 1/200] [Batch: 9281/20019] [D loss: -0.479308] [G loss: 3.267338] [ElapsedTime: 93966.44 [sec]]
+2019-01-18 21:39:06,508 :[Epoch: 1/200] [Batch: 9381/20019] [D loss: -0.524725] [G loss: 2.855619] [ElapsedTime: 94284.65 [sec]]
+2019-01-18 21:44:20,695 :[Epoch: 1/200] [Batch: 9481/20019] [D loss: -0.554519] [G loss: 3.396322] [ElapsedTime: 94598.83 [sec]]
+2019-01-18 21:49:30,098 :[Epoch: 1/200] [Batch: 9581/20019] [D loss: -0.567202] [G loss: 3.216470] [ElapsedTime: 94908.19 [sec]]
+2019-01-18 21:54:39,863 :[Epoch: 1/200] [Batch: 9681/20019] [D loss: -0.519356] [G loss: 2.838027] [ElapsedTime: 95218.00 [sec]]
+2019-01-18 21:59:50,578 :[Epoch: 1/200] [Batch: 9781/20019] [D loss: -0.246765] [G loss: 1.429102] [ElapsedTime: 95528.72 [sec]]
+2019-01-18 22:05:55,117 :[Epoch: 1/200] [Batch: 9881/20019] [D loss: -0.408693] [G loss: 3.419484] [ElapsedTime: 95893.14 [sec]]
+2019-01-18 22:11:06,440 :[Epoch: 1/200] [Batch: 9981/20019] [D loss: -0.205733] [G loss: 2.601705] [ElapsedTime: 96204.58 [sec]]
+2019-01-18 22:11:32,554 :[Epoch: 1/200] [Iteration: 30000] [Inception Score: 5.84] [Max Score Ever: 5.91]
+2019-01-18 22:16:54,229 :[Epoch: 1/200] [Batch: 10081/20019] [D loss: -0.411439] [G loss: 3.077254] [ElapsedTime: 96552.37 [sec]]
+2019-01-18 22:22:19,199 :[Epoch: 1/200] [Batch: 10181/20019] [D loss: -0.906130] [G loss: 3.800967] [ElapsedTime: 96877.24 [sec]]
+2019-01-18 22:27:54,932 :[Epoch: 1/200] [Batch: 10281/20019] [D loss: -0.580191] [G loss: 2.779789] [ElapsedTime: 97213.07 [sec]]
+2019-01-18 22:33:29,921 :[Epoch: 1/200] [Batch: 10381/20019] [D loss: -0.486361] [G loss: 3.317759] [ElapsedTime: 97548.06 [sec]]
+2019-01-18 22:38:56,820 :[Epoch: 1/200] [Batch: 10481/20019] [D loss: -0.445100] [G loss: 3.649584] [ElapsedTime: 97874.96 [sec]]
+2019-01-18 22:44:25,363 :[Epoch: 1/200] [Batch: 10581/20019] [D loss: -0.611826] [G loss: 3.101739] [ElapsedTime: 98203.50 [sec]]
+2019-01-18 22:49:51,149 :[Epoch: 1/200] [Batch: 10681/20019] [D loss: -0.637404] [G loss: 3.400799] [ElapsedTime: 98529.29 [sec]]
+2019-01-18 22:55:15,320 :[Epoch: 1/200] [Batch: 10781/20019] [D loss: -0.598612] [G loss: 2.519995] [ElapsedTime: 98853.46 [sec]]
+2019-01-18 23:00:38,313 :[Epoch: 1/200] [Batch: 10881/20019] [D loss: -0.460422] [G loss: 2.924993] [ElapsedTime: 99176.46 [sec]]
+2019-01-18 23:06:43,650 :[Epoch: 1/200] [Batch: 10981/20019] [D loss: -0.470735] [G loss: 3.865672] [ElapsedTime: 99541.79 [sec]]
+2019-01-18 23:07:07,882 :[Epoch: 1/200] [Iteration: 31000] [Inception Score: 5.28] [Max Score Ever: 5.91]
+2019-01-18 23:12:50,805 :[Epoch: 1/200] [Batch: 11081/20019] [D loss: -0.408738] [G loss: 3.126432] [ElapsedTime: 99908.94 [sec]]
+2019-01-18 23:18:43,852 :[Epoch: 1/200] [Batch: 11181/20019] [D loss: -0.601422] [G loss: 3.020747] [ElapsedTime: 100261.99 [sec]]
+2019-01-18 23:24:21,021 :[Epoch: 1/200] [Batch: 11281/20019] [D loss: -0.461967] [G loss: 4.212106] [ElapsedTime: 100599.17 [sec]]
+2019-01-18 23:29:20,979 :[Epoch: 1/200] [Batch: 11381/20019] [D loss: 0.047954] [G loss: 5.239005] [ElapsedTime: 100899.12 [sec]]
+2019-01-18 23:34:24,282 :[Epoch: 1/200] [Batch: 11481/20019] [D loss: -0.497339] [G loss: 3.693845] [ElapsedTime: 101202.42 [sec]]
+2019-01-18 23:39:16,962 :[Epoch: 1/200] [Batch: 11581/20019] [D loss: -0.932674] [G loss: 4.481060] [ElapsedTime: 101495.10 [sec]]
+2019-01-18 23:44:07,811 :[Epoch: 1/200] [Batch: 11681/20019] [D loss: -0.334706] [G loss: 4.310590] [ElapsedTime: 101785.93 [sec]]
+2019-01-18 23:48:53,335 :[Epoch: 1/200] [Batch: 11781/20019] [D loss: -0.321997] [G loss: 3.450406] [ElapsedTime: 102071.45 [sec]]
+2019-01-18 23:53:35,465 :[Epoch: 1/200] [Batch: 11881/20019] [D loss: -0.521536] [G loss: 4.339354] [ElapsedTime: 102353.60 [sec]]
+2019-01-18 23:58:14,083 :[Epoch: 1/200] [Batch: 11981/20019] [D loss: -0.610992] [G loss: 3.803907] [ElapsedTime: 102632.22 [sec]]
+2019-01-18 23:58:28,956 :[Epoch: 1/200] [Iteration: 32000] [Inception Score: 4.91] [Max Score Ever: 5.91]
+2019-01-19 00:03:49,632 :[Epoch: 1/200] [Batch: 12081/20019] [D loss: -1.141885] [G loss: 2.977976] [ElapsedTime: 102967.74 [sec]]
+2019-01-19 00:09:00,089 :[Epoch: 1/200] [Batch: 12181/20019] [D loss: -0.673527] [G loss: 4.105276] [ElapsedTime: 103278.23 [sec]]
+2019-01-19 00:14:35,834 :[Epoch: 1/200] [Batch: 12281/20019] [D loss: -1.140518] [G loss: 3.878363] [ElapsedTime: 103613.97 [sec]]
+2019-01-19 00:19:55,050 :[Epoch: 1/200] [Batch: 12381/20019] [D loss: -0.654735] [G loss: 3.183607] [ElapsedTime: 103933.19 [sec]]
+2019-01-19 00:25:13,645 :[Epoch: 1/200] [Batch: 12481/20019] [D loss: -0.185234] [G loss: 2.026747] [ElapsedTime: 104251.77 [sec]]
+2019-01-19 00:30:33,823 :[Epoch: 1/200] [Batch: 12581/20019] [D loss: -0.894730] [G loss: 2.991241] [ElapsedTime: 104571.96 [sec]]
+2019-01-19 00:36:00,879 :[Epoch: 1/200] [Batch: 12681/20019] [D loss: -0.572288] [G loss: 4.669647] [ElapsedTime: 104899.02 [sec]]
+2019-01-19 00:41:18,516 :[Epoch: 1/200] [Batch: 12781/20019] [D loss: -1.312084] [G loss: 3.544584] [ElapsedTime: 105216.65 [sec]]
+2019-01-19 00:46:35,211 :[Epoch: 1/200] [Batch: 12881/20019] [D loss: -0.276026] [G loss: 4.610692] [ElapsedTime: 105533.35 [sec]]
+2019-01-19 00:51:39,363 :[Epoch: 1/200] [Batch: 12981/20019] [D loss: -0.264124] [G loss: 4.758996] [ElapsedTime: 105837.46 [sec]]
+2019-01-19 00:51:59,809 :[Epoch: 1/200] [Iteration: 33000] [Inception Score: 5.52] [Max Score Ever: 5.91]
+2019-01-19 00:57:07,517 :[Epoch: 1/200] [Batch: 13081/20019] [D loss: -0.592543] [G loss: 2.441155] [ElapsedTime: 106165.66 [sec]]
+2019-01-19 01:03:06,655 :[Epoch: 1/200] [Batch: 13181/20019] [D loss: -0.358835] [G loss: 2.901232] [ElapsedTime: 106524.82 [sec]]
+2019-01-19 01:09:08,764 :[Epoch: 1/200] [Batch: 13281/20019] [D loss: 0.143774] [G loss: 5.243924] [ElapsedTime: 106886.87 [sec]]
+2019-01-19 01:14:41,146 :[Epoch: 1/200] [Batch: 13381/20019] [D loss: -0.981746] [G loss: 5.040245] [ElapsedTime: 107219.28 [sec]]
+2019-01-19 01:20:01,801 :[Epoch: 1/200] [Batch: 13481/20019] [D loss: 0.043113] [G loss: 7.108428] [ElapsedTime: 107539.94 [sec]]
+2019-01-19 01:25:29,843 :[Epoch: 1/200] [Batch: 13581/20019] [D loss: -0.170813] [G loss: 4.472473] [ElapsedTime: 107867.87 [sec]]
+2019-01-19 01:30:53,196 :[Epoch: 1/200] [Batch: 13681/20019] [D loss: -0.223507] [G loss: 4.647070] [ElapsedTime: 108191.33 [sec]]
+2019-01-19 01:36:06,500 :[Epoch: 1/200] [Batch: 13781/20019] [D loss: -0.525955] [G loss: 4.673741] [ElapsedTime: 108504.64 [sec]]
+2019-01-19 01:41:06,203 :[Epoch: 1/200] [Batch: 13881/20019] [D loss: -0.473303] [G loss: 4.598086] [ElapsedTime: 108804.33 [sec]]
+2019-01-19 01:46:12,228 :[Epoch: 1/200] [Batch: 13981/20019] [D loss: -0.425028] [G loss: 4.244465] [ElapsedTime: 109110.37 [sec]]
+2019-01-19 01:46:34,287 :[Epoch: 1/200] [Iteration: 34000] [Inception Score: 5.45] [Max Score Ever: 5.91]
+2019-01-19 01:51:48,543 :[Epoch: 1/200] [Batch: 14081/20019] [D loss: -0.928173] [G loss: 5.454555] [ElapsedTime: 109446.68 [sec]]
+2019-01-19 01:57:01,223 :[Epoch: 1/200] [Batch: 14181/20019] [D loss: -0.444162] [G loss: 4.703828] [ElapsedTime: 109759.23 [sec]]
+2019-01-19 02:03:12,335 :[Epoch: 1/200] [Batch: 14281/20019] [D loss: -0.420006] [G loss: 4.617074] [ElapsedTime: 110130.47 [sec]]
+2019-01-19 02:08:56,683 :[Epoch: 1/200] [Batch: 14381/20019] [D loss: -0.543629] [G loss: 3.871535] [ElapsedTime: 110474.82 [sec]]
+2019-01-19 02:14:30,785 :[Epoch: 1/200] [Batch: 14481/20019] [D loss: -0.330756] [G loss: 3.777542] [ElapsedTime: 110808.92 [sec]]
+2019-01-19 02:20:15,968 :[Epoch: 1/200] [Batch: 14581/20019] [D loss: -0.379831] [G loss: 3.323593] [ElapsedTime: 111154.11 [sec]]
+2019-01-19 02:25:40,385 :[Epoch: 1/200] [Batch: 14681/20019] [D loss: -0.990411] [G loss: 4.595844] [ElapsedTime: 111478.52 [sec]]
+2019-01-19 02:30:55,399 :[Epoch: 1/200] [Batch: 14781/20019] [D loss: -0.610475] [G loss: 4.090503] [ElapsedTime: 111793.56 [sec]]
+2019-01-19 02:36:06,148 :[Epoch: 1/200] [Batch: 14881/20019] [D loss: -0.462378] [G loss: 1.872134] [ElapsedTime: 112104.29 [sec]]
+2019-01-19 02:41:29,789 :[Epoch: 1/200] [Batch: 14981/20019] [D loss: -0.279423] [G loss: 3.928978] [ElapsedTime: 112427.93 [sec]]
+2019-01-19 02:41:54,060 :[Epoch: 1/200] [Iteration: 35000] [Inception Score: 5.50] [Max Score Ever: 5.91]
+2019-01-19 02:47:18,850 :[Epoch: 1/200] [Batch: 15081/20019] [D loss: -0.079476] [G loss: 4.129916] [ElapsedTime: 112776.97 [sec]]
+2019-01-19 02:52:41,736 :[Epoch: 1/200] [Batch: 15181/20019] [D loss: -0.921005] [G loss: 3.450531] [ElapsedTime: 113099.87 [sec]]
+2019-01-19 02:58:08,639 :[Epoch: 1/200] [Batch: 15281/20019] [D loss: -0.726107] [G loss: 2.752078] [ElapsedTime: 113426.78 [sec]]
+2019-01-19 03:04:25,054 :[Epoch: 1/200] [Batch: 15381/20019] [D loss: -0.733392] [G loss: 4.099110] [ElapsedTime: 113803.17 [sec]]
+2019-01-19 03:09:59,565 :[Epoch: 1/200] [Batch: 15481/20019] [D loss: 0.393495] [G loss: 3.885141] [ElapsedTime: 114137.70 [sec]]
+2019-01-19 03:15:41,323 :[Epoch: 1/200] [Batch: 15581/20019] [D loss: -0.753382] [G loss: 4.318759] [ElapsedTime: 114479.46 [sec]]
+2019-01-19 03:21:09,334 :[Epoch: 1/200] [Batch: 15681/20019] [D loss: -0.321842] [G loss: 6.471931] [ElapsedTime: 114807.45 [sec]]
+2019-01-19 03:26:21,600 :[Epoch: 1/200] [Batch: 15781/20019] [D loss: -0.325818] [G loss: 5.189527] [ElapsedTime: 115119.74 [sec]]
+2019-01-19 03:31:38,504 :[Epoch: 1/200] [Batch: 15881/20019] [D loss: -0.425255] [G loss: 4.928290] [ElapsedTime: 115436.64 [sec]]
+2019-01-19 03:37:04,734 :[Epoch: 1/200] [Batch: 15981/20019] [D loss: -0.554676] [G loss: 4.749615] [ElapsedTime: 115762.83 [sec]]
+2019-01-19 03:37:28,287 :[Epoch: 1/200] [Iteration: 36000] [Inception Score: 5.59] [Max Score Ever: 5.91]
+2019-01-19 03:42:46,059 :[Epoch: 1/200] [Batch: 16081/20019] [D loss: -0.585930] [G loss: 4.366483] [ElapsedTime: 116104.20 [sec]]
+2019-01-19 03:48:04,962 :[Epoch: 1/200] [Batch: 16181/20019] [D loss: -0.645010] [G loss: 4.096413] [ElapsedTime: 116423.10 [sec]]
+2019-01-19 03:53:16,063 :[Epoch: 1/200] [Batch: 16281/20019] [D loss: -0.648038] [G loss: 4.021875] [ElapsedTime: 116734.18 [sec]]
+2019-01-19 03:58:30,272 :[Epoch: 1/200] [Batch: 16381/20019] [D loss: -0.504976] [G loss: 4.723566] [ElapsedTime: 117048.41 [sec]]
+2019-01-19 04:04:48,102 :[Epoch: 1/200] [Batch: 16481/20019] [D loss: -0.426161] [G loss: 3.691645] [ElapsedTime: 117426.24 [sec]]
+2019-01-19 04:10:34,839 :[Epoch: 1/200] [Batch: 16581/20019] [D loss: -0.570492] [G loss: 4.828212] [ElapsedTime: 117772.92 [sec]]
+2019-01-19 04:16:20,073 :[Epoch: 1/200] [Batch: 16681/20019] [D loss: -0.609745] [G loss: 4.202080] [ElapsedTime: 118118.18 [sec]]
+2019-01-19 04:21:49,155 :[Epoch: 1/200] [Batch: 16781/20019] [D loss: -0.777700] [G loss: 4.427207] [ElapsedTime: 118447.29 [sec]]
+2019-01-19 04:27:16,677 :[Epoch: 1/200] [Batch: 16881/20019] [D loss: -0.745609] [G loss: 4.118341] [ElapsedTime: 118774.78 [sec]]
+2019-01-19 04:32:58,397 :[Epoch: 1/200] [Batch: 16981/20019] [D loss: -0.284588] [G loss: 2.031933] [ElapsedTime: 119116.53 [sec]]
+2019-01-19 04:33:22,267 :[Epoch: 1/200] [Iteration: 37000] [Inception Score: 5.50] [Max Score Ever: 5.91]
+2019-01-19 04:38:56,028 :[Epoch: 1/200] [Batch: 17081/20019] [D loss: -0.860071] [G loss: 4.766809] [ElapsedTime: 119474.17 [sec]]
+2019-01-19 04:44:36,537 :[Epoch: 1/200] [Batch: 17181/20019] [D loss: -0.077079] [G loss: 6.206157] [ElapsedTime: 119814.67 [sec]]
+2019-01-19 04:50:08,515 :[Epoch: 1/200] [Batch: 17281/20019] [D loss: 0.595032] [G loss: 2.942015] [ElapsedTime: 120146.65 [sec]]
+2019-01-19 04:55:30,086 :[Epoch: 1/200] [Batch: 17381/20019] [D loss: -0.853822] [G loss: 4.481534] [ElapsedTime: 120468.22 [sec]]
+2019-01-19 05:00:59,887 :[Epoch: 1/200] [Batch: 17481/20019] [D loss: -0.898849] [G loss: 6.038595] [ElapsedTime: 120797.97 [sec]]
+2019-01-19 05:07:09,183 :[Epoch: 1/200] [Batch: 17581/20019] [D loss: -1.822022] [G loss: 4.185816] [ElapsedTime: 121167.32 [sec]]
+2019-01-19 05:12:54,699 :[Epoch: 1/200] [Batch: 17681/20019] [D loss: 0.059901] [G loss: 4.791031] [ElapsedTime: 121512.84 [sec]]
+2019-01-19 05:18:22,397 :[Epoch: 1/200] [Batch: 17781/20019] [D loss: -1.430956] [G loss: 3.936650] [ElapsedTime: 121840.47 [sec]]
+2019-01-19 05:23:51,821 :[Epoch: 1/200] [Batch: 17881/20019] [D loss: -0.027987] [G loss: 6.800263] [ElapsedTime: 122169.91 [sec]]
+2019-01-19 05:29:19,044 :[Epoch: 1/200] [Batch: 17981/20019] [D loss: -0.536328] [G loss: 6.416045] [ElapsedTime: 122497.18 [sec]]
+2019-01-19 05:29:46,291 :[Epoch: 1/200] [Iteration: 38000] [Inception Score: 5.00] [Max Score Ever: 5.91]
+2019-01-19 05:35:18,092 :[Epoch: 1/200] [Batch: 18081/20019] [D loss: 0.106580] [G loss: 5.009009] [ElapsedTime: 122856.23 [sec]]
+2019-01-19 05:40:55,259 :[Epoch: 1/200] [Batch: 18181/20019] [D loss: -0.513436] [G loss: 4.911232] [ElapsedTime: 123193.36 [sec]]
+2019-01-19 05:46:25,851 :[Epoch: 1/200] [Batch: 18281/20019] [D loss: -0.293466] [G loss: 5.532663] [ElapsedTime: 123523.95 [sec]]
+2019-01-19 05:51:53,829 :[Epoch: 1/200] [Batch: 18381/20019] [D loss: -0.737952] [G loss: 5.220649] [ElapsedTime: 123851.97 [sec]]
+2019-01-19 05:57:15,842 :[Epoch: 1/200] [Batch: 18481/20019] [D loss: -0.490100] [G loss: 4.959163] [ElapsedTime: 124173.89 [sec]]
+2019-01-19 06:03:21,799 :[Epoch: 1/200] [Batch: 18581/20019] [D loss: -0.674249] [G loss: 4.599260] [ElapsedTime: 124539.92 [sec]]
+2019-01-19 06:09:12,187 :[Epoch: 1/200] [Batch: 18681/20019] [D loss: -0.671373] [G loss: 4.571543] [ElapsedTime: 124890.32 [sec]]
+2019-01-19 06:14:59,745 :[Epoch: 1/200] [Batch: 18781/20019] [D loss: -0.602546] [G loss: 4.542022] [ElapsedTime: 125237.69 [sec]]
+2019-01-19 06:20:19,359 :[Epoch: 1/200] [Batch: 18881/20019] [D loss: -0.323101] [G loss: 4.633922] [ElapsedTime: 125557.48 [sec]]
+2019-01-19 06:25:34,671 :[Epoch: 1/200] [Batch: 18981/20019] [D loss: -0.887327] [G loss: 5.582808] [ElapsedTime: 125872.81 [sec]]
+2019-01-19 06:25:56,942 :[Epoch: 1/200] [Iteration: 39000] [Inception Score: 5.36] [Max Score Ever: 5.91]
+2019-01-19 06:31:29,027 :[Epoch: 1/200] [Batch: 19081/20019] [D loss: -0.131075] [G loss: 4.656498] [ElapsedTime: 126227.16 [sec]]
+2019-01-19 06:37:04,664 :[Epoch: 1/200] [Batch: 19181/20019] [D loss: -0.154923] [G loss: 4.557332] [ElapsedTime: 126562.72 [sec]]
+2019-01-19 06:42:30,993 :[Epoch: 1/200] [Batch: 19281/20019] [D loss: -0.622375] [G loss: 3.526725] [ElapsedTime: 126889.13 [sec]]
+2019-01-19 06:47:51,567 :[Epoch: 1/200] [Batch: 19381/20019] [D loss: -0.526914] [G loss: 4.450517] [ElapsedTime: 127209.70 [sec]]
+2019-01-19 06:53:12,581 :[Epoch: 1/200] [Batch: 19481/20019] [D loss: -0.265470] [G loss: 3.260762] [ElapsedTime: 127530.64 [sec]]
+2019-01-19 06:58:34,528 :[Epoch: 1/200] [Batch: 19581/20019] [D loss: -0.886375] [G loss: 4.423532] [ElapsedTime: 127852.67 [sec]]
+2019-01-19 07:05:03,376 :[Epoch: 1/200] [Batch: 19681/20019] [D loss: -0.698591] [G loss: 3.357712] [ElapsedTime: 128241.51 [sec]]
+2019-01-19 07:10:54,727 :[Epoch: 1/200] [Batch: 19781/20019] [D loss: -0.376846] [G loss: 3.872328] [ElapsedTime: 128592.87 [sec]]
+2019-01-19 07:16:41,860 :[Epoch: 1/200] [Batch: 19881/20019] [D loss: -0.395062] [G loss: 4.960534] [ElapsedTime: 128939.99 [sec]]
+2019-01-19 07:22:06,978 :[Epoch: 1/200] [Batch: 19981/20019] [D loss: -0.750270] [G loss: 5.016987] [ElapsedTime: 129265.12 [sec]]
+2019-01-19 07:22:30,545 :[Epoch: 1/200] [Iteration: 40000] [Inception Score: 5.05] [Max Score Ever: 5.91]
+2019-01-19 07:27:50,960 :[Epoch: 2/200] [Batch: 62/20019] [D loss: -0.574578] [G loss: 4.098327] [ElapsedTime: 129609.10 [sec]]
+2019-01-19 07:33:38,693 :[Epoch: 2/200] [Batch: 162/20019] [D loss: -0.324216] [G loss: 5.074292] [ElapsedTime: 129956.80 [sec]]
+2019-01-19 07:39:10,851 :[Epoch: 2/200] [Batch: 262/20019] [D loss: -1.168262] [G loss: 4.099129] [ElapsedTime: 130288.99 [sec]]
+2019-01-19 07:44:29,854 :[Epoch: 2/200] [Batch: 362/20019] [D loss: -0.369729] [G loss: 3.904471] [ElapsedTime: 130607.99 [sec]]
+2019-01-19 07:49:59,411 :[Epoch: 2/200] [Batch: 462/20019] [D loss: -0.732106] [G loss: 4.652153] [ElapsedTime: 130937.51 [sec]]
+2019-01-19 07:55:31,641 :[Epoch: 2/200] [Batch: 562/20019] [D loss: -0.754140] [G loss: 5.261687] [ElapsedTime: 131269.78 [sec]]
+2019-01-19 08:01:31,455 :[Epoch: 2/200] [Batch: 662/20019] [D loss: -0.441693] [G loss: 3.195927] [ElapsedTime: 131629.59 [sec]]
+2019-01-19 08:08:37,102 :[Epoch: 2/200] [Batch: 762/20019] [D loss: -1.099274] [G loss: 3.038260] [ElapsedTime: 132055.24 [sec]]
+2019-01-19 08:14:46,742 :[Epoch: 2/200] [Batch: 862/20019] [D loss: -0.482176] [G loss: 3.890885] [ElapsedTime: 132424.88 [sec]]
+2019-01-19 08:20:49,407 :[Epoch: 2/200] [Batch: 962/20019] [D loss: 1.999047] [G loss: 5.606656] [ElapsedTime: 132787.54 [sec]]
+2019-01-19 08:21:17,560 :[Epoch: 2/200] [Iteration: 41000] [Inception Score: 5.46] [Max Score Ever: 5.91]
+2019-01-19 08:27:09,697 :[Epoch: 2/200] [Batch: 1062/20019] [D loss: -0.024258] [G loss: 5.761624] [ElapsedTime: 133167.79 [sec]]
+2019-01-19 08:33:21,072 :[Epoch: 2/200] [Batch: 1162/20019] [D loss: -0.349727] [G loss: 6.078902] [ElapsedTime: 133539.21 [sec]]
+2019-01-19 08:39:14,799 :[Epoch: 2/200] [Batch: 1262/20019] [D loss: -0.431695] [G loss: 5.697051] [ElapsedTime: 133892.94 [sec]]
+2019-01-19 08:45:11,483 :[Epoch: 2/200] [Batch: 1362/20019] [D loss: -0.230570] [G loss: 6.326441] [ElapsedTime: 134249.62 [sec]]
+2019-01-19 08:51:09,037 :[Epoch: 2/200] [Batch: 1462/20019] [D loss: -0.331350] [G loss: 5.539596] [ElapsedTime: 134607.18 [sec]]
+2019-01-19 08:56:50,030 :[Epoch: 2/200] [Batch: 1562/20019] [D loss: -0.546882] [G loss: 6.318274] [ElapsedTime: 134948.17 [sec]]
+2019-01-19 09:03:35,882 :[Epoch: 2/200] [Batch: 1662/20019] [D loss: -0.770517] [G loss: 5.778117] [ElapsedTime: 135354.02 [sec]]
+2019-01-19 09:09:53,460 :[Epoch: 2/200] [Batch: 1762/20019] [D loss: -0.279246] [G loss: 6.318713] [ElapsedTime: 135731.47 [sec]]
+2019-01-19 09:15:45,710 :[Epoch: 2/200] [Batch: 1862/20019] [D loss: 0.089163] [G loss: 5.446294] [ElapsedTime: 136083.85 [sec]]
+2019-01-19 09:21:38,426 :[Epoch: 2/200] [Batch: 1962/20019] [D loss: -0.579430] [G loss: 5.392143] [ElapsedTime: 136436.56 [sec]]
+2019-01-19 09:22:07,249 :[Epoch: 2/200] [Iteration: 42000] [Inception Score: 5.68] [Max Score Ever: 5.91]
+2019-01-19 09:28:17,639 :[Epoch: 2/200] [Batch: 2062/20019] [D loss: -0.527530] [G loss: 5.625763] [ElapsedTime: 136835.78 [sec]]
+2019-01-19 09:34:17,267 :[Epoch: 2/200] [Batch: 2162/20019] [D loss: -0.410656] [G loss: 4.903415] [ElapsedTime: 137195.35 [sec]]
+2019-01-19 09:40:18,557 :[Epoch: 2/200] [Batch: 2262/20019] [D loss: -0.487926] [G loss: 5.612898] [ElapsedTime: 137556.69 [sec]]
+2019-01-19 09:46:11,359 :[Epoch: 2/200] [Batch: 2362/20019] [D loss: -0.568765] [G loss: 4.795855] [ElapsedTime: 137909.49 [sec]]
+2019-01-19 09:52:01,114 :[Epoch: 2/200] [Batch: 2462/20019] [D loss: -0.260044] [G loss: 5.519771] [ElapsedTime: 138259.25 [sec]]
+2019-01-19 09:57:50,098 :[Epoch: 2/200] [Batch: 2562/20019] [D loss: -0.373534] [G loss: 5.060729] [ElapsedTime: 138608.23 [sec]]
+2019-01-19 10:04:58,439 :[Epoch: 2/200] [Batch: 2662/20019] [D loss: -0.337964] [G loss: 5.582596] [ElapsedTime: 139036.58 [sec]]
+2019-01-19 10:11:10,804 :[Epoch: 2/200] [Batch: 2762/20019] [D loss: -0.602406] [G loss: 5.626723] [ElapsedTime: 139408.92 [sec]]
+2019-01-19 10:17:03,650 :[Epoch: 2/200] [Batch: 2862/20019] [D loss: -0.312916] [G loss: 4.429593] [ElapsedTime: 139761.79 [sec]]
+2019-01-19 10:23:03,243 :[Epoch: 2/200] [Batch: 2962/20019] [D loss: -0.550121] [G loss: 6.126581] [ElapsedTime: 140121.30 [sec]]
+2019-01-19 10:23:31,848 :[Epoch: 2/200] [Iteration: 43000] [Inception Score: 5.63] [Max Score Ever: 5.91]
+2019-01-19 10:29:36,463 :[Epoch: 2/200] [Batch: 3062/20019] [D loss: -0.226046] [G loss: 4.961237] [ElapsedTime: 140514.60 [sec]]
+2019-01-19 10:35:29,653 :[Epoch: 2/200] [Batch: 3162/20019] [D loss: -0.555809] [G loss: 5.722942] [ElapsedTime: 140867.79 [sec]]
+2019-01-19 10:41:25,966 :[Epoch: 2/200] [Batch: 3262/20019] [D loss: -0.698757] [G loss: 4.717649] [ElapsedTime: 141224.10 [sec]]
+2019-01-19 10:47:11,318 :[Epoch: 2/200] [Batch: 3362/20019] [D loss: -1.506737] [G loss: 4.942800] [ElapsedTime: 141569.44 [sec]]
+2019-01-19 10:53:06,336 :[Epoch: 2/200] [Batch: 3462/20019] [D loss: -0.627938] [G loss: 4.645865] [ElapsedTime: 141924.47 [sec]]
+2019-01-19 10:58:41,815 :[Epoch: 2/200] [Batch: 3562/20019] [D loss: -0.338086] [G loss: 6.878084] [ElapsedTime: 142259.95 [sec]]
+2019-01-19 11:05:37,601 :[Epoch: 2/200] [Batch: 3662/20019] [D loss: -0.424123] [G loss: 5.829158] [ElapsedTime: 142675.74 [sec]]
+2019-01-19 11:11:43,579 :[Epoch: 2/200] [Batch: 3762/20019] [D loss: -0.758342] [G loss: 6.913014] [ElapsedTime: 143041.72 [sec]]
+2019-01-19 11:17:49,889 :[Epoch: 2/200] [Batch: 3862/20019] [D loss: -0.499242] [G loss: 6.091105] [ElapsedTime: 143407.96 [sec]]
+2019-01-19 11:23:55,658 :[Epoch: 2/200] [Batch: 3962/20019] [D loss: -0.357344] [G loss: 5.484147] [ElapsedTime: 143773.80 [sec]]
+2019-01-19 11:24:22,832 :[Epoch: 2/200] [Iteration: 44000] [Inception Score: 5.31] [Max Score Ever: 5.91]
+2019-01-19 11:30:18,061 :[Epoch: 2/200] [Batch: 4062/20019] [D loss: -1.021747] [G loss: 5.597413] [ElapsedTime: 144156.20 [sec]]
+2019-01-19 11:35:52,891 :[Epoch: 2/200] [Batch: 4162/20019] [D loss: -0.365344] [G loss: 5.947717] [ElapsedTime: 144490.98 [sec]]
+2019-01-19 11:41:36,457 :[Epoch: 2/200] [Batch: 4262/20019] [D loss: 0.745414] [G loss: 7.775845] [ElapsedTime: 144834.59 [sec]]
+2019-01-19 11:47:13,463 :[Epoch: 2/200] [Batch: 4362/20019] [D loss: -0.065051] [G loss: 6.892298] [ElapsedTime: 145171.53 [sec]]
+2019-01-19 11:52:56,903 :[Epoch: 2/200] [Batch: 4462/20019] [D loss: -0.036342] [G loss: 6.142596] [ElapsedTime: 145515.04 [sec]]
+2019-01-19 11:58:41,137 :[Epoch: 2/200] [Batch: 4562/20019] [D loss: -0.291800] [G loss: 6.070592] [ElapsedTime: 145859.28 [sec]]
+2019-01-19 12:05:52,004 :[Epoch: 2/200] [Batch: 4662/20019] [D loss: -0.307964] [G loss: 5.481305] [ElapsedTime: 146290.16 [sec]]
+2019-01-19 12:11:57,461 :[Epoch: 2/200] [Batch: 4762/20019] [D loss: -0.820351] [G loss: 5.578687] [ElapsedTime: 146655.60 [sec]]
+2019-01-19 12:18:02,759 :[Epoch: 2/200] [Batch: 4862/20019] [D loss: -0.438791] [G loss: 5.333378] [ElapsedTime: 147020.87 [sec]]
+2019-01-19 12:24:02,517 :[Epoch: 2/200] [Batch: 4962/20019] [D loss: -0.668453] [G loss: 5.889215] [ElapsedTime: 147380.66 [sec]]
+2019-01-19 12:24:31,956 :[Epoch: 2/200] [Iteration: 45000] [Inception Score: 5.70] [Max Score Ever: 5.91]
+2019-01-19 12:30:33,369 :[Epoch: 2/200] [Batch: 5062/20019] [D loss: -0.416372] [G loss: 5.553198] [ElapsedTime: 147771.51 [sec]]
+2019-01-19 12:36:25,984 :[Epoch: 2/200] [Batch: 5162/20019] [D loss: -0.664218] [G loss: 5.849461] [ElapsedTime: 148124.12 [sec]]
+2019-01-19 12:42:17,411 :[Epoch: 2/200] [Batch: 5262/20019] [D loss: -0.648328] [G loss: 5.017159] [ElapsedTime: 148475.55 [sec]]
+2019-01-19 12:47:53,121 :[Epoch: 2/200] [Batch: 5362/20019] [D loss: -0.827974] [G loss: 6.157753] [ElapsedTime: 148811.14 [sec]]
+2019-01-19 12:53:26,993 :[Epoch: 2/200] [Batch: 5462/20019] [D loss: -0.005083] [G loss: 5.532600] [ElapsedTime: 149145.13 [sec]]
+2019-01-19 12:59:06,917 :[Epoch: 2/200] [Batch: 5562/20019] [D loss: -0.274602] [G loss: 6.110849] [ElapsedTime: 149485.05 [sec]]
+2019-01-19 13:06:09,644 :[Epoch: 2/200] [Batch: 5662/20019] [D loss: -0.189966] [G loss: 5.198114] [ElapsedTime: 149907.78 [sec]]
+2019-01-19 13:12:10,084 :[Epoch: 2/200] [Batch: 5762/20019] [D loss: -0.426075] [G loss: 5.851790] [ElapsedTime: 150268.12 [sec]]
+2019-01-19 13:18:16,050 :[Epoch: 2/200] [Batch: 5862/20019] [D loss: -0.260271] [G loss: 5.780818] [ElapsedTime: 150634.19 [sec]]
+2019-01-19 13:24:15,559 :[Epoch: 2/200] [Batch: 5962/20019] [D loss: -0.118108] [G loss: 4.746317] [ElapsedTime: 150993.67 [sec]]
+2019-01-19 13:24:44,728 :[Epoch: 2/200] [Iteration: 46000] [Inception Score: 5.47] [Max Score Ever: 5.91]
+2019-01-19 13:30:47,870 :[Epoch: 2/200] [Batch: 6062/20019] [D loss: -0.333370] [G loss: 5.588099] [ElapsedTime: 151386.01 [sec]]
+2019-01-19 13:36:41,892 :[Epoch: 2/200] [Batch: 6162/20019] [D loss: -0.400113] [G loss: 4.762609] [ElapsedTime: 151739.93 [sec]]
+2019-01-19 13:42:29,911 :[Epoch: 2/200] [Batch: 6262/20019] [D loss: -0.237292] [G loss: 5.824971] [ElapsedTime: 152088.05 [sec]]
+2019-01-19 13:48:28,972 :[Epoch: 2/200] [Batch: 6362/20019] [D loss: -0.154562] [G loss: 4.710089] [ElapsedTime: 152447.11 [sec]]
+2019-01-19 13:54:14,824 :[Epoch: 2/200] [Batch: 6462/20019] [D loss: -0.325777] [G loss: 5.320304] [ElapsedTime: 152792.92 [sec]]
+2019-01-19 13:59:56,779 :[Epoch: 2/200] [Batch: 6562/20019] [D loss: -0.305328] [G loss: 5.706107] [ElapsedTime: 153134.92 [sec]]
+2019-01-19 14:06:44,330 :[Epoch: 2/200] [Batch: 6662/20019] [D loss: -0.675729] [G loss: 5.717173] [ElapsedTime: 153542.00 [sec]]
+2019-01-19 14:12:50,422 :[Epoch: 2/200] [Batch: 6762/20019] [D loss: -0.474247] [G loss: 5.971649] [ElapsedTime: 153908.56 [sec]]
+2019-01-19 14:18:47,637 :[Epoch: 2/200] [Batch: 6862/20019] [D loss: -0.374413] [G loss: 4.844576] [ElapsedTime: 154265.78 [sec]]
+2019-01-19 14:24:44,157 :[Epoch: 2/200] [Batch: 6962/20019] [D loss: -0.257298] [G loss: 5.267573] [ElapsedTime: 154622.24 [sec]]
+2019-01-19 14:25:13,638 :[Epoch: 2/200] [Iteration: 47000] [Inception Score: 5.45] [Max Score Ever: 5.91]
+2019-01-19 14:31:14,453 :[Epoch: 2/200] [Batch: 7062/20019] [D loss: -1.005879] [G loss: 5.618381] [ElapsedTime: 155012.59 [sec]]
+2019-01-19 14:37:10,238 :[Epoch: 2/200] [Batch: 7162/20019] [D loss: -0.644928] [G loss: 5.683063] [ElapsedTime: 155368.31 [sec]]
+2019-01-19 14:43:01,840 :[Epoch: 2/200] [Batch: 7262/20019] [D loss: -0.433606] [G loss: 5.954217] [ElapsedTime: 155719.98 [sec]]
+2019-01-19 14:48:46,470 :[Epoch: 2/200] [Batch: 7362/20019] [D loss: -1.506203] [G loss: 6.160528] [ElapsedTime: 156064.59 [sec]]
+2019-01-19 14:54:27,738 :[Epoch: 2/200] [Batch: 7462/20019] [D loss: -0.916646] [G loss: 5.899592] [ElapsedTime: 156405.88 [sec]]
+2019-01-19 15:00:09,909 :[Epoch: 2/200] [Batch: 7562/20019] [D loss: -1.172464] [G loss: 7.460396] [ElapsedTime: 156747.98 [sec]]
+2019-01-19 15:07:12,058 :[Epoch: 2/200] [Batch: 7662/20019] [D loss: 2.803788] [G loss: 6.563416] [ElapsedTime: 157170.20 [sec]]
+2019-01-19 15:13:36,368 :[Epoch: 2/200] [Batch: 7762/20019] [D loss: -0.530995] [G loss: 5.897130] [ElapsedTime: 157554.45 [sec]]
+2019-01-19 15:19:44,736 :[Epoch: 2/200] [Batch: 7862/20019] [D loss: -0.571180] [G loss: 6.069611] [ElapsedTime: 157922.87 [sec]]
+2019-01-19 15:25:41,148 :[Epoch: 2/200] [Batch: 7962/20019] [D loss: -0.452949] [G loss: 6.331018] [ElapsedTime: 158279.19 [sec]]
+2019-01-19 15:26:09,336 :[Epoch: 2/200] [Iteration: 48000] [Inception Score: 5.57] [Max Score Ever: 5.91]
+2019-01-19 15:32:11,531 :[Epoch: 2/200] [Batch: 8062/20019] [D loss: -0.592048] [G loss: 5.403432] [ElapsedTime: 158669.67 [sec]]
+2019-01-19 15:38:04,157 :[Epoch: 2/200] [Batch: 8162/20019] [D loss: -0.810368] [G loss: 7.527114] [ElapsedTime: 159022.24 [sec]]
+2019-01-19 15:43:52,042 :[Epoch: 2/200] [Batch: 8262/20019] [D loss: -0.754103] [G loss: 5.103939] [ElapsedTime: 159370.18 [sec]]
+2019-01-19 15:49:39,752 :[Epoch: 2/200] [Batch: 8362/20019] [D loss: -1.190860] [G loss: 5.982460] [ElapsedTime: 159717.79 [sec]]
+2019-01-19 15:55:32,679 :[Epoch: 2/200] [Batch: 8462/20019] [D loss: -0.509760] [G loss: 6.480116] [ElapsedTime: 160070.82 [sec]]
+2019-01-19 16:01:41,779 :[Epoch: 2/200] [Batch: 8562/20019] [D loss: -0.299583] [G loss: 8.764218] [ElapsedTime: 160439.84 [sec]]
+2019-01-19 16:08:13,740 :[Epoch: 2/200] [Batch: 8662/20019] [D loss: -1.057808] [G loss: 5.631135] [ElapsedTime: 160831.88 [sec]]
+2019-01-19 16:14:27,042 :[Epoch: 2/200] [Batch: 8762/20019] [D loss: 0.421374] [G loss: 6.252285] [ElapsedTime: 161205.18 [sec]]
+2019-01-19 16:20:30,736 :[Epoch: 2/200] [Batch: 8862/20019] [D loss: -0.213824] [G loss: 6.442021] [ElapsedTime: 161568.84 [sec]]
