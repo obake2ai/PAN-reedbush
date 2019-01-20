@@ -24,9 +24,9 @@ opt = easydict.EasyDict({
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 98300, #0 = train from scratch
+    'resume' : 97300, #0 = train from scratch
     'logIS' : True,
-    'loadDir' : '0115:190116_NoiseGenerator2Dv6_WGANDiscriminator32__imagenet'
+    'loadDir' : '0115:190116_NoiseGenerator2Dv7_WGANDiscriminator32__imagenet'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
