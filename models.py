@@ -850,10 +850,7 @@ class NoiseResGeneratorW(nn.Module):
 class NoiseGenerator2Dv1(nn.Module):
     def __init__(self, opt):
         super(NoiseGenerator2Dv1, self).__init__()
-        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
-          channels = 1
-        else:
-          channels = 3
+        channels = 1 if opt.dataset == 'mnist' or opt.dataset == 'fashion' else 3
         self.img_shape = (channels, opt.img_size, opt.img_size)
 
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
@@ -873,6 +870,40 @@ class NoiseGenerator2Dv1(nn.Module):
         x = self.pre_layer(z)
         img = self.model(x.view(-1, 128 * 8, 4, 4))
         return img
+
+class NoiseGenerator2Dv1_(nn.Module):
+    def __init__(self, opt):
+        super(NoiseGenerator2Dv1_, self).__init__()
+        channels = 1 if opt.dataset == 'mnist' or opt.dataset == 'fashion' else 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+
+        self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
+
+        self.l1 = nn.Sequential(
+            NoiseLayer2D(128 * 8, 128 * 4, 0.1),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
+            NoiseLayer2D(128 * 4, 128 * 2, 0.1),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
+            NoiseLayer2D(128 * 2, 128 * 1, 0.1),
+        )
+
+        self.l2 = nn.Sequential(
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
+        )
+        self.l3 = nn.Sequential(
+            NoiseLayer2D(128 * 1, channels, 0.1),
+        )
+        self.l4 = nn.Sequential(
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        x = self.pre_layer(z)
+        x1 = self.l1(x.view(-1, 128 * 8, 4, 4))
+        x2 = self.l2(x1)
+        x3 = self.l3(x2)
+        img = self.l3(x3)
+        return img, x1, x2, x3
 
 class NoiseGenerator2Dv2(nn.Module):
     def __init__(self, opt):
@@ -1003,10 +1034,7 @@ class NoiseGenerator2Dv5(nn.Module):
 class NoiseGenerator2Dv6(nn.Module):
     def __init__(self, opt, seed=None):
         super(NoiseGenerator2Dv6, self).__init__()
-        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
-          channels = 1
-        else:
-          channels = 3
+        channels = 1 if opt.dataset == 'mnist' or opt.dataset == 'fashion' else 3
         self.img_shape = (channels, opt.img_size, opt.img_size)
 
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
