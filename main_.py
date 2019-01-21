@@ -119,9 +119,9 @@ def train(generator, discriminator, dataloader, opt):
 
         logger.info(opt)
         #logger.info(gName)
-        logger.info(generator)
+        #logger.info(generator)
         #logger.info(dName)
-        logger.info(discriminator)
+        #logger.info(discriminator)
 
     for epoch in range(opt.n_epochs):
         if epoch == 0 and epoch_done != 0: epoch += epoch_done
