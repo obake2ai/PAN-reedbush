@@ -873,7 +873,7 @@ class NoiseGenerator2Dv1(nn.Module):
 
 class NoiseGenerator2Dv1_(nn.Module):
     def __init__(self, opt):
-        super(NoiseGenerator2Dv1, self).__init__()
+        super(NoiseGenerator2Dv1_, self).__init__()
         channels = 1 if opt.dataset == 'mnist' or opt.dataset == 'fashion' else 3
         self.img_shape = (channels, opt.img_size, opt.img_size)
 
