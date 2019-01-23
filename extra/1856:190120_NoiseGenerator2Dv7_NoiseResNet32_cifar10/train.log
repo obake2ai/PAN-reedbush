@@ -1,0 +1,627 @@
+2019-01-20 18:56:58,527 :{'n_epochs': 200, 'batch_size': 64, 'lr': 0.0002, 'b1': 0.5, 'b2': 0.999, 'n_cpu': 8, 'latent_dim': 128, 'img_size': 32, 'n_critic': 1, 'clip_value': 0.01, 'sample_interval': 100, 'modelsave_interval': 1, 'log_interval': 100, 'dataset': 'cifar10', 'num_filters': 128, 'saveDir': None, 'resume': 0, 'logIS': True, 'loadDir': None}
+2019-01-20 18:56:58,528 :NoiseGenerator2Dv7(
+  (pre_layer): Linear(in_features=128, out_features=4096, bias=True)
+  (model): Sequential(
+    (0): NoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (1): NoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU()
+        (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Conv2d(1024, 768, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (2): Upsample(scale_factor=2, mode=bilinear)
+    (3): NoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(768, 768, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(768, 768, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (4): NoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU()
+        (1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Conv2d(768, 512, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (5): Upsample(scale_factor=2, mode=bilinear)
+    (6): NoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (7): NoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU()
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (8): Upsample(scale_factor=2, mode=bilinear)
+    (9): NoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (10): NoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU()
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (11): Upsample(scale_factor=2, mode=bilinear)
+    (12): NoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): NoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU()
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (13): NoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU()
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Conv2d(128, 3, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (14): Tanh()
+  )
+)
+2019-01-20 18:56:58,530 :NoiseResNet32(
+  (pre_layers): Sequential(
+    (0): Conv2d(3, 128, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace)
+    (3): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (layer1): Sequential(
+    (0): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer2): Sequential(
+    (0): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer3): Sequential(
+    (0): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): NoiseBasicBlock(
+      (layers): Sequential(
+        (0): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): NoiseLayer(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (avgpool): AvgPool2d(kernel_size=2, stride=1, padding=0)
+  (linear): Linear(in_features=512, out_features=1, bias=True)
+)
+2019-01-20 18:57:00,254 :[Epoch: 0/200] [Batch: 0/782] [D loss: 4.618308] [G loss: 0.180254] [ElapsedTime: 1.66 [sec]]
+2019-01-20 18:57:16,572 :[Epoch: 0/200] [Iteration: 0] [Inception Score: 1.34] [Max Score Ever: 1.34]
+2019-01-20 18:57:31,948 :[Epoch: 0/200] [Iteration: 1] [Inception Score: 1.33] [Max Score Ever: 1.34]
+2019-01-20 18:57:46,707 :[Epoch: 0/200] [Iteration: 2] [Inception Score: 1.34] [Max Score Ever: 1.34]
+2019-01-20 18:58:01,263 :[Epoch: 0/200] [Iteration: 3] [Inception Score: 1.34] [Max Score Ever: 1.34]
+2019-01-20 18:58:16,203 :[Epoch: 0/200] [Iteration: 4] [Inception Score: 1.32] [Max Score Ever: 1.34]
+2019-01-20 18:58:30,954 :[Epoch: 0/200] [Iteration: 5] [Inception Score: 1.33] [Max Score Ever: 1.34]
+2019-01-20 18:58:45,802 :[Epoch: 0/200] [Iteration: 6] [Inception Score: 1.33] [Max Score Ever: 1.34]
+2019-01-20 18:59:01,528 :[Epoch: 0/200] [Iteration: 7] [Inception Score: 1.33] [Max Score Ever: 1.34]
+2019-01-20 18:59:16,144 :[Epoch: 0/200] [Iteration: 8] [Inception Score: 1.33] [Max Score Ever: 1.34]
+2019-01-20 18:59:30,703 :[Epoch: 0/200] [Iteration: 9] [Inception Score: 1.35] [Max Score Ever: 1.35]
+2019-01-20 18:59:45,348 :[Epoch: 0/200] [Iteration: 10] [Inception Score: 1.34] [Max Score Ever: 1.35]
+2019-01-20 19:00:00,310 :[Epoch: 0/200] [Iteration: 11] [Inception Score: 1.35] [Max Score Ever: 1.35]
+2019-01-20 19:00:14,906 :[Epoch: 0/200] [Iteration: 12] [Inception Score: 1.36] [Max Score Ever: 1.36]
+2019-01-20 19:00:29,875 :[Epoch: 0/200] [Iteration: 13] [Inception Score: 1.37] [Max Score Ever: 1.37]
+2019-01-20 19:00:44,835 :[Epoch: 0/200] [Iteration: 14] [Inception Score: 1.36] [Max Score Ever: 1.37]
+2019-01-20 19:00:59,945 :[Epoch: 0/200] [Iteration: 15] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:01:26,142 :[Epoch: 0/200] [Iteration: 16] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:01:46,994 :[Epoch: 0/200] [Iteration: 17] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:02:06,000 :[Epoch: 0/200] [Iteration: 18] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:02:24,180 :[Epoch: 0/200] [Iteration: 19] [Inception Score: 1.33] [Max Score Ever: 1.37]
+2019-01-20 19:02:42,804 :[Epoch: 0/200] [Iteration: 20] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:03:00,109 :[Epoch: 0/200] [Iteration: 21] [Inception Score: 1.33] [Max Score Ever: 1.37]
+2019-01-20 19:03:17,330 :[Epoch: 0/200] [Iteration: 22] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:03:34,471 :[Epoch: 0/200] [Iteration: 23] [Inception Score: 1.33] [Max Score Ever: 1.37]
+2019-01-20 19:03:51,568 :[Epoch: 0/200] [Iteration: 24] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:04:09,040 :[Epoch: 0/200] [Iteration: 25] [Inception Score: 1.33] [Max Score Ever: 1.37]
+2019-01-20 19:04:25,957 :[Epoch: 0/200] [Iteration: 26] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:04:42,679 :[Epoch: 0/200] [Iteration: 27] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:04:59,154 :[Epoch: 0/200] [Iteration: 28] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:05:15,507 :[Epoch: 0/200] [Iteration: 29] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:05:32,139 :[Epoch: 0/200] [Iteration: 30] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:05:48,781 :[Epoch: 0/200] [Iteration: 31] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:06:05,543 :[Epoch: 0/200] [Iteration: 32] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:06:22,222 :[Epoch: 0/200] [Iteration: 33] [Inception Score: 1.34] [Max Score Ever: 1.37]
+2019-01-20 19:06:38,819 :[Epoch: 0/200] [Iteration: 34] [Inception Score: 1.36] [Max Score Ever: 1.37]
+2019-01-20 19:06:55,395 :[Epoch: 0/200] [Iteration: 35] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:07:11,588 :[Epoch: 0/200] [Iteration: 36] [Inception Score: 1.35] [Max Score Ever: 1.37]
+2019-01-20 19:07:28,753 :[Epoch: 0/200] [Iteration: 37] [Inception Score: 1.38] [Max Score Ever: 1.38]
+2019-01-20 19:07:45,366 :[Epoch: 0/200] [Iteration: 38] [Inception Score: 1.36] [Max Score Ever: 1.38]
+2019-01-20 19:08:02,573 :[Epoch: 0/200] [Iteration: 39] [Inception Score: 1.37] [Max Score Ever: 1.38]
+2019-01-20 19:08:19,389 :[Epoch: 0/200] [Iteration: 40] [Inception Score: 1.38] [Max Score Ever: 1.38]
+2019-01-20 19:08:36,086 :[Epoch: 0/200] [Iteration: 41] [Inception Score: 1.39] [Max Score Ever: 1.39]
+2019-01-20 19:08:52,633 :[Epoch: 0/200] [Iteration: 42] [Inception Score: 1.40] [Max Score Ever: 1.40]
+2019-01-20 19:09:09,518 :[Epoch: 0/200] [Iteration: 43] [Inception Score: 1.39] [Max Score Ever: 1.40]
+2019-01-20 19:09:26,727 :[Epoch: 0/200] [Iteration: 44] [Inception Score: 1.39] [Max Score Ever: 1.40]
+2019-01-20 19:09:43,647 :[Epoch: 0/200] [Iteration: 45] [Inception Score: 1.41] [Max Score Ever: 1.41]
+2019-01-20 19:09:59,891 :[Epoch: 0/200] [Iteration: 46] [Inception Score: 1.40] [Max Score Ever: 1.41]
+2019-01-20 19:10:16,624 :[Epoch: 0/200] [Iteration: 47] [Inception Score: 1.41] [Max Score Ever: 1.41]
+2019-01-20 19:10:33,978 :[Epoch: 0/200] [Iteration: 48] [Inception Score: 1.41] [Max Score Ever: 1.41]
+2019-01-20 19:10:50,854 :[Epoch: 0/200] [Iteration: 49] [Inception Score: 1.42] [Max Score Ever: 1.42]
+2019-01-20 19:11:08,678 :[Epoch: 0/200] [Iteration: 50] [Inception Score: 1.41] [Max Score Ever: 1.42]
+2019-01-20 19:11:26,954 :[Epoch: 0/200] [Iteration: 51] [Inception Score: 1.43] [Max Score Ever: 1.43]
+2019-01-20 19:11:43,792 :[Epoch: 0/200] [Iteration: 52] [Inception Score: 1.44] [Max Score Ever: 1.44]
+2019-01-20 19:12:00,790 :[Epoch: 0/200] [Iteration: 53] [Inception Score: 1.44] [Max Score Ever: 1.44]
+2019-01-20 19:12:17,509 :[Epoch: 0/200] [Iteration: 54] [Inception Score: 1.41] [Max Score Ever: 1.44]
+2019-01-20 19:12:34,658 :[Epoch: 0/200] [Iteration: 55] [Inception Score: 1.44] [Max Score Ever: 1.44]
+2019-01-20 19:12:52,559 :[Epoch: 0/200] [Iteration: 56] [Inception Score: 1.46] [Max Score Ever: 1.46]
+2019-01-20 19:13:09,468 :[Epoch: 0/200] [Iteration: 57] [Inception Score: 1.43] [Max Score Ever: 1.46]
+2019-01-20 19:13:26,295 :[Epoch: 0/200] [Iteration: 58] [Inception Score: 1.44] [Max Score Ever: 1.46]
+2019-01-20 19:13:43,311 :[Epoch: 0/200] [Iteration: 59] [Inception Score: 1.46] [Max Score Ever: 1.46]
+2019-01-20 19:14:00,218 :[Epoch: 0/200] [Iteration: 60] [Inception Score: 1.44] [Max Score Ever: 1.46]
+2019-01-20 19:14:16,248 :[Epoch: 0/200] [Iteration: 61] [Inception Score: 1.44] [Max Score Ever: 1.46]
+2019-01-20 19:14:32,764 :[Epoch: 0/200] [Iteration: 62] [Inception Score: 1.46] [Max Score Ever: 1.46]
+2019-01-20 19:14:50,216 :[Epoch: 0/200] [Iteration: 63] [Inception Score: 1.45] [Max Score Ever: 1.46]
+2019-01-20 19:15:07,181 :[Epoch: 0/200] [Iteration: 64] [Inception Score: 1.48] [Max Score Ever: 1.48]
+2019-01-20 19:15:24,468 :[Epoch: 0/200] [Iteration: 65] [Inception Score: 1.45] [Max Score Ever: 1.48]
+2019-01-20 19:15:40,941 :[Epoch: 0/200] [Iteration: 66] [Inception Score: 1.47] [Max Score Ever: 1.48]
+2019-01-20 19:15:57,480 :[Epoch: 0/200] [Iteration: 67] [Inception Score: 1.46] [Max Score Ever: 1.48]
+2019-01-20 19:16:13,871 :[Epoch: 0/200] [Iteration: 68] [Inception Score: 1.48] [Max Score Ever: 1.48]
+2019-01-20 19:16:29,944 :[Epoch: 0/200] [Iteration: 69] [Inception Score: 1.47] [Max Score Ever: 1.48]
+2019-01-20 19:16:46,253 :[Epoch: 0/200] [Iteration: 70] [Inception Score: 1.46] [Max Score Ever: 1.48]
+2019-01-20 19:17:02,319 :[Epoch: 0/200] [Iteration: 71] [Inception Score: 1.49] [Max Score Ever: 1.49]
+2019-01-20 19:17:18,939 :[Epoch: 0/200] [Iteration: 72] [Inception Score: 1.50] [Max Score Ever: 1.50]
+2019-01-20 19:17:35,029 :[Epoch: 0/200] [Iteration: 73] [Inception Score: 1.49] [Max Score Ever: 1.50]
+2019-01-20 19:17:52,247 :[Epoch: 0/200] [Iteration: 74] [Inception Score: 1.51] [Max Score Ever: 1.51]
+2019-01-20 19:18:08,804 :[Epoch: 0/200] [Iteration: 75] [Inception Score: 1.49] [Max Score Ever: 1.51]
+2019-01-20 19:18:25,221 :[Epoch: 0/200] [Iteration: 76] [Inception Score: 1.51] [Max Score Ever: 1.51]
+2019-01-20 19:18:42,022 :[Epoch: 0/200] [Iteration: 77] [Inception Score: 1.51] [Max Score Ever: 1.51]
+2019-01-20 19:18:58,290 :[Epoch: 0/200] [Iteration: 78] [Inception Score: 1.54] [Max Score Ever: 1.54]
+2019-01-20 19:19:15,080 :[Epoch: 0/200] [Iteration: 79] [Inception Score: 1.53] [Max Score Ever: 1.54]
+2019-01-20 19:19:31,895 :[Epoch: 0/200] [Iteration: 80] [Inception Score: 1.55] [Max Score Ever: 1.55]
+2019-01-20 19:19:47,774 :[Epoch: 0/200] [Iteration: 81] [Inception Score: 1.54] [Max Score Ever: 1.55]
+2019-01-20 19:20:06,334 :[Epoch: 0/200] [Iteration: 82] [Inception Score: 1.53] [Max Score Ever: 1.55]
+2019-01-20 19:20:23,586 :[Epoch: 0/200] [Iteration: 83] [Inception Score: 1.54] [Max Score Ever: 1.55]
+2019-01-20 19:20:39,951 :[Epoch: 0/200] [Iteration: 84] [Inception Score: 1.58] [Max Score Ever: 1.58]
+2019-01-20 19:20:56,861 :[Epoch: 0/200] [Iteration: 85] [Inception Score: 1.58] [Max Score Ever: 1.58]
+2019-01-20 19:21:13,741 :[Epoch: 0/200] [Iteration: 86] [Inception Score: 1.54] [Max Score Ever: 1.58]
+2019-01-20 19:21:30,277 :[Epoch: 0/200] [Iteration: 87] [Inception Score: 1.55] [Max Score Ever: 1.58]
+2019-01-20 19:21:47,025 :[Epoch: 0/200] [Iteration: 88] [Inception Score: 1.57] [Max Score Ever: 1.58]
+2019-01-20 19:22:02,782 :[Epoch: 0/200] [Iteration: 89] [Inception Score: 1.58] [Max Score Ever: 1.58]
+2019-01-20 19:22:18,983 :[Epoch: 0/200] [Iteration: 90] [Inception Score: 1.53] [Max Score Ever: 1.58]
+2019-01-20 19:22:34,901 :[Epoch: 0/200] [Iteration: 91] [Inception Score: 1.57] [Max Score Ever: 1.58]
+2019-01-20 19:22:50,736 :[Epoch: 0/200] [Iteration: 92] [Inception Score: 1.55] [Max Score Ever: 1.58]
+2019-01-20 19:23:06,908 :[Epoch: 0/200] [Iteration: 93] [Inception Score: 1.56] [Max Score Ever: 1.58]
+2019-01-20 19:23:23,200 :[Epoch: 0/200] [Iteration: 94] [Inception Score: 1.54] [Max Score Ever: 1.58]
+2019-01-20 19:23:39,395 :[Epoch: 0/200] [Iteration: 95] [Inception Score: 1.57] [Max Score Ever: 1.58]
+2019-01-20 19:23:55,594 :[Epoch: 0/200] [Iteration: 96] [Inception Score: 1.59] [Max Score Ever: 1.59]
+2019-01-20 19:24:11,596 :[Epoch: 0/200] [Iteration: 97] [Inception Score: 1.57] [Max Score Ever: 1.59]
+2019-01-20 19:24:27,757 :[Epoch: 0/200] [Iteration: 98] [Inception Score: 1.57] [Max Score Ever: 1.59]
+2019-01-20 19:24:44,251 :[Epoch: 0/200] [Iteration: 99] [Inception Score: 1.55] [Max Score Ever: 1.59]
+2019-01-20 19:24:44,553 :[Epoch: 0/200] [Batch: 100/782] [D loss: -0.208331] [G loss: 0.172071] [ElapsedTime: 1665.96 [sec]]
+2019-01-20 19:25:00,290 :[Epoch: 0/200] [Iteration: 100] [Inception Score: 1.60] [Max Score Ever: 1.60]
+2019-01-20 19:25:16,806 :[Epoch: 0/200] [Iteration: 101] [Inception Score: 1.57] [Max Score Ever: 1.60]
+2019-01-20 19:25:32,828 :[Epoch: 0/200] [Iteration: 102] [Inception Score: 1.59] [Max Score Ever: 1.60]
+2019-01-20 19:25:48,994 :[Epoch: 0/200] [Iteration: 103] [Inception Score: 1.58] [Max Score Ever: 1.60]
+2019-01-20 19:26:05,937 :[Epoch: 0/200] [Iteration: 104] [Inception Score: 1.59] [Max Score Ever: 1.60]
+2019-01-20 19:26:22,861 :[Epoch: 0/200] [Iteration: 105] [Inception Score: 1.56] [Max Score Ever: 1.60]
+2019-01-20 19:26:39,585 :[Epoch: 0/200] [Iteration: 106] [Inception Score: 1.58] [Max Score Ever: 1.60]
+2019-01-20 19:26:56,410 :[Epoch: 0/200] [Iteration: 107] [Inception Score: 1.57] [Max Score Ever: 1.60]
+2019-01-20 19:27:13,666 :[Epoch: 0/200] [Iteration: 108] [Inception Score: 1.60] [Max Score Ever: 1.60]
+2019-01-20 19:27:30,897 :[Epoch: 0/200] [Iteration: 109] [Inception Score: 1.60] [Max Score Ever: 1.60]
+2019-01-20 19:27:47,885 :[Epoch: 0/200] [Iteration: 110] [Inception Score: 1.63] [Max Score Ever: 1.63]
+2019-01-20 19:28:05,190 :[Epoch: 0/200] [Iteration: 111] [Inception Score: 1.67] [Max Score Ever: 1.67]
+2019-01-20 19:28:22,280 :[Epoch: 0/200] [Iteration: 112] [Inception Score: 1.66] [Max Score Ever: 1.67]
+2019-01-20 19:28:40,126 :[Epoch: 0/200] [Iteration: 113] [Inception Score: 1.63] [Max Score Ever: 1.67]
+2019-01-20 19:28:57,679 :[Epoch: 0/200] [Iteration: 114] [Inception Score: 1.65] [Max Score Ever: 1.67]
+2019-01-20 19:29:14,602 :[Epoch: 0/200] [Iteration: 115] [Inception Score: 1.66] [Max Score Ever: 1.67]
+2019-01-20 19:29:31,368 :[Epoch: 0/200] [Iteration: 116] [Inception Score: 1.73] [Max Score Ever: 1.73]
+2019-01-20 19:29:48,288 :[Epoch: 0/200] [Iteration: 117] [Inception Score: 1.72] [Max Score Ever: 1.73]
+2019-01-20 19:30:05,352 :[Epoch: 0/200] [Iteration: 118] [Inception Score: 1.73] [Max Score Ever: 1.73]
+2019-01-20 19:30:22,456 :[Epoch: 0/200] [Iteration: 119] [Inception Score: 1.71] [Max Score Ever: 1.73]
+2019-01-20 19:30:40,037 :[Epoch: 0/200] [Iteration: 120] [Inception Score: 1.72] [Max Score Ever: 1.73]
+2019-01-20 19:30:56,777 :[Epoch: 0/200] [Iteration: 121] [Inception Score: 1.73] [Max Score Ever: 1.73]
+2019-01-20 19:31:13,340 :[Epoch: 0/200] [Iteration: 122] [Inception Score: 1.77] [Max Score Ever: 1.77]
+2019-01-20 19:31:30,684 :[Epoch: 0/200] [Iteration: 123] [Inception Score: 1.74] [Max Score Ever: 1.77]
+2019-01-20 19:31:49,461 :[Epoch: 0/200] [Iteration: 124] [Inception Score: 1.77] [Max Score Ever: 1.77]
+2019-01-20 19:32:06,795 :[Epoch: 0/200] [Iteration: 125] [Inception Score: 1.77] [Max Score Ever: 1.77]
+2019-01-20 19:32:25,492 :[Epoch: 0/200] [Iteration: 126] [Inception Score: 1.76] [Max Score Ever: 1.77]
+2019-01-20 19:32:42,215 :[Epoch: 0/200] [Iteration: 127] [Inception Score: 1.78] [Max Score Ever: 1.78]
+2019-01-20 19:32:59,496 :[Epoch: 0/200] [Iteration: 128] [Inception Score: 1.81] [Max Score Ever: 1.81]
+2019-01-20 19:33:16,752 :[Epoch: 0/200] [Iteration: 129] [Inception Score: 1.77] [Max Score Ever: 1.81]
+2019-01-20 19:33:33,403 :[Epoch: 0/200] [Iteration: 130] [Inception Score: 1.79] [Max Score Ever: 1.81]
+2019-01-20 19:33:50,986 :[Epoch: 0/200] [Iteration: 131] [Inception Score: 1.82] [Max Score Ever: 1.82]
+2019-01-20 19:34:07,840 :[Epoch: 0/200] [Iteration: 132] [Inception Score: 1.78] [Max Score Ever: 1.82]
+2019-01-20 19:34:24,636 :[Epoch: 0/200] [Iteration: 133] [Inception Score: 1.82] [Max Score Ever: 1.82]
+2019-01-20 19:34:42,082 :[Epoch: 0/200] [Iteration: 134] [Inception Score: 1.79] [Max Score Ever: 1.82]
+2019-01-20 19:34:58,697 :[Epoch: 0/200] [Iteration: 135] [Inception Score: 1.77] [Max Score Ever: 1.82]
+2019-01-20 19:35:15,930 :[Epoch: 0/200] [Iteration: 136] [Inception Score: 1.82] [Max Score Ever: 1.82]
+2019-01-20 19:35:32,556 :[Epoch: 0/200] [Iteration: 137] [Inception Score: 1.82] [Max Score Ever: 1.82]
+2019-01-20 19:35:49,498 :[Epoch: 0/200] [Iteration: 138] [Inception Score: 1.85] [Max Score Ever: 1.85]
+2019-01-20 19:36:07,858 :[Epoch: 0/200] [Iteration: 139] [Inception Score: 1.84] [Max Score Ever: 1.85]
+2019-01-20 19:36:24,700 :[Epoch: 0/200] [Iteration: 140] [Inception Score: 1.84] [Max Score Ever: 1.85]
+2019-01-20 19:36:41,610 :[Epoch: 0/200] [Iteration: 141] [Inception Score: 1.86] [Max Score Ever: 1.86]
+2019-01-20 19:36:58,712 :[Epoch: 0/200] [Iteration: 142] [Inception Score: 1.86] [Max Score Ever: 1.86]
+2019-01-20 19:37:15,317 :[Epoch: 0/200] [Iteration: 143] [Inception Score: 1.86] [Max Score Ever: 1.86]
+2019-01-20 19:37:31,852 :[Epoch: 0/200] [Iteration: 144] [Inception Score: 1.86] [Max Score Ever: 1.86]
+2019-01-20 19:37:48,540 :[Epoch: 0/200] [Iteration: 145] [Inception Score: 1.89] [Max Score Ever: 1.89]
+2019-01-20 19:38:04,826 :[Epoch: 0/200] [Iteration: 146] [Inception Score: 1.83] [Max Score Ever: 1.89]
+2019-01-20 19:38:21,702 :[Epoch: 0/200] [Iteration: 147] [Inception Score: 1.93] [Max Score Ever: 1.93]
+2019-01-20 19:38:37,569 :[Epoch: 0/200] [Iteration: 148] [Inception Score: 1.92] [Max Score Ever: 1.93]
+2019-01-20 19:38:53,805 :[Epoch: 0/200] [Iteration: 149] [Inception Score: 1.90] [Max Score Ever: 1.93]
+2019-01-20 19:39:10,223 :[Epoch: 0/200] [Iteration: 150] [Inception Score: 1.91] [Max Score Ever: 1.93]
+2019-01-20 19:39:27,232 :[Epoch: 0/200] [Iteration: 151] [Inception Score: 1.90] [Max Score Ever: 1.93]
+2019-01-20 19:39:43,219 :[Epoch: 0/200] [Iteration: 152] [Inception Score: 1.94] [Max Score Ever: 1.94]
+2019-01-20 19:39:59,429 :[Epoch: 0/200] [Iteration: 153] [Inception Score: 1.88] [Max Score Ever: 1.94]
+2019-01-20 19:40:15,688 :[Epoch: 0/200] [Iteration: 154] [Inception Score: 2.01] [Max Score Ever: 2.01]
+2019-01-20 19:40:32,561 :[Epoch: 0/200] [Iteration: 155] [Inception Score: 1.98] [Max Score Ever: 2.01]
+2019-01-20 19:40:48,252 :[Epoch: 0/200] [Iteration: 156] [Inception Score: 2.01] [Max Score Ever: 2.01]
+2019-01-20 19:41:04,480 :[Epoch: 0/200] [Iteration: 157] [Inception Score: 2.00] [Max Score Ever: 2.01]
+2019-01-20 19:41:20,664 :[Epoch: 0/200] [Iteration: 158] [Inception Score: 2.01] [Max Score Ever: 2.01]
+2019-01-20 19:41:36,948 :[Epoch: 0/200] [Iteration: 159] [Inception Score: 1.97] [Max Score Ever: 2.01]
+2019-01-20 19:41:52,830 :[Epoch: 0/200] [Iteration: 160] [Inception Score: 2.05] [Max Score Ever: 2.05]
+2019-01-20 19:42:08,654 :[Epoch: 0/200] [Iteration: 161] [Inception Score: 2.03] [Max Score Ever: 2.05]
+2019-01-20 19:42:24,299 :[Epoch: 0/200] [Iteration: 162] [Inception Score: 2.00] [Max Score Ever: 2.05]
+2019-01-20 19:42:40,169 :[Epoch: 0/200] [Iteration: 163] [Inception Score: 2.07] [Max Score Ever: 2.07]
+2019-01-20 19:42:55,763 :[Epoch: 0/200] [Iteration: 164] [Inception Score: 2.08] [Max Score Ever: 2.08]
+2019-01-20 19:43:11,325 :[Epoch: 0/200] [Iteration: 165] [Inception Score: 2.06] [Max Score Ever: 2.08]
+2019-01-20 19:43:26,890 :[Epoch: 0/200] [Iteration: 166] [Inception Score: 2.05] [Max Score Ever: 2.08]
+2019-01-20 19:43:43,009 :[Epoch: 0/200] [Iteration: 167] [Inception Score: 2.04] [Max Score Ever: 2.08]
+2019-01-20 19:43:58,657 :[Epoch: 0/200] [Iteration: 168] [Inception Score: 2.09] [Max Score Ever: 2.09]
+2019-01-20 19:44:14,501 :[Epoch: 0/200] [Iteration: 169] [Inception Score: 2.08] [Max Score Ever: 2.09]
+2019-01-20 19:44:29,844 :[Epoch: 0/200] [Iteration: 170] [Inception Score: 2.12] [Max Score Ever: 2.12]
+2019-01-20 19:44:45,909 :[Epoch: 0/200] [Iteration: 171] [Inception Score: 2.13] [Max Score Ever: 2.13]
+2019-01-20 19:45:01,773 :[Epoch: 0/200] [Iteration: 172] [Inception Score: 2.11] [Max Score Ever: 2.13]
+2019-01-20 19:45:16,534 :[Epoch: 0/200] [Iteration: 173] [Inception Score: 2.20] [Max Score Ever: 2.20]
+2019-01-20 19:45:31,163 :[Epoch: 0/200] [Iteration: 174] [Inception Score: 2.15] [Max Score Ever: 2.20]
+2019-01-20 19:45:45,979 :[Epoch: 0/200] [Iteration: 175] [Inception Score: 2.22] [Max Score Ever: 2.22]
+2019-01-20 19:46:00,544 :[Epoch: 0/200] [Iteration: 176] [Inception Score: 2.17] [Max Score Ever: 2.22]
+2019-01-20 19:46:15,353 :[Epoch: 0/200] [Iteration: 177] [Inception Score: 2.25] [Max Score Ever: 2.25]
+2019-01-20 19:46:29,783 :[Epoch: 0/200] [Iteration: 178] [Inception Score: 2.21] [Max Score Ever: 2.25]
+2019-01-20 19:46:44,582 :[Epoch: 0/200] [Iteration: 179] [Inception Score: 2.27] [Max Score Ever: 2.27]
+2019-01-20 19:46:59,230 :[Epoch: 0/200] [Iteration: 180] [Inception Score: 2.19] [Max Score Ever: 2.27]
+2019-01-20 19:47:14,273 :[Epoch: 0/200] [Iteration: 181] [Inception Score: 2.18] [Max Score Ever: 2.27]
+2019-01-20 19:47:28,722 :[Epoch: 0/200] [Iteration: 182] [Inception Score: 2.19] [Max Score Ever: 2.27]
+2019-01-20 19:47:43,071 :[Epoch: 0/200] [Iteration: 183] [Inception Score: 2.24] [Max Score Ever: 2.27]
+2019-01-20 19:47:57,850 :[Epoch: 0/200] [Iteration: 184] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:48:11,945 :[Epoch: 0/200] [Iteration: 185] [Inception Score: 2.22] [Max Score Ever: 2.27]
+2019-01-20 19:48:28,018 :[Epoch: 0/200] [Iteration: 186] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:48:42,351 :[Epoch: 0/200] [Iteration: 187] [Inception Score: 2.22] [Max Score Ever: 2.27]
+2019-01-20 19:48:57,193 :[Epoch: 0/200] [Iteration: 188] [Inception Score: 2.22] [Max Score Ever: 2.27]
+2019-01-20 19:49:11,344 :[Epoch: 0/200] [Iteration: 189] [Inception Score: 2.23] [Max Score Ever: 2.27]
+2019-01-20 19:49:25,899 :[Epoch: 0/200] [Iteration: 190] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:49:40,187 :[Epoch: 0/200] [Iteration: 191] [Inception Score: 2.14] [Max Score Ever: 2.27]
+2019-01-20 19:49:53,988 :[Epoch: 0/200] [Iteration: 192] [Inception Score: 2.15] [Max Score Ever: 2.27]
+2019-01-20 19:50:08,610 :[Epoch: 0/200] [Iteration: 193] [Inception Score: 2.16] [Max Score Ever: 2.27]
+2019-01-20 19:50:22,574 :[Epoch: 0/200] [Iteration: 194] [Inception Score: 2.10] [Max Score Ever: 2.27]
+2019-01-20 19:50:36,362 :[Epoch: 0/200] [Iteration: 195] [Inception Score: 2.15] [Max Score Ever: 2.27]
+2019-01-20 19:50:50,135 :[Epoch: 0/200] [Iteration: 196] [Inception Score: 2.13] [Max Score Ever: 2.27]
+2019-01-20 19:51:04,128 :[Epoch: 0/200] [Iteration: 197] [Inception Score: 2.10] [Max Score Ever: 2.27]
+2019-01-20 19:51:17,708 :[Epoch: 0/200] [Iteration: 198] [Inception Score: 2.21] [Max Score Ever: 2.27]
+2019-01-20 19:51:31,570 :[Epoch: 0/200] [Iteration: 199] [Inception Score: 2.14] [Max Score Ever: 2.27]
+2019-01-20 19:51:31,871 :[Epoch: 0/200] [Batch: 200/782] [D loss: -0.054925] [G loss: 0.227763] [ElapsedTime: 3273.28 [sec]]
+2019-01-20 19:51:45,223 :[Epoch: 0/200] [Iteration: 200] [Inception Score: 2.21] [Max Score Ever: 2.27]
+2019-01-20 19:51:59,419 :[Epoch: 0/200] [Iteration: 201] [Inception Score: 2.13] [Max Score Ever: 2.27]
+2019-01-20 19:52:12,772 :[Epoch: 0/200] [Iteration: 202] [Inception Score: 2.13] [Max Score Ever: 2.27]
+2019-01-20 19:52:26,500 :[Epoch: 0/200] [Iteration: 203] [Inception Score: 2.10] [Max Score Ever: 2.27]
+2019-01-20 19:52:40,066 :[Epoch: 0/200] [Iteration: 204] [Inception Score: 2.09] [Max Score Ever: 2.27]
+2019-01-20 19:52:53,382 :[Epoch: 0/200] [Iteration: 205] [Inception Score: 2.15] [Max Score Ever: 2.27]
+2019-01-20 19:53:06,914 :[Epoch: 0/200] [Iteration: 206] [Inception Score: 2.09] [Max Score Ever: 2.27]
+2019-01-20 19:53:20,380 :[Epoch: 0/200] [Iteration: 207] [Inception Score: 2.10] [Max Score Ever: 2.27]
+2019-01-20 19:53:33,829 :[Epoch: 0/200] [Iteration: 208] [Inception Score: 2.03] [Max Score Ever: 2.27]
+2019-01-20 19:53:46,919 :[Epoch: 0/200] [Iteration: 209] [Inception Score: 2.13] [Max Score Ever: 2.27]
+2019-01-20 19:54:00,297 :[Epoch: 0/200] [Iteration: 210] [Inception Score: 2.11] [Max Score Ever: 2.27]
+2019-01-20 19:54:13,246 :[Epoch: 0/200] [Iteration: 211] [Inception Score: 2.15] [Max Score Ever: 2.27]
+2019-01-20 19:54:26,535 :[Epoch: 0/200] [Iteration: 212] [Inception Score: 2.10] [Max Score Ever: 2.27]
+2019-01-20 19:54:39,718 :[Epoch: 0/200] [Iteration: 213] [Inception Score: 2.09] [Max Score Ever: 2.27]
+2019-01-20 19:54:53,137 :[Epoch: 0/200] [Iteration: 214] [Inception Score: 2.11] [Max Score Ever: 2.27]
+2019-01-20 19:55:06,037 :[Epoch: 0/200] [Iteration: 215] [Inception Score: 2.13] [Max Score Ever: 2.27]
+2019-01-20 19:55:19,100 :[Epoch: 0/200] [Iteration: 216] [Inception Score: 2.15] [Max Score Ever: 2.27]
+2019-01-20 19:55:32,003 :[Epoch: 0/200] [Iteration: 217] [Inception Score: 2.08] [Max Score Ever: 2.27]
+2019-01-20 19:55:45,462 :[Epoch: 0/200] [Iteration: 218] [Inception Score: 2.16] [Max Score Ever: 2.27]
+2019-01-20 19:55:58,378 :[Epoch: 0/200] [Iteration: 219] [Inception Score: 2.24] [Max Score Ever: 2.27]
+2019-01-20 19:56:11,103 :[Epoch: 0/200] [Iteration: 220] [Inception Score: 2.19] [Max Score Ever: 2.27]
+2019-01-20 19:56:24,232 :[Epoch: 0/200] [Iteration: 221] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:56:37,450 :[Epoch: 0/200] [Iteration: 222] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:56:51,082 :[Epoch: 0/200] [Iteration: 223] [Inception Score: 2.21] [Max Score Ever: 2.27]
+2019-01-20 19:57:03,746 :[Epoch: 0/200] [Iteration: 224] [Inception Score: 2.26] [Max Score Ever: 2.27]
+2019-01-20 19:57:16,117 :[Epoch: 0/200] [Iteration: 225] [Inception Score: 2.23] [Max Score Ever: 2.27]
+2019-01-20 19:57:29,095 :[Epoch: 0/200] [Iteration: 226] [Inception Score: 2.24] [Max Score Ever: 2.27]
+2019-01-20 19:57:41,919 :[Epoch: 0/200] [Iteration: 227] [Inception Score: 2.20] [Max Score Ever: 2.27]
+2019-01-20 19:57:55,064 :[Epoch: 0/200] [Iteration: 228] [Inception Score: 2.24] [Max Score Ever: 2.27]
+2019-01-20 19:58:07,895 :[Epoch: 0/200] [Iteration: 229] [Inception Score: 2.24] [Max Score Ever: 2.27]
+2019-01-20 19:58:20,714 :[Epoch: 0/200] [Iteration: 230] [Inception Score: 2.32] [Max Score Ever: 2.32]
+2019-01-20 19:58:33,969 :[Epoch: 0/200] [Iteration: 231] [Inception Score: 2.28] [Max Score Ever: 2.32]
+2019-01-20 19:58:46,123 :[Epoch: 0/200] [Iteration: 232] [Inception Score: 2.24] [Max Score Ever: 2.32]
+2019-01-20 19:58:58,581 :[Epoch: 0/200] [Iteration: 233] [Inception Score: 2.28] [Max Score Ever: 2.32]
+2019-01-20 19:59:10,914 :[Epoch: 0/200] [Iteration: 234] [Inception Score: 2.29] [Max Score Ever: 2.32]
+2019-01-20 19:59:23,995 :[Epoch: 0/200] [Iteration: 235] [Inception Score: 2.27] [Max Score Ever: 2.32]
+2019-01-20 19:59:36,339 :[Epoch: 0/200] [Iteration: 236] [Inception Score: 2.32] [Max Score Ever: 2.32]
+2019-01-20 19:59:48,936 :[Epoch: 0/200] [Iteration: 237] [Inception Score: 2.30] [Max Score Ever: 2.32]
+2019-01-20 20:00:01,234 :[Epoch: 0/200] [Iteration: 238] [Inception Score: 2.24] [Max Score Ever: 2.32]
+2019-01-20 20:00:13,419 :[Epoch: 0/200] [Iteration: 239] [Inception Score: 2.38] [Max Score Ever: 2.38]
+2019-01-20 20:00:25,935 :[Epoch: 0/200] [Iteration: 240] [Inception Score: 2.33] [Max Score Ever: 2.38]
+2019-01-20 20:00:37,915 :[Epoch: 0/200] [Iteration: 241] [Inception Score: 2.33] [Max Score Ever: 2.38]
+2019-01-20 20:00:50,490 :[Epoch: 0/200] [Iteration: 242] [Inception Score: 2.31] [Max Score Ever: 2.38]
+2019-01-20 20:01:02,802 :[Epoch: 0/200] [Iteration: 243] [Inception Score: 2.35] [Max Score Ever: 2.38]
+2019-01-20 20:01:25,483 :[Epoch: 0/200] [Iteration: 244] [Inception Score: 2.38] [Max Score Ever: 2.38]
+2019-01-20 20:01:44,718 :[Epoch: 0/200] [Iteration: 245] [Inception Score: 2.36] [Max Score Ever: 2.38]
+2019-01-20 20:02:17,692 :[Epoch: 0/200] [Iteration: 246] [Inception Score: 2.40] [Max Score Ever: 2.40]
+2019-01-20 20:02:47,556 :[Epoch: 0/200] [Iteration: 247] [Inception Score: 2.40] [Max Score Ever: 2.40]
+2019-01-20 20:03:21,932 :[Epoch: 0/200] [Iteration: 248] [Inception Score: 2.46] [Max Score Ever: 2.46]
+2019-01-20 20:03:55,770 :[Epoch: 0/200] [Iteration: 249] [Inception Score: 2.34] [Max Score Ever: 2.46]
+2019-01-20 20:04:26,957 :[Epoch: 0/200] [Iteration: 250] [Inception Score: 2.45] [Max Score Ever: 2.46]
+2019-01-20 20:04:49,666 :[Epoch: 0/200] [Iteration: 251] [Inception Score: 2.43] [Max Score Ever: 2.46]
+2019-01-20 20:05:35,984 :[Epoch: 0/200] [Iteration: 252] [Inception Score: 2.45] [Max Score Ever: 2.46]
+2019-01-20 20:06:11,724 :[Epoch: 0/200] [Iteration: 253] [Inception Score: 2.51] [Max Score Ever: 2.51]
+2019-01-20 20:06:49,823 :[Epoch: 0/200] [Iteration: 254] [Inception Score: 2.40] [Max Score Ever: 2.51]
+2019-01-20 20:07:21,986 :[Epoch: 0/200] [Iteration: 255] [Inception Score: 2.48] [Max Score Ever: 2.51]
+2019-01-20 20:07:53,772 :[Epoch: 0/200] [Iteration: 256] [Inception Score: 2.40] [Max Score Ever: 2.51]
+2019-01-20 20:08:20,388 :[Epoch: 0/200] [Iteration: 257] [Inception Score: 2.41] [Max Score Ever: 2.51]
+2019-01-20 20:08:54,730 :[Epoch: 0/200] [Iteration: 258] [Inception Score: 2.40] [Max Score Ever: 2.51]
+2019-01-20 20:09:19,256 :[Epoch: 0/200] [Iteration: 259] [Inception Score: 2.36] [Max Score Ever: 2.51]
+2019-01-20 20:09:59,119 :[Epoch: 0/200] [Iteration: 260] [Inception Score: 2.33] [Max Score Ever: 2.51]
+2019-01-20 20:10:32,530 :[Epoch: 0/200] [Iteration: 261] [Inception Score: 2.27] [Max Score Ever: 2.51]
+2019-01-20 20:10:51,658 :[Epoch: 0/200] [Iteration: 262] [Inception Score: 2.32] [Max Score Ever: 2.51]
+2019-01-20 20:11:37,530 :[Epoch: 0/200] [Iteration: 263] [Inception Score: 2.33] [Max Score Ever: 2.51]
+2019-01-20 20:12:00,277 :[Epoch: 0/200] [Iteration: 264] [Inception Score: 2.44] [Max Score Ever: 2.51]
+2019-01-20 20:12:36,056 :[Epoch: 0/200] [Iteration: 265] [Inception Score: 2.45] [Max Score Ever: 2.51]
+2019-01-20 20:12:55,981 :[Epoch: 0/200] [Iteration: 266] [Inception Score: 2.49] [Max Score Ever: 2.51]
+2019-01-20 20:13:32,344 :[Epoch: 0/200] [Iteration: 267] [Inception Score: 2.40] [Max Score Ever: 2.51]
+2019-01-20 20:13:56,744 :[Epoch: 0/200] [Iteration: 268] [Inception Score: 2.38] [Max Score Ever: 2.51]
+2019-01-20 20:14:29,266 :[Epoch: 0/200] [Iteration: 269] [Inception Score: 2.47] [Max Score Ever: 2.51]
+2019-01-20 20:15:09,596 :[Epoch: 0/200] [Iteration: 270] [Inception Score: 2.47] [Max Score Ever: 2.51]
+2019-01-20 20:15:50,309 :[Epoch: 0/200] [Iteration: 271] [Inception Score: 2.53] [Max Score Ever: 2.53]
+2019-01-20 20:16:07,436 :[Epoch: 0/200] [Iteration: 272] [Inception Score: 2.52] [Max Score Ever: 2.53]
+2019-01-20 20:16:45,830 :[Epoch: 0/200] [Iteration: 273] [Inception Score: 2.39] [Max Score Ever: 2.53]
+2019-01-20 20:17:27,478 :[Epoch: 0/200] [Iteration: 274] [Inception Score: 2.48] [Max Score Ever: 2.53]
+2019-01-20 20:17:55,719 :[Epoch: 0/200] [Iteration: 275] [Inception Score: 2.46] [Max Score Ever: 2.53]
+2019-01-20 20:18:20,734 :[Epoch: 0/200] [Iteration: 276] [Inception Score: 2.41] [Max Score Ever: 2.53]
+2019-01-20 20:19:05,536 :[Epoch: 0/200] [Iteration: 277] [Inception Score: 2.32] [Max Score Ever: 2.53]
+2019-01-20 20:19:41,536 :[Epoch: 0/200] [Iteration: 278] [Inception Score: 2.39] [Max Score Ever: 2.53]
+2019-01-20 20:20:10,964 :[Epoch: 0/200] [Iteration: 279] [Inception Score: 2.48] [Max Score Ever: 2.53]
+2019-01-20 20:20:43,708 :[Epoch: 0/200] [Iteration: 280] [Inception Score: 2.35] [Max Score Ever: 2.53]
+2019-01-20 20:21:16,654 :[Epoch: 0/200] [Iteration: 281] [Inception Score: 2.39] [Max Score Ever: 2.53]
+2019-01-20 20:21:50,448 :[Epoch: 0/200] [Iteration: 282] [Inception Score: 2.39] [Max Score Ever: 2.53]
+2019-01-20 20:22:23,129 :[Epoch: 0/200] [Iteration: 283] [Inception Score: 2.35] [Max Score Ever: 2.53]
+2019-01-20 20:22:55,557 :[Epoch: 0/200] [Iteration: 284] [Inception Score: 2.35] [Max Score Ever: 2.53]
+2019-01-20 20:23:27,061 :[Epoch: 0/200] [Iteration: 285] [Inception Score: 2.38] [Max Score Ever: 2.53]
+2019-01-20 20:23:45,791 :[Epoch: 0/200] [Iteration: 286] [Inception Score: 2.49] [Max Score Ever: 2.53]
+2019-01-20 20:24:32,987 :[Epoch: 0/200] [Iteration: 287] [Inception Score: 2.50] [Max Score Ever: 2.53]
+2019-01-20 20:25:07,167 :[Epoch: 0/200] [Iteration: 288] [Inception Score: 2.48] [Max Score Ever: 2.53]
+2019-01-20 20:25:42,055 :[Epoch: 0/200] [Iteration: 289] [Inception Score: 2.41] [Max Score Ever: 2.53]
+2019-01-20 20:26:05,023 :[Epoch: 0/200] [Iteration: 290] [Inception Score: 2.39] [Max Score Ever: 2.53]
+2019-01-20 20:26:46,423 :[Epoch: 0/200] [Iteration: 291] [Inception Score: 2.41] [Max Score Ever: 2.53]
+2019-01-20 20:27:23,079 :[Epoch: 0/200] [Iteration: 292] [Inception Score: 2.37] [Max Score Ever: 2.53]
+2019-01-20 20:27:57,867 :[Epoch: 0/200] [Iteration: 293] [Inception Score: 2.38] [Max Score Ever: 2.53]
+2019-01-20 20:28:33,551 :[Epoch: 0/200] [Iteration: 294] [Inception Score: 2.33] [Max Score Ever: 2.53]
+2019-01-20 20:29:09,129 :[Epoch: 0/200] [Iteration: 295] [Inception Score: 2.43] [Max Score Ever: 2.53]
+2019-01-20 20:29:43,462 :[Epoch: 0/200] [Iteration: 296] [Inception Score: 2.42] [Max Score Ever: 2.53]
+2019-01-20 20:30:16,585 :[Epoch: 0/200] [Iteration: 297] [Inception Score: 2.43] [Max Score Ever: 2.53]
+2019-01-20 20:30:45,405 :[Epoch: 0/200] [Iteration: 298] [Inception Score: 2.45] [Max Score Ever: 2.53]
+2019-01-20 20:31:14,433 :[Epoch: 0/200] [Iteration: 299] [Inception Score: 2.48] [Max Score Ever: 2.53]
+2019-01-20 20:31:14,735 :[Epoch: 0/200] [Batch: 300/782] [D loss: -0.369797] [G loss: 0.349761] [ElapsedTime: 5656.15 [sec]]
+2019-01-20 20:31:43,639 :[Epoch: 0/200] [Iteration: 300] [Inception Score: 2.46] [Max Score Ever: 2.53]
+2019-01-20 20:32:09,922 :[Epoch: 0/200] [Iteration: 301] [Inception Score: 2.47] [Max Score Ever: 2.53]
+2019-01-20 20:32:48,707 :[Epoch: 0/200] [Iteration: 302] [Inception Score: 2.46] [Max Score Ever: 2.53]
+2019-01-20 20:33:21,411 :[Epoch: 0/200] [Iteration: 303] [Inception Score: 2.53] [Max Score Ever: 2.53]
+2019-01-20 20:33:46,581 :[Epoch: 0/200] [Iteration: 304] [Inception Score: 2.49] [Max Score Ever: 2.53]
+2019-01-20 20:34:16,876 :[Epoch: 0/200] [Iteration: 305] [Inception Score: 2.50] [Max Score Ever: 2.53]
+2019-01-20 20:34:35,844 :[Epoch: 0/200] [Iteration: 306] [Inception Score: 2.57] [Max Score Ever: 2.57]
+2019-01-20 20:35:08,649 :[Epoch: 0/200] [Iteration: 307] [Inception Score: 2.65] [Max Score Ever: 2.65]
+2019-01-20 20:35:54,728 :[Epoch: 0/200] [Iteration: 308] [Inception Score: 2.67] [Max Score Ever: 2.67]
+2019-01-20 20:36:28,376 :[Epoch: 0/200] [Iteration: 309] [Inception Score: 2.68] [Max Score Ever: 2.68]
+2019-01-20 20:36:57,127 :[Epoch: 0/200] [Iteration: 310] [Inception Score: 2.79] [Max Score Ever: 2.79]
+2019-01-20 20:37:27,181 :[Epoch: 0/200] [Iteration: 311] [Inception Score: 2.80] [Max Score Ever: 2.80]
+2019-01-20 20:37:59,568 :[Epoch: 0/200] [Iteration: 312] [Inception Score: 2.85] [Max Score Ever: 2.85]
+2019-01-20 20:38:32,031 :[Epoch: 0/200] [Iteration: 313] [Inception Score: 2.88] [Max Score Ever: 2.88]
+2019-01-20 20:39:03,919 :[Epoch: 0/200] [Iteration: 314] [Inception Score: 3.00] [Max Score Ever: 3.00]
+2019-01-20 20:39:37,419 :[Epoch: 0/200] [Iteration: 315] [Inception Score: 2.91] [Max Score Ever: 3.00]
+2019-01-20 20:40:06,923 :[Epoch: 0/200] [Iteration: 316] [Inception Score: 2.94] [Max Score Ever: 3.00]
+2019-01-20 20:40:37,086 :[Epoch: 0/200] [Iteration: 317] [Inception Score: 2.84] [Max Score Ever: 3.00]
+2019-01-20 20:41:06,735 :[Epoch: 0/200] [Iteration: 318] [Inception Score: 2.88] [Max Score Ever: 3.00]
+2019-01-20 20:41:34,752 :[Epoch: 0/200] [Iteration: 319] [Inception Score: 2.88] [Max Score Ever: 3.00]
+2019-01-20 20:42:11,227 :[Epoch: 0/200] [Iteration: 320] [Inception Score: 2.84] [Max Score Ever: 3.00]
+2019-01-20 20:42:44,816 :[Epoch: 0/200] [Iteration: 321] [Inception Score: 2.77] [Max Score Ever: 3.00]
+2019-01-20 20:43:19,231 :[Epoch: 0/200] [Iteration: 322] [Inception Score: 2.72] [Max Score Ever: 3.00]
+2019-01-20 20:43:52,485 :[Epoch: 0/200] [Iteration: 323] [Inception Score: 2.68] [Max Score Ever: 3.00]
+2019-01-20 20:44:24,950 :[Epoch: 0/200] [Iteration: 324] [Inception Score: 2.67] [Max Score Ever: 3.00]
+2019-01-20 20:44:58,417 :[Epoch: 0/200] [Iteration: 325] [Inception Score: 2.74] [Max Score Ever: 3.00]

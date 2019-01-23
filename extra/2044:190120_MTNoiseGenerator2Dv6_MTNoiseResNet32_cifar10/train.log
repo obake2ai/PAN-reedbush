@@ -1,0 +1,272 @@
+2019-01-20 20:44:44,140 :{'n_epochs': 200, 'batch_size': 64, 'lr': 0.0002, 'b1': 0.5, 'b2': 0.999, 'n_cpu': 8, 'latent_dim': 128, 'img_size': 32, 'n_critic': 1, 'clip_value': 0.01, 'sample_interval': 100, 'modelsave_interval': 1, 'log_interval': 100, 'dataset': 'cifar10', 'num_filters': 128, 'saveDir': None, 'resume': 0, 'logIS': True, 'loadDir': None}
+2019-01-20 20:44:44,141 :MTNoiseGenerator2Dv6(
+  (pre_layer): Linear(in_features=128, out_features=16384, bias=True)
+  (model): Sequential(
+    (0): MTNoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (1): MTNoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): Upsample(scale_factor=2, mode=bilinear)
+    (3): MTNoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (4): MTNoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (5): Upsample(scale_factor=2, mode=bilinear)
+    (6): MTNoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (7): MTNoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (8): Upsample(scale_factor=2, mode=bilinear)
+    (9): MTNoiseBasicBlock2D(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (relu): ReLU()
+    )
+    (10): MTNoiseLayer2D(
+      (layers): Sequential(
+        (0): ReLU(inplace)
+        (1): Conv2d(128, 3, kernel_size=(1, 1), stride=(1, 1))
+        (2): BatchNorm2d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (11): Tanh()
+  )
+)
+2019-01-20 20:44:44,142 :MTNoiseResNet32(
+  (pre_layers): Sequential(
+    (0): Conv2d(3, 128, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace)
+    (3): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (layer1): Sequential(
+    (0): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer2): Sequential(
+    (0): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (layer3): Sequential(
+    (0): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (shortcut): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): MTNoiseBasicBlock(
+      (layers): Sequential(
+        (0): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): ReLU(inplace)
+        (4): MTNoiseLayer2D(
+          (layers): Sequential(
+            (0): ReLU(inplace)
+            (1): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+            (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (avgpool): AvgPool2d(kernel_size=2, stride=1, padding=0)
+  (linear): Linear(in_features=512, out_features=1, bias=True)
+)
+2019-01-20 20:44:45,308 :[Epoch: 0/200] [Batch: 0/782] [D loss: 6.125338] [G loss: 0.212988] [ElapsedTime: 1.15 [sec]]
+2019-01-20 20:45:04,780 :[Epoch: 0/200] [Iteration: 0] [Inception Score: 1.33] [Max Score Ever: 1.33]
