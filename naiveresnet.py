@@ -373,7 +373,7 @@ class MTNoiseResNet512(nn.Module):
         self.avgpool = nn.AvgPool2d(pool, stride=1)
         self.linear = nn.Linear(8*nfilters*block.expansion, nclasses)
 
-    def _make_layer(self, block, planes, nblocks, stride=1, level=0.2):
+    def _make_layer(self, block, planes, nblocks, stride=1, level=0.2, seed=0):
         shortcut = None
         if stride != 1 or self.in_planes != planes * block.expansion:
             shortcut = nn.Sequential(
@@ -382,10 +382,10 @@ class MTNoiseResNet512(nn.Module):
                 nn.BatchNorm2d(planes * block.expansion),
             )
         layers = []
-        layers.append(block(self.in_planes, planes, stride, shortcut, level=level))
+        layers.append(block(self.in_planes, planes, stride, shortcut, level=level, seed=seed))
         self.in_planes = planes * block.expansion
         for i in range(1, nblocks):
-            layers.append(block(self.in_planes, planes, level=level))
+            layers.append(block(self.in_planes, planes, level=level, seed=seed))
         return nn.Sequential(*layers)
 
     def forward(self, x):
