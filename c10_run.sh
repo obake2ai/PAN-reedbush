@@ -1,5 +1,5 @@
 #!/bin/sh
-#PBS -q h-regular
+#PBS -q l-regular
 #PBS -l select=1:mpiprocs=1:ompthreads=32
 #PBS -W group_list=gj16
 #PBS -l walltime=40:00:00
