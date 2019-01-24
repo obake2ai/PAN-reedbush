@@ -1212,6 +1212,49 @@ class LCGNoiseGenerator2Dv6_(nn.Module):
         img = self.model(x.view(-1, 128 * 8, 4, 4))
         return img
 
+class LCGNoiseGenerator2Dv6_512(nn.Module):
+    def __init__(self, opt, seed):
+        super(LCGNoiseGenerator2Dv6_, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+
+        self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
+
+        self.model = nn.Sequential(
+            LCGNoiseBasicBlock2D_(128 * 8, 128 * 8, level=0.1, seed=seed, size=[128*8, 4, 4]),
+            LCGNoiseLayer2D_(128 * 8, 128 * 4, 0.1, seed=seed+10, size=[128*8, 4, 4]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
+            LCGNoiseBasicBlock2D_(128 * 4, 128 * 4, level=0.1, seed=seed+20, size=[128*4, 8, 8]),
+            LCGNoiseLayer2D_(128 * 4, 128 * 2, 0.1, seed=seed+30, size=[128*4, 8, 8]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
+            LCGNoiseBasicBlock2D_(128 * 2, 128 * 2, level=0.1, seed=seed+40, size=[128*2, 16, 16]),
+            LCGNoiseLayer2D_(128 * 2, 128 * 1, 0.1, seed=seed+50, size=[128*2, 16, 16]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 32, 32]),
+            LCGNoiseLayer2D_(128 * 1, 128 * 1, 0.1, seed=seed+70, size=[128*1, 32, 32]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(32, 32) -> (64, 64)
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 64, 64]),
+            LCGNoiseLayer2D_(128 * 1, 128 * 1, 0.1, seed=seed+90, size=[128*1, 64, 64]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(64, 64) -> (128, 128)
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 128, 128]),
+            LCGNoiseLayer2D_(128 * 1, 128 * 1, 0.1, seed=seed+110, size=[128*1, 128, 128]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(128, 128) -> (256, 256)
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 256, 256]),
+            LCGNoiseLayer2D_(128 * 1, 128 * 1, 0.1, seed=seed+130, size=[128*1, 256, 256]),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(256, 256) -> (512, 512)
+            LCGNoiseBasicBlock2D_(128 * 1, 128 * 1, level=0.1, seed=seed+60, size=[128*1, 512, 512]),
+            LCGNoiseLayer2D_(128 * 1, channels, 0.1, seed=seed+150, size=[128*1, 512, 512]),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        x = self.pre_layer(z)
+        img = self.model(x.view(-1, 128 * 8, 4, 4))
+        return img
+
 class NoiseResGenerator2Dv1(nn.Module):
     def __init__(self, opt, block, nblocks, level):
         super(NoiseResGenerator2Dv1, self).__init__()
