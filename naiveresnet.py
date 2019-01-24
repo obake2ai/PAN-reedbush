@@ -280,7 +280,7 @@ class NoiseResNet512(nn.Module):
         self.layer6 = self._make_layer(block, 8*nfilters, nblocks[5], stride=2, level=level)
         self.layer7 = self._make_layer(block, 8*nfilters, nblocks[6], stride=2, level=level)
         self.avgpool = nn.AvgPool2d(pool, stride=1)
-        self.linear = nn.Linear(4*nfilters*block.expansion, nclasses)
+        self.linear = nn.Linear(8*nfilters*block.expansion, nclasses)
 
     def _make_layer(self, block, planes, nblocks, stride=1, level=0.2):
         shortcut = None
