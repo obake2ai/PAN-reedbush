@@ -120,6 +120,17 @@ class Dataset(nn.Module):
 	    dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
 	    return dataset, dataloader
 
+    def imagenet(self, opt):
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/maico2kiku/train",
+	                        transform=transforms.Compose([
+	                            transforms.Resize(opt.img_size),
+	                            transforms.CenterCrop(opt.img_size),
+	                            transforms.ToTensor(),
+	                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+	                        ]))
+	    dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
+	    return dataset, dataloader
+
 def makeDataloader(opt):
     dataset = Dataset(opt)
     if opt.dataset == 'mnist': return dataset.mnist(opt)
@@ -128,3 +139,4 @@ def makeDataloader(opt):
     if opt.dataset == 'lsun': return dataset.lsun(opt)
     if opt.dataset == 'celeba': return dataset.celeba(opt)
     if opt.dataset == 'imagenet': return dataset.imagenet(opt)
+    if opt.dataset == 'maico2kiku': return dataset.maico2kiku(opt)
