@@ -523,7 +523,7 @@ class MTNoiseResNet2048(nn.Module):
         x7 = self.layer6(x6)
         x8 = self.layer7(x7)
         x9 = self.layer8(x8)
-        x10 = self.layer8(x9)
+        x10 = self.layer9(x9)
         x11 = self.avgpool(x10)
         x12 = x11.view(x11.size(0), -1)
         x13 = self.linear(x12)
