@@ -120,7 +120,7 @@ class Dataset(nn.Module):
 	    dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
 	    return dataset, dataloader
 
-    def imagenet(self, opt):
+    def maico2kiku(self, opt):
 	    dataset = datasets.ImageFolder(root="./otherGANs/data/maico2kiku/train",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
