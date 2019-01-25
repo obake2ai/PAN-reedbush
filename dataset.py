@@ -121,7 +121,7 @@ class Dataset(nn.Module):
 	    return dataset, dataloader
 
     def maico2kiku(self, opt):
-	    dataset = datasets.ImageFolder(root="./otherGANs/data/maico2kiku/train",
+	    dataset = datasets.ImageFolder(root="./otherGANs/data/maico2kiku/",
 	                        transform=transforms.Compose([
 	                            transforms.Resize(opt.img_size),
 	                            transforms.CenterCrop(opt.img_size),
