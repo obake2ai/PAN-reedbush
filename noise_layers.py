@@ -224,11 +224,11 @@ class MTSNDNoiseLayer2D_x4(nn.Module):
             x2 = x
             x2[:,:,:bar,:bar] = torch.add(x[:,:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
             torch.manual_seed(self.seed+1)
-            x2[:,:,bar:bar*2,:bar] = torch.add(x[:,:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
+            x2[:,:,bar:bar*2,:bar] = torch.add(x[:,:,bar:bar*2,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
             torch.manual_seed(self.seed+2)
-            x2[:,:,:bar,bar:bar*2] = torch.add(x[:,:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
+            x2[:,:,:bar,bar:bar*2] = torch.add(x[:,:,:bar,bar:bar*2], torch.randn(x.size(1), bar, bar).cuda() * self.level)
             torch.manual_seed(self.seed+3)
-            x2[:,:,bar:bar*2,bar:bar*2] = torch.add(x[:,:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
+            x2[:,:,bar:bar*2,bar:bar*2] = torch.add(x[::,:,bar:bar*2,bar:bar*2], torch.randn(x.size(1), bar, bar).cuda() * self.level)
         else:
             x2 = torch.add(x, torch.randn(x.size(1), x.size(2), x.size(3)).cuda() * self.level)
 
