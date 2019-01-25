@@ -222,6 +222,7 @@ class MTSNDNoiseLayer2D_x4(nn.Module):
         if x.size(2) >= 512:
             bar = int(x.size(2)/2)
             x2 = x
+            print (x[:,:bar,:bar].size())
             x2[:,:bar,:bar] = torch.add(x[:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
             torch.manual_seed(self.seed+1)
             x2[:,bar+1:bar*2,:bar] = torch.add(x[:,:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
