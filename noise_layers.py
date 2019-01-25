@@ -235,6 +235,41 @@ class MTSNDNoiseLayer2D_x4(nn.Module):
         z = self.layers(x2)
         return z
 
+class MTSNDNoiseLayer2Dx(nn.Module):
+    def __init__(self, in_planes, out_planes, level, seed, normalize=True):
+        super(MTSNDNoiseLayer2Dx, self).__init__()
+
+        self.level = level
+        self.seed = seed
+        if normalize:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+                nn.BatchNorm2d(out_planes),
+            )
+        else:
+            self.layers = nn.Sequential(
+                nn.ReLU(True),
+                nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=1),
+            )
+
+    def forward(self, x):
+        torch.manual_seed(self.seed)
+        if x.size(2) >= 512 and x.size(2) < 2048:
+            split = 2 if x.size(2) < 2048 else 4
+            bar = int(x.size(2)/split)
+            x2 = x
+            k = 0
+            for i, j in itertools.product(range(split), range(split)):
+                torch.manual_seed(self.seed+k)
+                x2[:,:,bar*j:bar*(j+1),bar*i:bar*(i+1)] = torch.add(x[:,:,bar*j:bar*(j+1),bar*i:bar*(i+1)], torch.randn(x.size(1), bar, bar).cuda() * self.level)
+                k += 1
+        else:
+            x2 = torch.add(x, torch.randn(x.size(1), x.size(2), x.size(3)).cuda() * self.level)
+
+        z = self.layers(x2)
+        return z
+
 class LCGNoiseLayer2D(nn.Module):
     def __init__(self, in_planes, out_planes, level, seed, normalize=True):
         super(LCGNoiseLayer2D, self).__init__()
