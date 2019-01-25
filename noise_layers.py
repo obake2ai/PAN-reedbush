@@ -201,7 +201,7 @@ class MTSNDNoiseLayer2D(nn.Module):
 
 class MTSNDNoiseLayer2D_x4(nn.Module):
     def __init__(self, in_planes, out_planes, level, seed, normalize=True):
-        super(MTSNDNoiseLayer2D, self).__init__()
+        super(MTSNDNoiseLayer2D_x4, self).__init__()
 
         self.level = level
         self.seed = seed
@@ -220,7 +220,7 @@ class MTSNDNoiseLayer2D_x4(nn.Module):
     def forward(self, x):
         torch.manual_seed(self.seed)
         if x.size(2) >= 512:
-            bar = int(x.size(2)/4)
+            bar = int(x.size(2)/2)
             x2 = x
             x2[:bar,:bar] = torch.add(x[:bar,:bar], torch.randn(x.size(1), bar, bar).cuda() * self.level)
             torch.manual_seed(self.seed+1)
