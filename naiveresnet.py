@@ -478,7 +478,7 @@ class MTNoiseResNet1024(nn.Module):
 
 class MTNoiseResNet2048(nn.Module):
     def __init__(self, block, nblocks, nchannels, nfilters, nclasses, pool, level, seed):
-        super(MTNoiseResNet1024, self).__init__()
+        super(MTNoiseResNet2048, self).__init__()
         self.in_planes = nfilters
         self.pre_layers = nn.Sequential(
             nn.Conv2d(nchannels,nfilters,kernel_size=7,stride=2,padding=3,bias=False),
