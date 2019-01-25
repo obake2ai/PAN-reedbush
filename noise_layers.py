@@ -174,9 +174,9 @@ class MTNoiseLayer2D(nn.Module):
         z = self.layers(x2)
         return z
 
-class MTstdNoiseLayer2D(nn.Module):
+class MTSNDNoiseLayer2D(nn.Module):
     def __init__(self, in_planes, out_planes, level, seed, normalize=True):
-        super(MTstdNoiseLayer2D, self).__init__()
+        super(MTSNDNoiseLayer2D, self).__init__()
 
         self.level = level
         self.seed = seed

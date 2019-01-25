@@ -82,6 +82,29 @@ class MTNoiseBasicBlock(nn.Module):
         y = F.relu(y)
         return y
 
+class MTSNDNoiseBasicBlock(nn.Module):
+    expansion = 1
+    def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2):
+        super(MTSNDNoiseBasicBlock, self).__init__()
+        self.layers = nn.Sequential(
+            noise_layers.MTSNDNoiseLayer2D(in_planes, planes, level, seed),
+            nn.MaxPool2d(stride, stride),
+            nn.BatchNorm2d(planes),
+            nn.ReLU(True),
+            noise_layers.MTSNDNoiseLayer2D(planes, planes, level, seed+1),
+            nn.BatchNorm2d(planes),
+        )
+        self.shortcut = shortcut
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        y = F.relu(y)
+        return y
+
 class LCGNoiseBasicBlock(nn.Module):
     expansion = 1
     def __init__(self, in_planes, planes, stride=1, shortcut=None, seed=0, level=0.2):
