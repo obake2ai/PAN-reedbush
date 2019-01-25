@@ -94,7 +94,7 @@ def train(generator, discriminator, dataloader, opt):
     epoch_done = 0
     start = time.time()
     maxIS = 0
-    fixed_z = Variable(Tensor(np.random.normal(0, 1, (50, opt.latent_dim))))
+    fixed_z = Variable(Tensor(np.random.normal(0, 1, (10, opt.latent_dim))))
 
     if opt.resume != 0:
         batches_done += opt.resume
@@ -184,10 +184,10 @@ def train(generator, discriminator, dataloader, opt):
 
                 if batches_done % opt.sample_interval == 0:
                     if batches_done == 0:
-                        vutils.save_image(real_imgs.data[:49], (os.path.join(saveDir, opt.dataset + "_real.png")), nrow=7, normalize=True)
-                        vutils.save_image(generator(fixed_z).data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
+                        vutils.save_image(real_imgs.data[:9], (os.path.join(saveDir, opt.dataset + "_real.png")), nrow=3, normalize=True)
+                        vutils.save_image(generator(fixed_z).data[:9], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=3, normalize=True)
                     else:
-                        vutils.save_image(generator(fixed_z).data[:49], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=7, normalize=True)
+                        vutils.save_image(generator(fixed_z).data[:9], (os.path.join(saveDir, opt.dataset + "_fake_%s.png")) % str(batches_done).zfill(8), nrow=3, normalize=True)
 
                 if batches_done % opt.modelsave_interval == 0:
                     torch.save(generator.state_dict(), os.path.join(saveDir, "generator_model_%s") % str(batches_done).zfill(8))
