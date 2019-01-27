@@ -9,7 +9,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 1000,
-    'batch_size': 16,
+    'batch_size': 8,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -24,7 +24,7 @@ opt = easydict.EasyDict({
     'dataset': 'shunga',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 18000, #0 = train from scratch
+    'resume' : 19000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1234:190126_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_shunga'
 })
