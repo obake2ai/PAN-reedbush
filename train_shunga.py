@@ -8,7 +8,7 @@ import noise_layers
 import easydict
 
 opt = easydict.EasyDict({
-    'n_epochs': 200,
+    'n_epochs': 1000,
     'batch_size': 16,
     'lr': 0.0002,
     'b1': 0.5,
@@ -24,7 +24,7 @@ opt = easydict.EasyDict({
     'dataset': 'shunga',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 7000, #0 = train from scratch
+    'resume' : 18000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1234:190126_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_shunga'
 })
