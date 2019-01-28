@@ -18,15 +18,15 @@ opt = easydict.EasyDict({
     'img_size': 1024,
     'n_critic': 1,
     'clip_value': 0.01,
-    'sample_interval': 10,
+    'sample_interval': 100,
     'modelsave_interval': 100,
     'log_interval': 10,
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 0, #0 = train from scratch
+    'resume' : 10100, #0 = train from scratch
     'logIS' : False,
-    'loadDir' : False
+    'loadDir' : '1231:190125_MTNoiseGenerator2Dv6SND1024_x4_MTNoiseResNet1024_imagenet'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
