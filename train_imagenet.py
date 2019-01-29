@@ -8,8 +8,8 @@ import noise_layers
 import easydict
 
 opt = easydict.EasyDict({
-    'n_epochs': 200,
-    'batch_size': 16,
+    'n_epochs': 2000,
+    'batch_size': 32,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -19,12 +19,12 @@ opt = easydict.EasyDict({
     'n_critic': 1,
     'clip_value': 0.01,
     'sample_interval': 100,
-    'modelsave_interval': 100,
+    'modelsave_interval': 1000,
     'log_interval': 10,
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 29000, #0 = train from scratch
+    'resume' : 34300, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1017:190125_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_imagenet'
 })

@@ -8,8 +8,8 @@ import noise_layers
 import easydict
 
 opt = easydict.EasyDict({
-    'n_epochs': 200,
-    'batch_size': 16,
+    'n_epochs': 2000,
+    'batch_size': 32,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -24,7 +24,7 @@ opt = easydict.EasyDict({
     'dataset': 'maico2kiku',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 38000, #0 = train from scratch
+    'resume' : 41000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1754:190125_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_maico2kiku'
 })

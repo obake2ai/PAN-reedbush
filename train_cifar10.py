@@ -8,7 +8,7 @@ import noise_layers
 import easydict
 
 opt = easydict.EasyDict({
-    'n_epochs': 200,
+    'n_epochs': 2000,
     'batch_size': 32,
     'lr': 0.0002,
     'b1': 0.5,
@@ -24,9 +24,9 @@ opt = easydict.EasyDict({
     'dataset': 'cifar10',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 0,
+    'resume' : 21896,
     'logIS' : False,
-    'loadDir' : None
+    'loadDir' : '0328:190125_MTNoiseGenerator2Dv6_512_MTNoiseResNet512_cifar10'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
