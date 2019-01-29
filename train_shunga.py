@@ -24,9 +24,9 @@ opt = easydict.EasyDict({
     'dataset': 'shunga',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 12000, #0 = train from scratch
+    'resume' : 10000, #0 = train from scratch
     'logIS' : False,
-    'loadDir' : '1656:190126_MTNoiseGenerator2Dv6SND1024_x4_MTNoiseResNet1024_shunga'
+    'loadDir' : '1237:190126_MTNoiseGenerator2Dv6SND1024_x4v2_MTNoiseResNet1024_shunga'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
@@ -34,7 +34,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6SND512(opt, seed=0)
-generator = models.MTNoiseGenerator2Dv6SND1024_x4(opt, seed=0)
+generator = models.MTNoiseGenerator2Dv6SND1024_x4v2(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=40)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=6)
 #generator = models.NoiseResGenerator2Dv1(opt, noise_layers.NoiseBasicBlock2Dv2, [2,2,2,2,1], level=0.1)
