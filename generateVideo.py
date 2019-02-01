@@ -47,6 +47,6 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
     os.makedirs(result_subdir, exist_ok=True)
     for t in range (0, num_frames):
         latents = all_latents[t]
-        vutils.save_image(Tensor(generator(latents)), (os.path.join(result_subdir, opt.dataset + "_frame_%s.png")) % str(t).zfill(8), nrow=1, normalize=True)
+        vutils.save_image(Variable(torch.from_numpy(generator(latents))), (os.path.join(result_subdir, opt.dataset + "_frame_%s.png")) % str(t).zfill(8), nrow=1, normalize=True)
 
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
