@@ -4,6 +4,7 @@ from main import train
 from otherGANs import past_models
 import naiveresnet
 import noise_layers
+from generateVideo import generate_interpolation_video
 
 import easydict
 
@@ -48,4 +49,5 @@ discriminator = naiveresnet.MTNoiseResNet512(naiveresnet.MTSNDNoiseBasicBlock, [
 #discriminator = past_models.WGANDiscriminator32_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
-train(generator, discriminator, dataloader, opt)
+#train(generator, discriminator, dataloader, opt)
+generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8)
