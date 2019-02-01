@@ -32,9 +32,7 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
     # Frame generation func for moviepy.
     def make_frame(t):
         frame_idx = int(np.clip(np.round(t * mp4_fps), 0, num_frames - 1))
-        latents = all_latents[frame_idx]
-        print (type(latents))
-        print (latents.size)
+        latents = Variable(Tensor(all_latents[frame_idx])).view(1, all_latents[frame_idx].size)
         images = generator(latents)
         if image_zoom > 1:
             images = scipy.ndimage.zoom(images, [image_zoom, image_zoom, 1], order=0)
