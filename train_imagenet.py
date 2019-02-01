@@ -25,7 +25,7 @@ opt = easydict.EasyDict({
     'dataset': 'imagenet',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 50000, #0 = train from scratch
+    'resume' : 40000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1017:190125_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_imagenet'
 })
@@ -51,4 +51,4 @@ discriminator = naiveresnet.MTNoiseResNet512(naiveresnet.MTSNDNoiseBasicBlock, [
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
 #train(generator, discriminator, dataloader, opt)
-generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8)
+generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, duration_sec=180.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8)
