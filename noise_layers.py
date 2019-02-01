@@ -398,6 +398,23 @@ class MTNoiseBasicBlock2D(nn.Module):
         y = self.relu(y)
         return y
 
+class MTSNDNoiseBasicBlock2D_x4(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
+        super(MTSNDNoiseBasicBlock2D_x4, self).__init__()
+        self.layers = nn.Sequential(
+            MTSNDNoiseLayer2D_x4(in_planes, out_planes, level, seed, normalize),
+            MTSNDNoiseLayer2D_x4(out_planes, out_planes, level, seed+1),
+        )
+        self.shortcut = shortcut
+
+    def forward(self, x):
+        residual = x
+        y = self.layers(x)
+        if self.shortcut:
+            residual = self.shortcut(x)
+        y += residual
+        return y
+
 class LCGNoiseBasicBlock2D(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, shortcut=None, level=0.2, seed=0, normalize=True):
         super(LCGNoiseBasicBlock2D, self).__init__()

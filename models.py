@@ -1499,6 +1499,58 @@ class NoiseResGenerator2Dv1(nn.Module):
         x6 = self.layer5(x5)                            #(128*1, 32, 32) -> (nc, 32, 32)
         return self.tanh(x6)
 
+class NoiseResGenerator2D1024(nn.Module):
+    def __init__(self, opt, block, nblock, level):
+        super(NoiseResGenerator2D1024, self).__init__()
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion':
+          channels = 1
+        else:
+          channels = 3
+        nfilters = opt.num_filters
+        self.in_planes = 8*nfilters
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+        self.pre_layer = nn.Linear(opt.latent_dim, 8*nfilters * 4 * 4)
+        self.layer1 = self._make_layer(block, 8*nfilters, nblock, level=level)
+        self.layer2 = self._make_layer(block, 8*nfilters, nblock, scale=2, level=level)
+        self.layer3 = self._make_layer(block, 6*nfilters, nblock, scale=2, level=level)
+        self.layer4 = self._make_layer(block, 6*nfilters, nblock, scale=2, level=level)
+        self.layer5 = self._make_layer(block, 4*nfilters, nblock, scale=2, level=level)
+        self.layer6 = self._make_layer(block, 4*nfilters, nblock, scale=2, level=level)
+        self.layer7 = self._make_layer(block, 2*nfilters, nblock, scale=2, level=level)
+        self.layer8 = self._make_layer(block, 2*nfilters, nblock, scale=2, level=level)
+        self.layer9 = self._make_layer(block, 1*nfilters, nblock, scale=2, level=level)
+        self.layer10 = self._make_layer(block, channels, 1, scale=1, level=level)
+        self.tanh = nn.Tanh()
+
+    def _make_layer(self, block, planes, nblocks, scale=1, level=0.2):
+        shortcut = None
+        if scale != 1 or self.in_planes != planes * block.expansion:
+            shortcut = nn.Sequential(
+                NoiseLayer2D(self.in_planes, planes * block.expansion, level=level),
+                nn.Upsample(scale_factor=scale, mode='bilinear'),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+        layers = []
+        layers.append(block(self.in_planes, planes, scale, shortcut, level=level))
+        self.in_planes = planes * block.expansion
+        for i in range(1, nblocks):
+            layers.append(block(self.in_planes, planes, level=level))
+        return nn.Sequential(*layers)
+
+    def forward(self, z):
+        x1 = self.pre_layer(z)                          #(1) -> (4)
+        x2 = self.layer1(x1.view(-1, 128 * 8, 4, 4))
+        x3 = self.layer2(x2)                            #(4) -> (8)
+        x4 = self.layer3(x3)                            #(8) -> (16)
+        x5 = self.layer4(x4)                            #(16) -> (32)
+        x6 = self.layer5(x5)                            #(32) -> (64)
+        x7 = self.layer6(x6)                            #(64) -> (128)
+        x8 = self.layer7(x7)                            #(128) -> (256)
+        x9 = self.layer8(x8)                            #(256) -> (512)
+        x10 = self.layer9(x9)                            #(512) -> (1024)
+        x11 = self.layer10(x10)                            #(512) -> (1024)
+        return self.tanh(x11)
+
 class NoiseGenerator2Dv6_512(nn.Module):
     def __init__(self, opt, seed=None):
         super(NoiseGenerator2Dv6_512, self).__init__()
