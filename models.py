@@ -1341,7 +1341,7 @@ class MTNoiseGenerator2Dv6SND1024_x4v3(nn.Module):
             nn.Upsample(scale_factor=2, mode='bilinear'), #(256, 256) -> (512, 512)
             MTSNDNoiseLayer2D_x4(128 * 2, 128 * 1, level=0.1, seed=seed+70),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(512, 512) -> (1024), 1024)
-            MTSNDNoiseBasicBlock2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
+            MTSNDNoiseLayer2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
             MTSNDNoiseLayer2D_x4(128 * 1, channels, level=0.1, seed=seed+90),
             nn.Tanh()
         )
@@ -1376,7 +1376,7 @@ class MTNoiseGenerator2Dv6SND1024_x4v4(nn.Module):
             nn.Upsample(scale_factor=2, mode='bilinear'), #(256, 256) -> (512, 512)
             MTSNDNoiseLayer2D_x4(128 * 2, 128 * 1, level=0.1, seed=seed+70),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(512, 512) -> (1024), 1024)
-            MTSNDNoiseLayer2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
+            MTSNDNoiseBasicBlock2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
             MTSNDNoiseLayer2D_x4(128 * 1, channels, level=0.1, seed=seed+90),
             nn.Tanh()
         )
