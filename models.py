@@ -1341,6 +1341,41 @@ class MTNoiseGenerator2Dv6SND1024_x4v3(nn.Module):
             nn.Upsample(scale_factor=2, mode='bilinear'), #(256, 256) -> (512, 512)
             MTSNDNoiseLayer2D_x4(128 * 2, 128 * 1, level=0.1, seed=seed+70),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(512, 512) -> (1024), 1024)
+            MTSNDNoiseBasicBlock2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
+            MTSNDNoiseLayer2D_x4(128 * 1, channels, level=0.1, seed=seed+90),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        x = self.pre_layer(z)
+        img = self.model(x.view(-1, 128 * 8, 4, 4))
+        return img
+
+class MTNoiseGenerator2Dv6SND1024_x4v4(nn.Module):
+    def __init__(self, opt, seed=None):
+        super(MTNoiseGenerator2Dv6SND1024_x4v4, self).__init__()
+        channels = 1 if opt.dataset == 'mnist' or opt.dataset == 'fashion' else 3
+        self.img_shape = (channels, opt.img_size, opt.img_size)
+
+        self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
+
+        self.model = nn.Sequential(
+            MTSNDNoiseLayer2D_x4(128 * 8, 128 * 8, level=0.1, seed=seed),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
+            MTSNDNoiseLayer2D_x4(128 * 8, 128 * 6, level=0.1, seed=seed+10),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
+            MTSNDNoiseLayer2D_x4(128 * 6, 128 * 6, level=0.1, seed=seed+20),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
+            MTSNDNoiseLayer2D_x4(128 * 6, 128 * 4, level=0.1, seed=seed+30),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(32, 32) -> (64, 64)
+            MTSNDNoiseLayer2D_x4(128 * 4, 128 * 4, level=0.1, seed=seed+40),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(64, 64) -> (128, 128)
+            MTSNDNoiseLayer2D_x4(128 * 4, 128 * 2, level=0.1, seed=seed+50),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(128, 128) -> (256, 256)
+            MTSNDNoiseLayer2D_x4(128 * 2, 128 * 2, level=0.1, seed=seed+60),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(256, 256) -> (512, 512)
+            MTSNDNoiseLayer2D_x4(128 * 2, 128 * 1, level=0.1, seed=seed+70),
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(512, 512) -> (1024), 1024)
             MTSNDNoiseLayer2D_x4(128 * 1, 128 * 1, level=0.1, seed=seed+80),
             MTSNDNoiseLayer2D_x4(128 * 1, channels, level=0.1, seed=seed+90),
             nn.Tanh()
