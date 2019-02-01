@@ -25,7 +25,7 @@ opt = easydict.EasyDict({
     'dataset': 'maico2kiku',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 51000, #0 = train from scratch
+    'resume' : 71000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : '1754:190125_MTNoiseGenerator2Dv6SND512_MTNoiseResNet512_maico2kiku'
 })
