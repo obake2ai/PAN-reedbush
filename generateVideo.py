@@ -14,7 +14,9 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
     num_frames = int(np.rint(duration_sec * mp4_fps))
     random_state = np.random.RandomState(random_seed)
 
-    if cuda: generator.cuda()
+    if cuda:
+        generator.cuda()
+        generator = torch.nn.DataParallel(generator)
 
     print('Loading network from "%s"...' % network_model)
     generator.load_state_dict(torch.load(os.path.join(opt.loadDir, "generator_model_%s") % str(opt.resume - opt.resume%opt.modelsave_interval).zfill(8)))
