@@ -23,7 +23,7 @@ opt = easydict.EasyDict({
     'modelsave_interval': 1000,
     'log_interval': 10,
     'dataset': 'maico2kiku',
-    'num_filters': 256, #for CNN Discriminator and Generator
+    'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
     'resume' : 0, #0 = train from scratch
     'logIS' : False,
