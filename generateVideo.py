@@ -34,10 +34,10 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
         frame_idx = int(np.clip(np.round(t * mp4_fps), 0, num_frames - 1))
         latents = Variable(Tensor(all_latents[frame_idx])).view(1, all_latents[frame_idx].size)
         images = generator(latents)
+        if images.shape[0] == 1 and len(images.shape) == 4:
+            images = np.array(images.view(3, opt.img_size, opt.img_size))
         if image_zoom > 1:
             images = scipy.ndimage.zoom(images, [image_zoom, image_zoom, 1], order=0)
-        if images.shape[0] == 1 and len(images.shape) == 4:
-            images = images.view(3, opt.img_size, opt.img_size)
         return images
 
     # Generate video.
