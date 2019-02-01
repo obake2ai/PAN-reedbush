@@ -25,7 +25,7 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
     print('Generating latent vectors...')
     shape = [num_frames, opt.latent_dim] # [frame, component]
     all_latents = Variable(Tensor(random_state.randn(*shape).astype(np.float32)))
-    all_latents = scipy.ndimage.gaussian_filter(z, [smoothing_sec * mp4_fps] + [0], mode='wrap')
+    all_latents = scipy.ndimage.gaussian_filter(all_latents, [smoothing_sec * mp4_fps] + [0], mode='wrap')
     all_latents /= np.sqrt(np.mean(np.square(all_latents)))
 
     # Frame generation func for moviepy.
