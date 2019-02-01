@@ -41,12 +41,13 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
         return images
 
     # Generate video.
-    result_subdir = opt.loadDir
-    import moviepy.editor # pip install moviepy
-    moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
-    # os.makedirs(result_subdir, exist_ok=True)
-    # for t in range (0, num_frames):
-    #     latents = all_latents[t]
-    #     vutils.save_image(Variable(torch.from_numpy(generator(latents))), (os.path.join(result_subdir, opt.dataset + "_frame_%s.png")) % str(t).zfill(8), nrow=1, normalize=True)
+    # result_subdir = opt.loadDir
+    # import moviepy.editor # pip install moviepy
+    # moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
+    result_subdir = os.path.join(opt.loadDir, mp4)
+    os.makedirs(result_subdir, exist_ok=True)
+    for t in range (0, num_frames):
+        latents = all_latents[t]
+        vutils.save_image(Variable(torch.from_numpy(generator(latents))), (os.path.join(result_subdir, opt.dataset + "_frame_%s.png")) % str(t).zfill(8), nrow=1, normalize=True)
 
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
