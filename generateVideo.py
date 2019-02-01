@@ -36,8 +36,8 @@ def generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, d
         images = generator(latents)
         if image_zoom > 1:
             images = scipy.ndimage.zoom(images, [image_zoom, image_zoom, 1], order=0)
-        if images.shape[0] == 1:
-            images = images.repeat(3, 2) # grayscale => RGB
+        if images.shape[0] == 1 and len(images.shape) == 4:
+            images = images.view(3, opt.img_size, opt.img_size)
         return images
 
     # Generate video.
