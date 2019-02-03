@@ -25,9 +25,9 @@ opt = easydict.EasyDict({
     'dataset': 'maico2kiku',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 0, #0 = train from scratch
+    'resume' : 23000, #0 = train from scratch
     'logIS' : False,
-    'loadDir' : False
+    'loadDir' : '1254:190125_MTNoiseGenerator2Dv6SND1024_x4_MTNoiseResNet1024_maico2kiku'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
@@ -35,7 +35,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6SND512(opt, seed=0)
-generator = models.MTNoiseGenerator2Dv6SND1024_x4v4(opt, seed=0)
+generator = models.MTNoiseGenerator2Dv6SND1024_x4(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=40)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=6)
 # generator = models.NoiseResGenerator2D1024(opt, noise_layers.MTSNDNoiseBasicBlock2D_x4, 2, level=0.1)
