@@ -35,7 +35,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6SND512(opt, seed=0)
-generator = models.MTNoiseGenerator2Dv6SND1024_x4v2(opt, seed=0)
+generator = models.MTNoiseGenerator2Dv6SND1024_x4v4(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6SND2048x(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=40)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=6)
