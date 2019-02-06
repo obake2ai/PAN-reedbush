@@ -1662,21 +1662,21 @@ class NoiseConvGenerator2D_512(nn.Module):
         self.pre_layer = nn.Linear(opt.latent_dim, 128 * 8 * 4 * 4)
 
         self.model = nn.Sequential(
-            NoiseLayer2D(128 * 8, 128 * 8, 0.1, seed=seed),
+            MTSNDNoiseLayer2Dx(128 * 8, 128 * 8, 0.1, seed=seed),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(4, 4) -> (8, 8)
-            NoiseLayer2D(128 * 8, 128 * 4, 0.1, seed=seed+10),
+            MTSNDNoiseLayer2Dx(128 * 8, 128 * 4, 0.1, seed=seed+10),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(8, 8) -> (16, 16)
-            NoiseLayer2D(128 * 4, 128 * 2, 0.1, seed=seed+20),
+            MTSNDNoiseLayer2Dx(128 * 4, 128 * 2, 0.1, seed=seed+20),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
-            NoiseLayer2D(128 * 2, 128 * 1, 0.1, seed=seed+30),
+            MTSNDNoiseLayer2Dx(128 * 2, 128 * 1, 0.1, seed=seed+30),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(32, 32) -> (64, 64)
-            NoiseLayer2D(128 * 1, 128 * 1, 0.1, seed=seed+40),
+            MTSNDNoiseLayer2Dx(128 * 1, 128 * 1, 0.1, seed=seed+40),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(64, 64) -> (128, 128)
-            NoiseLayer2D(128 * 1, 128 * 1, 0.1, seed=seed+50),
+            MTSNDNoiseLayer2Dx(128 * 1, 128 * 1, 0.1, seed=seed+50),
             TransConvLayer(128 * 1, 128 * 1),             #(128, 128) -> (256, 256)
-            NoiseLayer2D(128 * 1, 128 * 1, 0.1, seed=seed+60),
+            MTSNDNoiseLayer2Dx(128 * 1, 128 * 1, 0.1, seed=seed+60),
             TransConvLayer(128 * 1, 128 * 1),             #(256, 256) -> (512, 512)
-            NoiseLayer2D(128 * 1, channels, 0.1, seed=seed+70),
+            MTSNDNoiseLayer2Dx(128 * 1, channels, 0.1, seed=seed+70),
             nn.Tanh()
         )
 
