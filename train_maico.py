@@ -10,7 +10,7 @@ import easydict
 
 opt = easydict.EasyDict({
     'n_epochs': 2000,
-    'batch_size': 32,
+    'batch_size': 16,
     'lr': 0.0002,
     'b1': 0.5,
     'b2': 0.999,
@@ -35,7 +35,7 @@ _, dataloader = dataset.makeDataloader(opt)
 # Initialize generator and discriminator
 #generator = models.NoiseGenerator2Dv6(opt)
 #generator = models.MTNoiseGenerator2Dv6SND512(opt, seed=0)
-generator = models.NoiseConvGenerator2Dv3_512(opt, seed=0)
+generator = models.NoiseConvGenerator2Dv2_512(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6SND1024_x4v4(opt, seed=0)
 #generator = models.MTNoiseGenerator2Dv6(opt, seed=40)
 #generator = models.LCGNoiseGenerator2Dv6_(opt, seed=6)
