@@ -15,7 +15,7 @@ opt = easydict.EasyDict({
     'b1': 0.5,
     'b2': 0.999,
     'n_cpu': 8,
-    'latent_dim': 128,
+    'latent_dim': 100,
     'img_size': 512,
     'n_critic': 1,
     'clip_value': 0.01,
