@@ -10,7 +10,7 @@ class TransConvLayer(nn.Module):
         self.layers = nn.Sequential(
             nn.ConvTranspose2d(in_planes, out_planes, kernel_size=4, stride=2, padding=1, bias=False),
             nn.BatchNorm2d(out_planes),
-            nn.ReLU(True),
+            nn.ReLU(),
         )
 
     def forward(self, x):
