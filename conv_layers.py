@@ -22,7 +22,7 @@ class ConvUpsample(nn.Module):
         super(ConvUpsample, self).__init__()
 
         self.layers = nn.Sequential(
-            nn.Upsample(scale_factor=2, mode='bilinear'),
+            nn.Upsample(scale_factor=4, mode='bilinear'),
             nn.Conv2d(in_planes, out_planes, kernel_size=4, stride=2, padding=1, bias=False),
             nn.BatchNorm2d(out_planes),
             nn.ReLU(),
