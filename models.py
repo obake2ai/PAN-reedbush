@@ -1920,15 +1920,15 @@ class NoiseConvGenerator2Dv9_512(nn.Module):
             MTSNDNoiseLayer2Dx(128 * 8, 128 * 8, 0.1, seed=seed),
             ConvUpsample(128 * 8, 128 * 8), #(4, 4) -> (8, 8)
             MTSNDNoiseLayer2Dx(128 * 8, 128 * 4, 0.1, seed=seed+10),
-            ConvUpsample(128 * 4, 128 * 4),  #(8, 8) -> (16, 16)
+            nn.Upsample(scale_factor=2, mode='bilinear'),  #(8, 8) -> (16, 16)
             MTSNDNoiseLayer2Dx(128 * 4, 128 * 2, 0.1, seed=seed+20),
             ConvUpsample(128 * 2, 128 * 2), #(16, 16) -> (32, 32)
             MTSNDNoiseLayer2Dx(128 * 2, 128 * 1, 0.1, seed=seed+30),
-            ConvUpsample(128 * 1, 128 * 1), #(32, 32) -> (64, 64)
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(32, 32) -> (64, 64)
             MTSNDNoiseBasicBlock2Dx(128 * 1, 128 * 1, 0.1, seed=seed+40),
             ConvUpsample(128 * 1, 128 * 1), #(64, 64) -> (128, 128)
             MTSNDNoiseBasicBlock2Dx(128 * 1, 128 * 1, 0.1, seed=seed+50),
-            ConvUpsample(128 * 1, 128 * 1), #(128, 128) -> (256, 256)
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(128, 128) -> (256, 256)
             MTSNDNoiseBasicBlock2Dx(128 * 1, 128 * 1, 0.1, seed=seed+60),
             ConvUpsample(128 * 1, 128 * 1),             #(256, 256) -> (512, 512)
             MTSNDNoiseLayer2Dx(128 * 1, channels, 0.1, seed=seed+70),
