@@ -1922,7 +1922,7 @@ class NoiseConvGenerator2Dv9_512(nn.Module):
             MTSNDNoiseLayer2Dx(128 * 8, 128 * 4, 0.1, seed=seed+10),
             nn.Upsample(scale_factor=2, mode='bilinear'),  #(8, 8) -> (16, 16)
             MTSNDNoiseLayer2Dx(128 * 4, 128 * 2, 0.1, seed=seed+20),
-            ConvUpsample(128 * 2, 128 * 2), #(16, 16) -> (32, 32)
+            nn.Upsample(scale_factor=2, mode='bilinear'), #(16, 16) -> (32, 32)
             MTSNDNoiseLayer2Dx(128 * 2, 128 * 1, 0.1, seed=seed+30),
             nn.Upsample(scale_factor=2, mode='bilinear'), #(32, 32) -> (64, 64)
             MTSNDNoiseBasicBlock2Dx(128 * 1, 128 * 1, 0.1, seed=seed+40),
