@@ -256,7 +256,7 @@ class MTSNDNoiseLayer2Dx(nn.Module):
     def forward(self, x):
         torch.manual_seed(self.seed)
         if x.size(2) >= 512 and x.size(2) < 2048:
-            split = 2 if x.size(2) < 2048 else 4
+            split = 4 if x.size(2) < 2048 else 8
             bar = int(x.size(2)/split)
             x2 = x
             k = 0
