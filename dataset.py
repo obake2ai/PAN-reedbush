@@ -128,7 +128,7 @@ class Dataset(nn.Module):
 	                            transforms.ToTensor(),
 	                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 	                        ]))
-	    dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
+	    dataloader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, num_workers=8, shuffle=True)
 	    return dataset, dataloader
 
     def shunga(self, opt):
