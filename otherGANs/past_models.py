@@ -285,15 +285,15 @@ class WGANDiscriminator512_(nn.Module):
             nn.LeakyReLU(0.2, inplace=True),
             # state size. (ndf*2) x 128 x 128
             nn.Conv2d(ndf * 2, ndf * 2, 4, 2, 1, bias=False),
-            nn.BatchNorm2d(ndf * 4),
+            nn.BatchNorm2d(ndf * 2),
             nn.LeakyReLU(0.2, inplace=True),
             # state size. (ndf*8) x 64 x 64
             nn.Conv2d(ndf * 2, ndf * 4, 4, 1, 0, bias=False),
-            nn.BatchNorm2d(ndf * 8),
+            nn.BatchNorm2d(ndf * 4),
             nn.LeakyReLU(0.2, inplace=True),
             # state size. (ndf*8) x 32 x 32
             nn.Conv2d(ndf * 4, ndf * 4, 4, 1, 0, bias=False),
-            nn.BatchNorm2d(ndf * 8),
+            nn.BatchNorm2d(ndf * 4),
             nn.LeakyReLU(0.2, inplace=True),
             # state size. (ndf*8) x 16 x 16
             nn.Conv2d(ndf * 4, ndf * 8, 4, 1, 0, bias=False),
