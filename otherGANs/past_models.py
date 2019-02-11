@@ -269,6 +269,55 @@ class WGANDiscriminator32_(nn.Module):
         x3 = self.linear(x2)
         return x3
 
+class WGANDiscriminator512_(nn.Module):
+    def __init__(self, opt):
+        super(WGANDiscriminator512_, self).__init__()
+        ndf = opt.num_filters
+        if opt.dataset == 'mnist' or opt.dataset == 'fashion': nc = 1
+        else: nc = 3
+        self.main = nn.Sequential(
+            # input is (nc) x 512 x 512
+            nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf) x 256 x 256
+            nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 2),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*2) x 128 x 128
+            nn.Conv2d(ndf * 2, ndf * 2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 64 x 64
+            nn.Conv2d(ndf * 2, ndf * 4, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 32 x 32
+            nn.Conv2d(ndf * 4, ndf * 4, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 16 x 16
+            nn.Conv2d(ndf * 4, ndf * 8, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 8 x 8
+            nn.Conv2d(ndf * 8, ndf * 8, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 4 x 4
+            nn.Conv2d(ndf * 8, ndf * 8, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (ndf*8) x 2 x 2
+        )
+        self.avgpool = nn.AvgPool2d(2, stride=1)
+        self.linear = nn.Linear(ndf * 8, 1)
+
+    def forward(self, input):
+        x1 = self.main(input)
+        x2 = x1.view(x1.size(0), -1)
+        x3 = self.linear(x2)
+        return x3
+
 class DCGANDiscriminator32_BN(nn.Module):
     def __init__(self, opt):
         super(DCGANDiscriminator32_BN, self).__init__()
