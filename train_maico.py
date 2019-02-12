@@ -25,7 +25,7 @@ opt = easydict.EasyDict({
     'dataset': 'maico2kiku',
     'num_filters': 128, #for CNN Discriminator and Generator
     'saveDir' : None,
-    'resume' : 0, #0 = train from scratch
+    'resume' : 17000, #0 = train from scratch
     'logIS' : False,
     'loadDir' : False
 })
@@ -52,5 +52,5 @@ generator = models.NoiseGenerator2Dv7_512(opt, seed=0)
 discriminator = past_models.WGANDiscriminator512_(opt)
 #discriminator = past_models.DCGANDiscriminator32_(opt)
 
-train(generator, discriminator, dataloader, opt)
-#generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8)
+#train(generator, discriminator, dataloader, opt)
+generate_interpolation_video(generator, opt, image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8)
