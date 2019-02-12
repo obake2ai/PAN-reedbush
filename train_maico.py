@@ -27,7 +27,7 @@ opt = easydict.EasyDict({
     'saveDir' : None,
     'resume' : 17000, #0 = train from scratch
     'logIS' : False,
-    'loadDir' : False
+    'loadDir' : '1544:190210_NoiseConvGenerator2Dv7_512_MTNoiseResNet512_maico2kiku'
 })
 
 _, dataloader = dataset.makeDataloader(opt)
